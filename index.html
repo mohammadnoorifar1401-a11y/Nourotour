@@ -1,624 +1,1128 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="نوروتور؛ تور، پرواز، ویزا، سفارت، اقامت و مهاجرت">
-<title>نوروتور | سفر فراتر از انتظار</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#08090b">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="نوروتور؛ رزرو تورهای داخلی و خارجی، پرواز، هتل، خدمات ویزا، وقت سفارت و مشاوره سفر.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://noorotour.com/">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/lucide@latest"></script>
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="نوروتور | سفر فراتر از انتظار">
+  <meta property="og:description" content="تور، پرواز، هتل، ویزا و خدمات تخصصی سفر">
+  <meta property="og:url" content="https://noorotour.com/">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1600&q=85">
+
+  <title>نوروتور | سفر فراتر از انتظار</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/lucide@latest"></script>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"TravelAgency",
+    "name":"نوروتور",
+    "alternateName":"NOUROTOUR",
+    "url":"https://noorotour.com/",
+    "description":"ارائه‌دهنده تورهای داخلی و خارجی، رزرو پرواز، هتل و خدمات ویزا",
+    "telephone":"+98-21-00000000",
+    "email":"info@noorotour.com",
+    "address":{
+      "@type":"PostalAddress",
+      "addressLocality":"تهران",
+      "addressCountry":"IR"
+    },
+    "openingHours":"Sa-Th 09:00-18:00",
+    "priceRange":"$$$"
+  }
+  </script>
 
 <style>
 :root{
-  --bg:#08090b;--surface:#121419;--surface2:#191c22;
-  --gold:#d5ad59;--gold2:#f2d78e;--text:#f8f5ed;
-  --muted:#a7a8ad;--border:rgba(213,173,89,.2);
-  --line:rgba(255,255,255,.08);--radius:20px;
+  --bg:#08090b;
+  --surface:#111318;
+  --surface-2:#181b21;
+  --surface-3:#20242c;
+  --gold:#d6ae5a;
+  --gold-light:#f4da91;
+  --gold-dark:#9b7125;
+  --text:#faf7ef;
+  --muted:#a6a8ae;
+  --success:#58c794;
+  --danger:#ef7272;
+  --line:rgba(255,255,255,.085);
+  --gold-line:rgba(214,174,90,.26);
+  --shadow:0 30px 90px rgba(0,0,0,.38);
+  --radius:22px;
+  --radius-sm:14px;
+  --header:82px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:80px}
-body{font-family:Vazirmatn,sans-serif;background:var(--bg);color:var(--text);line-height:1.8;overflow-x:hidden}
+html{scroll-behavior:smooth;scroll-padding-top:105px}
+body{
+  min-width:320px;
+  overflow-x:hidden;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Vazirmatn,Tahoma,sans-serif;
+  line-height:1.85;
+  text-rendering:optimizeLegibility;
+}
 body.lock{overflow:hidden}
-a{text-decoration:none;color:inherit}
 button,input,select,textarea{font:inherit}
 button{cursor:pointer;color:inherit}
-img{width:100%;display:block}
-svg{width:20px;height:20px}
-.container{width:min(1180px,calc(100% - 32px));margin:auto}
-.section{padding:95px 0}
+a{color:inherit;text-decoration:none}
+img{display:block;width:100%;height:auto}
+svg{width:20px;height:20px;stroke-width:1.8}
+ul{list-style:none}
+::selection{background:var(--gold);color:#120e07}
+:focus-visible{outline:2px solid var(--gold-light);outline-offset:3px}
+.container{width:min(1200px,calc(100% - 32px));margin-inline:auto}
+.section{padding:100px 0}
+.section-dark{background:#0d0f12;border-block:1px solid var(--line)}
+.gold{color:var(--gold-light)}
+.muted{color:var(--muted)}
 .hidden{display:none!important}
-.gold{color:var(--gold2)}
-.eyebrow{color:var(--gold2);font-size:.8rem;font-weight:800}
-.title{font-size:clamp(1.8rem,4vw,3rem);line-height:1.45;margin:6px 0}
-.subtitle{color:var(--muted);max-width:680px}
-.heading{display:flex;justify-content:space-between;align-items:end;gap:25px;margin-bottom:38px}
-.center{text-align:center;justify-content:center}
-.center .subtitle{margin:auto}
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0
+}
+.skip-link{
+  position:fixed;z-index:5000;top:-80px;right:20px;padding:10px 16px;
+  background:var(--gold-light);color:#171108;border-radius:10px
+}
+.skip-link:focus{top:15px}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
+.reveal.visible{opacity:1;transform:none}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  color:var(--gold-light);font-size:.77rem;font-weight:800;letter-spacing:.02em
+}
+.eyebrow:before{content:"";width:22px;height:1px;background:var(--gold)}
+.title{
+  margin:7px 0 8px;font-size:clamp(1.9rem,4vw,3.15rem);
+  line-height:1.42;letter-spacing:-.035em
+}
+.subtitle{max-width:720px;color:var(--muted);font-size:.96rem}
+.heading{
+  display:flex;justify-content:space-between;align-items:end;
+  gap:30px;margin-bottom:40px
+}
+.heading.center{text-align:center;justify-content:center}
+.heading.center .eyebrow{justify-content:center}
+.heading.center .subtitle{margin-inline:auto}
 
 .btn{
-  min-height:46px;padding:0 20px;border:1px solid transparent;
-  border-radius:13px;display:inline-flex;align-items:center;
-  justify-content:center;gap:8px;font-weight:800;transition:.25s
+  min-height:48px;padding:0 20px;border:1px solid transparent;
+  border-radius:13px;display:inline-flex;align-items:center;justify-content:center;
+  gap:8px;font-size:.82rem;font-weight:800;transition:.25s
 }
 .btn:hover{transform:translateY(-2px)}
-.btn-gold{color:#181208;background:linear-gradient(135deg,var(--gold2),#a77d2c);box-shadow:0 14px 35px rgba(213,173,89,.18)}
-.btn-outline{border-color:var(--border);background:transparent;color:var(--gold2)}
+.btn-gold{
+  color:#171108;background:linear-gradient(135deg,var(--gold-light),var(--gold-dark));
+  box-shadow:0 15px 38px rgba(214,174,90,.18)
+}
+.btn-outline{border-color:var(--gold-line);background:rgba(214,174,90,.04);color:var(--gold-light)}
+.btn-ghost{border-color:var(--line);background:var(--surface);color:var(--text)}
+.btn-danger{border-color:rgba(239,114,114,.35);background:rgba(239,114,114,.08);color:#ff9e9e}
+.btn-small{min-height:39px;padding:0 13px;font-size:.72rem}
 .btn-full{width:100%}
+.icon-btn{
+  width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--line);
+  border-radius:13px;background:var(--surface)
+}
 
-/* Header */
+/* Topbar and header */
+.topbar{
+  position:relative;z-index:1002;height:34px;border-bottom:1px solid var(--line);
+  background:#050607;color:#bebfc3;font-size:.67rem
+}
+.topbar-inner{height:100%;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.live-status{display:flex;align-items:center;gap:7px}
+.live-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--success);
+  box-shadow:0 0 0 5px rgba(88,199,148,.1);animation:pulse 2s infinite
+}
+@keyframes pulse{50%{box-shadow:0 0 0 9px rgba(88,199,148,0)}}
+.topbar-date{display:flex;align-items:center;gap:14px}
 .header{
-  position:fixed;inset:0 0 auto;z-index:1000;height:78px;
-  transition:.25s;border-bottom:1px solid transparent
+  position:sticky;z-index:1000;top:0;height:var(--header);
+  border-bottom:1px solid transparent;background:rgba(8,9,11,.74);
+  backdrop-filter:blur(18px);transition:.25s
 }
-.header.scrolled{background:rgba(8,9,11,.9);backdrop-filter:blur(18px);border-color:var(--line)}
-.header-inner{height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
-.brand-icon{
-  width:43px;height:43px;display:grid;place-items:center;border-radius:14px;
-  color:#151008;background:linear-gradient(135deg,var(--gold2),#a77d2c)
+.header.scrolled{border-color:var(--line);box-shadow:0 12px 40px rgba(0,0,0,.2)}
+.header-inner{height:100%;display:flex;align-items:center;justify-content:space-between;gap:22px}
+.brand{display:flex;align-items:center;gap:11px;flex-shrink:0}
+.brand-logo{
+  width:46px;height:46px;display:grid;place-items:center;border-radius:15px;
+  color:#171108;background:linear-gradient(135deg,var(--gold-light),var(--gold-dark));
+  box-shadow:0 10px 30px rgba(214,174,90,.15)
 }
-.brand-text{display:flex;flex-direction:column;line-height:1.25}
-.brand-text strong{font-size:1.18rem;font-weight:900}
-.brand-text small{font-size:.65rem;color:var(--gold2)}
-.nav{display:flex;align-items:center;gap:23px}
-.nav a{font-size:.83rem;color:#d0d0d2;transition:.2s}
-.nav a:hover{color:var(--gold2)}
-.header-actions{display:flex;align-items:center;gap:10px}
-.phone{font-size:.78rem;color:var(--muted)}
-.menu-btn{
-  display:none;width:43px;height:43px;border:1px solid var(--border);
-  border-radius:12px;background:var(--surface);place-items:center
+.brand-logo img{width:100%;height:100%;object-fit:contain;border-radius:inherit}
+.brand-copy{display:flex;flex-direction:column;line-height:1.25}
+.brand-copy strong{font-size:1.2rem;font-weight:900}
+.brand-copy small{font-size:.62rem;color:var(--gold-light)}
+.nav{display:flex;align-items:center;gap:22px}
+.nav a{position:relative;color:#d4d4d6;font-size:.78rem;transition:.2s}
+.nav a:after{
+  content:"";position:absolute;right:0;bottom:-9px;width:0;height:1px;
+  background:var(--gold);transition:.25s
 }
+.nav a:hover{color:var(--gold-light)}
+.nav a:hover:after{width:100%}
+.header-actions{display:flex;align-items:center;gap:9px}
+.header-phone{color:var(--muted);font-size:.72rem}
+.menu-btn{display:none}
 
 /* Hero */
 .hero{
-  min-height:760px;padding:140px 0 80px;display:flex;align-items:center;
-  position:relative;background:
-  linear-gradient(90deg,rgba(6,7,9,.98),rgba(6,7,9,.65),rgba(6,7,9,.25)),
-  url("https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=2000&q=85") center/cover
+  position:relative;min-height:760px;display:flex;align-items:center;
+  padding:85px 0 110px;overflow:hidden;
+  background:
+    linear-gradient(90deg,rgba(6,7,9,.98),rgba(6,7,9,.73),rgba(6,7,9,.18)),
+    url("https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=2000&q=85") center/cover
 }
-.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,var(--bg),transparent 35%)}
-.hero-content{position:relative;z-index:1}
+.hero:after{
+  content:"";position:absolute;inset:auto 0 0;height:34%;
+  background:linear-gradient(to top,var(--bg),transparent)
+}
+.hero-glow{
+  position:absolute;width:550px;height:550px;right:-250px;top:30px;
+  background:rgba(214,174,90,.11);filter:blur(110px);border-radius:50%
+}
+.hero-content{position:relative;z-index:2}
 .hero-badge{
   display:inline-flex;align-items:center;gap:8px;padding:7px 13px;
-  border:1px solid var(--border);border-radius:30px;
-  color:var(--gold2);background:rgba(213,173,89,.08);font-size:.76rem
+  border:1px solid var(--gold-line);border-radius:30px;
+  color:var(--gold-light);background:rgba(214,174,90,.075);font-size:.73rem
 }
-.hero h1{font-size:clamp(2.5rem,6vw,5.2rem);line-height:1.25;max-width:850px;margin:18px 0 12px;font-weight:900}
-.hero-desc{max-width:700px;color:#c5c5c7}
-.stats{display:flex;gap:32px;margin:24px 0 35px}
-.stats div{display:flex;flex-direction:column}
-.stats strong{color:var(--gold2);font-size:1.2rem}
-.stats span{color:var(--muted);font-size:.7rem}
+.hero h1{
+  max-width:900px;margin:19px 0 13px;font-size:clamp(2.65rem,6.6vw,5.5rem);
+  line-height:1.18;letter-spacing:-.055em;font-weight:900
+}
+.hero-desc{max-width:720px;color:#c9c9cc;font-size:1rem}
+.hero-actions{display:flex;align-items:center;gap:10px;margin-top:24px}
+.hero-stats{display:flex;gap:34px;margin:30px 0}
+.hero-stat{display:flex;flex-direction:column}
+.hero-stat strong{color:var(--gold-light);font-size:1.3rem;line-height:1.4}
+.hero-stat span{color:var(--muted);font-size:.68rem}
 
-/* Search */
+.search-shell{
+  position:relative;z-index:3;margin-top:-70px;padding-bottom:15px
+}
 .search-box{
-  max-width:1100px;border:1px solid var(--border);border-radius:var(--radius);
-  background:rgba(17,19,24,.9);backdrop-filter:blur(15px);overflow:hidden
+  overflow:hidden;border:1px solid var(--gold-line);border-radius:24px;
+  background:rgba(17,19,24,.96);box-shadow:var(--shadow);backdrop-filter:blur(20px)
 }
-.search-tabs{display:flex;border-bottom:1px solid var(--line);padding:6px 14px 0}
+.search-tabs{display:flex;padding:7px 18px 0;border-bottom:1px solid var(--line)}
 .search-tab{
-  border:0;border-bottom:2px solid transparent;padding:12px 17px;
-  background:none;color:var(--muted);display:flex;gap:7px;align-items:center
+  padding:12px 18px;border:0;border-bottom:2px solid transparent;
+  display:flex;align-items:center;gap:7px;background:none;color:var(--muted)
 }
-.search-tab.active{color:var(--gold2);border-color:var(--gold)}
-.search-form{padding:20px;display:grid;grid-template-columns:repeat(4,1fr) auto;gap:11px;align-items:end}
+.search-tab.active{color:var(--gold-light);border-color:var(--gold)}
+.search-form{
+  display:grid;grid-template-columns:repeat(4,1fr) auto;
+  gap:12px;padding:22px;align-items:end
+}
 
 /* Forms */
 .field{display:flex;flex-direction:column;gap:6px}
-.field label{font-size:.75rem;color:#d8d8da}
+.field label{color:#d5d5d8;font-size:.72rem;font-weight:600}
 .field input,.field select,.field textarea{
-  width:100%;min-height:47px;padding:0 13px;border:1px solid var(--line);
-  border-radius:11px;outline:0;color:var(--text);background:rgba(255,255,255,.045)
+  width:100%;min-height:48px;border:1px solid var(--line);border-radius:11px;
+  padding:0 13px;outline:none;background:rgba(255,255,255,.045);color:var(--text)
 }
 .field textarea{padding-top:10px;resize:vertical}
 .field input:focus,.field select:focus,.field textarea:focus{
-  border-color:var(--gold);box-shadow:0 0 0 3px rgba(213,173,89,.08)
+  border-color:var(--gold);box-shadow:0 0 0 3px rgba(214,174,90,.08)
 }
 option{background:#17191e}
-.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
 
 /* Trust */
-.trust{border-block:1px solid var(--line);background:#0d0f12}
-.trust-grid{display:grid;grid-template-columns:repeat(4,1fr)}
-.trust-item{padding:25px 18px;display:flex;align-items:center;gap:11px;border-left:1px solid var(--line)}
-.trust-item:last-child{border:0}
-.trust-item svg{color:var(--gold);width:27px;height:27px}
+.trust{margin-top:28px}
+.trust-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);
+  border-radius:18px;background:#0d0f12
+}
+.trust-item{display:flex;align-items:center;gap:11px;padding:21px;border-left:1px solid var(--line)}
+.trust-item:last-child{border-left:0}
+.trust-item svg{width:26px;height:26px;color:var(--gold)}
 .trust-item div{display:flex;flex-direction:column}
-.trust-item strong{font-size:.84rem}
-.trust-item span{font-size:.68rem;color:var(--muted)}
+.trust-item strong{font-size:.8rem}
+.trust-item span{font-size:.65rem;color:var(--muted)}
+
+/* Today center */
+.today-grid{display:grid;grid-template-columns:1.05fr .95fr .95fr;gap:18px}
+.live-card{
+  position:relative;overflow:hidden;min-height:250px;padding:23px;
+  border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)
+}
+.live-card:before{
+  content:"";position:absolute;width:170px;height:170px;left:-80px;top:-80px;
+  border-radius:50%;background:rgba(214,174,90,.08);filter:blur(20px)
+}
+.live-card-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}
+.live-card-head h3{font-size:.95rem}
+.live-card-head span{font-size:.65rem;color:var(--muted)}
+.clock{font-size:clamp(2.4rem,5vw,4rem);font-weight:900;letter-spacing:.03em;color:var(--gold-light)}
+.greeting{font-size:1rem;margin-top:3px}
+.full-date{color:var(--muted);font-size:.75rem}
+.weather-row{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.weather-item,.rate-item{
+  padding:11px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.025)
+}
+.weather-item{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.weather-item span,.rate-item span{font-size:.67rem;color:var(--muted)}
+.weather-item strong,.rate-item strong{font-size:.82rem}
+.weather-icon{color:var(--gold-light)}
+.rates{display:grid;gap:8px}
+.rate-item{display:flex;align-items:center;justify-content:space-between}
+.rate-change{color:var(--success)!important}
+.data-note{display:block;margin-top:10px;color:#777;font-size:.59rem}
+
+/* Calendar */
+.calendar-week,.calendar-days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.calendar-week span{text-align:center;color:var(--muted);font-size:.6rem}
+.calendar-days span{
+  min-height:27px;display:grid;place-items:center;border-radius:8px;
+  color:#d2d2d5;font-size:.66rem
+}
+.calendar-days .muted-day{opacity:.25}
+.calendar-days .today{background:var(--gold-light);color:#171108;font-weight:900}
 
 /* Tours */
-.tour-layout{display:grid;grid-template-columns:250px 1fr;gap:25px;align-items:start}
-.filters{
-  position:sticky;top:95px;padding:20px;border:1px solid var(--line);
-  background:var(--surface);border-radius:var(--radius)
+.tour-toolbar{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:22px}
+.pills{display:flex;gap:7px;flex-wrap:wrap}
+.pill{
+  min-height:39px;padding:0 14px;border:1px solid var(--line);
+  border-radius:30px;background:var(--surface);color:var(--muted);font-size:.7rem
 }
-.filter-head{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:15px;margin-bottom:15px}
-.filter-head button{border:0;background:none;color:var(--gold2);font-size:.7rem}
-.filter-group{margin-top:14px}
-.filter-group label{font-size:.74rem;color:#d0d0d2;display:block;margin-bottom:5px}
-.filter-group select,.filter-group input,.sort select{
-  width:100%;height:43px;border:1px solid var(--line);border-radius:10px;
-  padding:0 10px;background:var(--surface2);color:var(--text)
+.pill.active{border-color:var(--gold-line);background:rgba(214,174,90,.1);color:var(--gold-light)}
+.sort-select{
+  height:41px;min-width:165px;border:1px solid var(--line);border-radius:11px;
+  padding:0 10px;background:var(--surface);color:var(--text);font-size:.7rem
 }
-.toolbar{display:flex;justify-content:flex-end;align-items:center;margin-bottom:15px}
-.sort{display:flex;align-items:center;gap:7px;font-size:.75rem;color:var(--muted)}
-.sort select{width:175px}
-.filter-toggle{display:none;background:none;border:0;color:var(--gold2);align-items:center;gap:6px}
-.tour-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
-.card{
+.tour-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:19px}
+.tour-card{
   overflow:hidden;border:1px solid var(--line);border-radius:var(--radius);
-  background:var(--surface);transition:.3s
+  background:var(--surface);transition:.35s
 }
-.card:hover{transform:translateY(-6px);border-color:var(--border);box-shadow:0 25px 60px rgba(0,0,0,.3)}
-.card-img{height:230px;position:relative;overflow:hidden}
-.card-img img{height:100%;object-fit:cover;transition:.6s}
-.card:hover img{transform:scale(1.05)}
-.card-img:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(8,9,11,.8),transparent)}
-.badge{position:absolute;z-index:1;top:14px;right:14px;background:var(--gold2);color:#171108;border-radius:30px;padding:5px 10px;font-size:.65rem;font-weight:900}
-.rating{position:absolute;z-index:1;bottom:13px;left:14px;font-size:.73rem;color:#ffd56c}
-.card-body{padding:18px}
-.route{font-size:.7rem;color:var(--gold2)}
-.card h3{font-size:1.12rem;margin:3px 0 11px}
-.meta{display:flex;flex-wrap:wrap;gap:10px;padding:11px 0;border-block:1px solid var(--line)}
-.meta span{font-size:.68rem;color:var(--muted)}
-.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}
-.chips span{font-size:.61rem;padding:3px 7px;border:1px solid var(--line);border-radius:6px;color:#c7c7ca}
-.card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:16px;gap:10px}
+.tour-card:hover{
+  transform:translateY(-7px);border-color:var(--gold-line);
+  box-shadow:0 28px 70px rgba(0,0,0,.3)
+}
+.tour-media{position:relative;height:225px;overflow:hidden}
+.tour-media img{height:100%;object-fit:cover;transition:.7s}
+.tour-card:hover .tour-media img{transform:scale(1.055)}
+.tour-media:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(8,9,11,.88),transparent 65%)
+}
+.badge{
+  position:absolute;z-index:2;top:13px;right:13px;padding:5px 10px;
+  border-radius:30px;background:var(--gold-light);color:#171108;
+  font-size:.61rem;font-weight:900
+}
+.favorite{
+  position:absolute;z-index:2;top:13px;left:13px;width:35px;height:35px;
+  display:grid;place-items:center;border:1px solid rgba(255,255,255,.2);
+  border-radius:50%;background:rgba(8,9,11,.55);backdrop-filter:blur(8px)
+}
+.favorite.active{color:#ff8a91;background:rgba(126,24,34,.65)}
+.rating{position:absolute;z-index:2;left:14px;bottom:12px;color:#ffd66e;font-size:.7rem}
+.capacity{
+  position:absolute;z-index:2;right:14px;bottom:12px;color:#fff;font-size:.65rem
+}
+.tour-body{padding:18px}
+.route{color:var(--gold-light);font-size:.65rem}
+.tour-title{margin:3px 0 5px;font-size:1.06rem}
+.tour-description{
+  min-height:45px;display:-webkit-box;overflow:hidden;-webkit-line-clamp:2;
+  -webkit-box-orient:vertical;color:var(--muted);font-size:.72rem
+}
+.tour-meta{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:7px;
+  margin:13px 0;padding:12px 0;border-block:1px solid var(--line)
+}
+.tour-meta span{display:flex;align-items:center;gap:5px;color:#bbbcc1;font-size:.64rem}
+.tour-meta svg{width:15px;height:15px;color:var(--gold)}
+.chips{display:flex;gap:5px;flex-wrap:wrap}
+.chips span{padding:3px 7px;border:1px solid var(--line);border-radius:7px;color:#c7c7ca;font-size:.58rem}
+.tour-footer{display:flex;align-items:end;justify-content:space-between;gap:10px;margin-top:15px}
 .price{display:flex;flex-direction:column}
-.price small{font-size:.63rem;color:var(--muted)}
-.price strong{color:var(--gold2)}
-.card-footer .btn{min-height:40px;padding:0 14px;font-size:.72rem}
-.empty{text-align:center;border:1px dashed var(--border);border-radius:var(--radius);padding:55px 15px}
-.empty p{color:var(--muted);margin:8px 0 18px}
+.old-price{color:#73757b;font-size:.61rem;text-decoration:line-through}
+.price small{color:var(--muted);font-size:.59rem}
+.price strong{color:var(--gold-light);font-size:.92rem}
+.tour-actions{display:flex;gap:6px}
+.discount{color:#ff9d83;font-size:.6rem}
+.empty{
+  padding:55px 20px;text-align:center;border:1px dashed var(--gold-line);
+  border-radius:var(--radius);background:var(--surface)
+}
+
+/* Offer */
+.offer{
+  position:relative;overflow:hidden;border:1px solid var(--gold-line);
+  border-radius:28px;padding:48px;
+  background:
+    linear-gradient(90deg,rgba(16,11,4,.96),rgba(34,25,8,.82)),
+    url("https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1700&q=80") center/cover
+}
+.offer-content{position:relative;z-index:2;max-width:680px}
+.offer h2{font-size:clamp(1.9rem,4vw,3rem);line-height:1.4}
+.offer p{color:#d1d1d1}
+.countdown{display:flex;gap:9px;margin:23px 0}
+.count-item{
+  min-width:72px;padding:9px;border:1px solid rgba(244,218,145,.25);
+  border-radius:13px;text-align:center;background:rgba(0,0,0,.25)
+}
+.count-item strong{display:block;color:var(--gold-light);font-size:1.3rem}
+.count-item span{font-size:.59rem;color:#bbb}
 
 /* Services */
-.services{background:#0d0f12}
 .service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .service{
-  min-height:260px;padding:24px;border:1px solid var(--line);
-  border-radius:var(--radius);background:linear-gradient(145deg,var(--surface2),var(--surface));transition:.25s
+  min-height:255px;padding:24px;border:1px solid var(--line);
+  border-radius:var(--radius);background:linear-gradient(145deg,var(--surface-2),var(--surface));
+  transition:.3s
 }
-.service:hover{transform:translateY(-5px);border-color:var(--border)}
+.service:hover{transform:translateY(-5px);border-color:var(--gold-line)}
 .service-icon{
-  width:49px;height:49px;display:grid;place-items:center;border:1px solid var(--border);
-  border-radius:15px;color:var(--gold2);background:rgba(213,173,89,.07)
+  width:50px;height:50px;display:grid;place-items:center;border:1px solid var(--gold-line);
+  border-radius:15px;background:rgba(214,174,90,.07);color:var(--gold-light)
 }
-.service h3{margin:17px 0 7px}
-.service p{font-size:.8rem;color:var(--muted)}
-.service a{display:inline-flex;margin-top:17px;color:var(--gold2);font-size:.75rem}
+.service h3{margin:16px 0 6px}
+.service p{color:var(--muted);font-size:.76rem}
+.service a{display:inline-flex;margin-top:16px;color:var(--gold-light);font-size:.72rem}
 
-/* Experiences */
-.experience-grid{display:grid;grid-template-columns:1.3fr 1fr;grid-template-rows:repeat(2,230px);gap:17px}
-.experience{position:relative;overflow:hidden;border-radius:var(--radius)}
-.experience.large{grid-row:1/3}
-.experience img{height:100%;object-fit:cover;transition:.7s}
-.experience:hover img{transform:scale(1.06)}
-.experience:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(5,6,8,.95),transparent 65%)}
-.experience-content{position:absolute;z-index:1;right:22px;bottom:20px;left:22px}
-.experience-content span{color:var(--gold2);font-size:.7rem}
-.experience-content h3{font-size:1.15rem}
-.large .experience-content h3{font-size:1.6rem}
+/* Gallery */
+.gallery-grid{
+  display:grid;grid-template-columns:1.25fr .75fr .75fr;
+  grid-template-rows:repeat(2,230px);gap:14px
+}
+.gallery-item{position:relative;overflow:hidden;border-radius:20px}
+.gallery-item:first-child{grid-row:1/3}
+.gallery-item img{height:100%;object-fit:cover;transition:.7s}
+.gallery-item:hover img{transform:scale(1.06)}
+.gallery-item:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(6,7,9,.9),transparent 60%)
+}
+.gallery-caption{position:absolute;z-index:2;right:17px;left:17px;bottom:15px}
+.gallery-caption span{color:var(--gold-light);font-size:.62rem}
+.gallery-caption h3{font-size:.95rem}
+
+/* News/blog */
+.news-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px}
+.news-grid,.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.news-card,.blog-card{
+  overflow:hidden;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)
+}
+.news-card{padding:21px}
+.news-type{color:var(--gold-light);font-size:.63rem}
+.news-card h3{margin:7px 0;font-size:.96rem}
+.news-card p{color:var(--muted);font-size:.72rem}
+.news-date{display:block;margin-top:14px;padding-top:11px;border-top:1px solid var(--line);color:#74767c;font-size:.61rem}
+.blog-image{height:190px;overflow:hidden}
+.blog-image img{height:100%;object-fit:cover;transition:.6s}
+.blog-card:hover img{transform:scale(1.05)}
+.blog-body{padding:18px}
+.blog-body h3{font-size:.95rem;margin:4px 0 7px}
+.blog-body p{color:var(--muted);font-size:.7rem}
+.blog-meta{color:var(--gold-light);font-size:.61rem}
 
 /* Reviews */
-.reviews{background:#0d0f12;border-block:1px solid var(--line)}
 .review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.review{padding:23px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
-.review.gold-card{border-color:var(--border);background:radial-gradient(circle at 80% 0,rgba(213,173,89,.12),transparent 45%),var(--surface)}
-.user{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.user-info{display:flex;align-items:center;gap:9px}
-.avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--gold2);color:#171108;font-weight:900}
-.user-info div{display:flex;flex-direction:column}
-.user-info strong{font-size:.8rem}
-.user-info span{font-size:.65rem;color:var(--muted)}
-.stars{color:#f3c95d;font-size:.7rem}
-.review p{font-size:.79rem;color:#c5c5c7;margin-top:18px}
-
-/* Agency */
-.agency{display:grid;grid-template-columns:.9fr 1.1fr;gap:55px;align-items:center}
-.agency-copy p{color:var(--muted);margin-top:10px}
-.benefits{margin:20px 0;display:grid;gap:8px}
-.benefits li{font-size:.82rem;color:#d1d1d3}
-.benefits li:before{content:"✓";color:var(--gold);margin-left:8px}
-.form-card{padding:28px;border:1px solid var(--border);border-radius:25px;background:var(--surface);box-shadow:0 25px 70px rgba(0,0,0,.3)}
-.form-card h3{font-size:1.35rem}
-.form-card>p{font-size:.76rem;color:var(--muted);margin-bottom:18px}
-.form-card>.field{margin-top:14px}
-
-/* CTA & Footer */
-.cta-section{padding:60px 0;background:linear-gradient(90deg,#171007eF,#3a2b10d9),url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=80") center/cover}
-.cta{display:flex;justify-content:space-between;align-items:center;gap:30px}
-.cta h2{font-size:clamp(1.7rem,3vw,2.6rem)}
-.cta p{color:#d0d0d0}
-.cta-actions{display:flex;gap:9px;flex-shrink:0}
-.footer{padding-top:65px;background:#07080a}
-.footer-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:38px;padding-bottom:45px}
-.footer h3{font-size:.9rem;color:var(--gold2);margin-bottom:14px}
-.footer p,.footer li{font-size:.75rem;color:var(--muted);margin-bottom:7px}
-.footer a:hover{color:var(--gold2)}
-.footer-bottom{padding:18px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:#777;font-size:.68rem}
-
-/* Modal & Toast */
-.modal{position:fixed;inset:0;z-index:2000;display:grid;place-items:center;padding:16px;visibility:hidden;opacity:0;transition:.2s}
-.modal.open{visibility:visible;opacity:1}
-.backdrop{position:absolute;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(7px)}
-.modal-box{
-  position:relative;z-index:1;width:min(680px,100%);max-height:calc(100vh - 32px);
-  overflow:auto;padding:30px;border:1px solid var(--border);border-radius:25px;background:#121419
+.review{
+  padding:23px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)
 }
-.close-modal{position:absolute;left:16px;top:16px;width:40px;height:40px;border:1px solid var(--line);border-radius:11px;background:var(--surface2)}
-.modal-box>p{color:var(--muted);font-size:.76rem;margin-bottom:20px}
-.modal-box form>.field{margin:14px 0}
+.review.featured{
+  border-color:var(--gold-line);
+  background:radial-gradient(circle at 85% 0,rgba(214,174,90,.13),transparent 45%),var(--surface)
+}
+.review-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.user{display:flex;align-items:center;gap:9px}
+.avatar{
+  width:43px;height:43px;display:grid;place-items:center;border-radius:50%;
+  background:var(--gold-light);color:#171108;font-weight:900
+}
+.user div{display:flex;flex-direction:column}
+.user strong{font-size:.76rem}
+.user span{color:var(--muted);font-size:.61rem}
+.stars{color:#f5cc61;font-size:.68rem}
+.review p{margin-top:17px;color:#c5c5c8;font-size:.75rem}
+
+/* About */
+.about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:55px;align-items:center}
+.about-visual{position:relative}
+.about-visual img{height:530px;object-fit:cover;border-radius:28px}
+.about-badge{
+  position:absolute;left:-20px;bottom:30px;width:190px;padding:18px;
+  border:1px solid var(--gold-line);border-radius:18px;background:rgba(17,19,24,.94);
+  backdrop-filter:blur(16px);box-shadow:var(--shadow)
+}
+.about-badge strong{display:block;color:var(--gold-light);font-size:1.5rem}
+.about-badge span{color:var(--muted);font-size:.67rem}
+.about-copy>p{color:var(--muted);margin:10px 0}
+.values{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin:20px 0}
+.value{
+  display:flex;gap:8px;padding:11px;border:1px solid var(--line);
+  border-radius:12px;background:var(--surface)
+}
+.value svg{flex-shrink:0;color:var(--gold)}
+.value strong{display:block;font-size:.73rem}
+.value span{display:block;color:var(--muted);font-size:.61rem}
+.licenses{display:flex;gap:8px;flex-wrap:wrap}
+.license-placeholder{
+  min-width:105px;padding:10px;border:1px dashed var(--gold-line);
+  border-radius:10px;text-align:center;color:var(--muted);font-size:.59rem
+}
+
+/* FAQ */
+.faq-list{max-width:880px;margin:auto;display:grid;gap:9px}
+.faq-item{border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+.faq-question{
+  width:100%;padding:17px 19px;border:0;background:none;
+  display:flex;align-items:center;justify-content:space-between;text-align:right;font-weight:700
+}
+.faq-answer{max-height:0;overflow:hidden;transition:max-height .35s}
+.faq-answer p{padding:0 19px 18px;color:var(--muted);font-size:.76rem}
+.faq-item.open{border-color:var(--gold-line)}
+.faq-item.open .faq-answer{max-height:230px}
+.faq-item.open .faq-question svg{transform:rotate(180deg)}
+
+/* Contact */
+.contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:25px}
+.contact-card,.contact-form{
+  padding:27px;border:1px solid var(--line);border-radius:24px;background:var(--surface)
+}
+.contact-list{display:grid;gap:10px;margin-top:20px}
+.contact-item{display:flex;align-items:center;gap:11px;padding:10px;border-bottom:1px solid var(--line)}
+.contact-item:last-child{border:0}
+.contact-item svg{color:var(--gold);flex-shrink:0}
+.contact-item strong{display:block;font-size:.71rem}
+.contact-item span,.contact-item a{color:var(--muted);font-size:.67rem}
+.map-placeholder{
+  min-height:180px;margin-top:17px;display:grid;place-items:center;
+  border:1px dashed var(--gold-line);border-radius:16px;text-align:center;
+  background:
+    linear-gradient(rgba(8,9,11,.78),rgba(8,9,11,.78)),
+    url("https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=900&q=70") center/cover
+}
+.map-placeholder span{color:var(--gold-light);font-size:.72rem}
+.contact-form .field{margin-bottom:12px}
+
+/* Footer */
+.footer{padding-top:62px;background:#060709}
+.footer-grid{display:grid;grid-template-columns:1.35fr repeat(3,1fr);gap:36px;padding-bottom:42px}
+.footer h3{margin-bottom:14px;color:var(--gold-light);font-size:.85rem}
+.footer p,.footer li{margin-bottom:7px;color:var(--muted);font-size:.7rem}
+.footer a:hover{color:var(--gold-light)}
+.socials{display:flex;gap:7px;margin-top:15px}
+.socials a{width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--line);border-radius:11px}
+.footer-bottom{
+  padding:17px 0;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;gap:15px;color:#73757a;font-size:.63rem
+}
+
+/* Modal */
+.modal{
+  position:fixed;z-index:2500;inset:0;padding:16px;display:grid;place-items:center;
+  visibility:hidden;opacity:0;transition:.25s
+}
+.modal.open{visibility:visible;opacity:1}
+.modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(8px)}
+.modal-box{
+  position:relative;z-index:2;width:min(760px,100%);max-height:calc(100vh - 32px);
+  overflow:auto;padding:29px;border:1px solid var(--gold-line);
+  border-radius:25px;background:#121419;box-shadow:var(--shadow)
+}
+.modal-close{position:absolute;left:15px;top:15px}
+.modal-title{padding-left:52px}
+.modal-title p{color:var(--muted);font-size:.72rem}
+.detail-hero{height:290px;margin:20px 0;overflow:hidden;border-radius:18px}
+.detail-hero img{height:100%;object-fit:cover}
+.detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.detail-item{padding:10px;border:1px solid var(--line);border-radius:11px}
+.detail-item small{display:block;color:var(--muted);font-size:.58rem}
+.detail-item strong{font-size:.71rem}
+.detail-section{margin-top:18px}
+.detail-section h3{margin-bottom:7px;font-size:.9rem}
+.detail-section p{color:var(--muted);font-size:.73rem}
+
+/* Toast */
 .toast{
-  position:fixed;z-index:3000;right:20px;bottom:20px;max-width:370px;
-  padding:14px 17px;border:1px solid var(--border);border-radius:14px;
-  background:#17191e;box-shadow:0 20px 50px #0008;
+  position:fixed;z-index:4000;right:20px;bottom:20px;max-width:380px;
+  padding:14px 17px;border:1px solid var(--gold-line);border-radius:14px;
+  background:#17191e;box-shadow:0 20px 55px #0009;
   opacity:0;visibility:hidden;transform:translateY(20px);transition:.25s
 }
 .toast.show{opacity:1;visibility:visible;transform:none}
+.toast strong{color:var(--gold-light)}
+.toast small{color:var(--muted)}
+
+/* Admin */
+.admin-panel{
+  position:fixed;z-index:3500;top:0;right:0;width:min(480px,100%);height:100vh;
+  padding:20px;overflow:auto;border-left:1px solid var(--gold-line);
+  background:#0e1014;box-shadow:-30px 0 90px #0008;
+  transform:translateX(110%);transition:.3s
+}
+.admin-panel.open{transform:none}
+.admin-head{
+  position:sticky;z-index:2;top:-20px;padding:20px 0 15px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:#0e1014;border-bottom:1px solid var(--line)
+}
+.admin-tabs{display:flex;gap:6px;flex-wrap:wrap;margin:17px 0}
+.admin-section{display:none}
+.admin-section.active{display:block}
+.admin-card{padding:15px;margin-bottom:12px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.admin-card h3{margin-bottom:10px;font-size:.85rem}
+.admin-card .field{margin-bottom:9px}
+.admin-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.admin-tour{display:flex;align-items:center;justify-content:space-between;gap:9px;padding:9px;border-bottom:1px solid var(--line)}
+.admin-tour:last-child{border:0}
+.admin-tour strong{font-size:.68rem}
+.admin-tour span{display:block;color:var(--muted);font-size:.58rem}
+.admin-json{min-height:360px!important;font:12px/1.6 monospace;direction:ltr;text-align:left}
 
 /* Responsive */
-@media(max-width:1000px){
+@media(max-width:1050px){
   .nav{
-    position:fixed;top:78px;right:16px;left:16px;display:none;
-    flex-direction:column;align-items:stretch;padding:18px;
-    border:1px solid var(--border);border-radius:18px;background:#111318
+    position:fixed;top:calc(var(--header) + 34px);right:16px;left:16px;
+    display:none;flex-direction:column;align-items:stretch;padding:18px;
+    border:1px solid var(--gold-line);border-radius:18px;background:#111318;
+    box-shadow:var(--shadow)
   }
-  .nav.open{display:flex}.menu-btn{display:grid}.phone,.header-actions>.btn{display:none}
-  .search-form{grid-template-columns:repeat(2,1fr)}.search-form .btn{grid-column:span 2}
-  .trust-grid{grid-template-columns:repeat(2,1fr)}
-  .tour-layout{grid-template-columns:1fr}
-  .filters{
-    position:fixed;z-index:1500;top:0;right:0;width:min(340px,90%);
-    height:100vh;border-radius:0;transform:translateX(110%);
-    transition:.25s;overflow:auto
-  }
-  .filters.open{transform:none}.filter-toggle{display:flex}.toolbar{justify-content:space-between}
+  .nav.open{display:flex}
+  .nav a{padding:8px}
+  .menu-btn{display:grid}
+  .header-actions>.btn,.header-phone{display:none}
+  .search-form{grid-template-columns:repeat(2,1fr)}
+  .search-form .btn{grid-column:span 2}
+  .today-grid{grid-template-columns:1fr 1fr}
+  .today-grid .live-card:first-child{grid-column:span 2}
+  .tour-grid{grid-template-columns:repeat(2,1fr)}
   .service-grid{grid-template-columns:repeat(2,1fr)}
-  .agency{grid-template-columns:1fr}
+  .about-grid,.contact-grid{grid-template-columns:1fr}
+  .about-visual{max-width:650px}
   .footer-grid{grid-template-columns:repeat(2,1fr)}
 }
-@media(max-width:680px){
-  .section{padding:72px 0}.hero{padding-top:120px;min-height:auto}
-  .hero h1{letter-spacing:-1px}.stats{gap:18px;flex-wrap:wrap}
-  .search-form,.form-grid{grid-template-columns:1fr}.search-form .btn{grid-column:auto}
-  .trust-grid{grid-template-columns:1fr}.trust-item{border-left:0;border-bottom:1px solid var(--line)}
-  .heading,.cta{align-items:flex-start;flex-direction:column}
-  .tour-grid,.service-grid,.review-grid{grid-template-columns:1fr}
-  .experience-grid{grid-template-columns:1fr;grid-template-rows:repeat(3,250px)}
-  .experience.large{grid-row:auto}
-  .cta-actions{flex-direction:column;width:100%}.cta-actions .btn{width:100%}
-  .footer-grid{grid-template-columns:1fr}.footer-bottom{flex-direction:column}
-  .card-img{height:215px}.modal-box{padding:25px 18px}
+@media(max-width:720px){
+  :root{--header:72px}
+  .topbar-date span:last-child{display:none}
+  .section{padding:75px 0}
+  .hero{min-height:auto;padding:70px 0 105px}
+  .hero h1{font-size:clamp(2.3rem,13vw,4rem)}
+  .hero-actions{align-items:stretch;flex-direction:column;max-width:330px}
+  .hero-stats{gap:18px;flex-wrap:wrap}
+  .search-shell{margin-top:-62px}
+  .search-tabs{overflow:auto}
+  .search-tab{white-space:nowrap}
+  .search-form,.form-grid{grid-template-columns:1fr}
+  .search-form .btn{grid-column:auto}
+  .trust-grid{grid-template-columns:1fr 1fr}
+  .trust-item:nth-child(2){border-left:0}
+  .trust-item:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .today-grid{grid-template-columns:1fr}
+  .today-grid .live-card:first-child{grid-column:auto}
+  .heading{align-items:flex-start;flex-direction:column}
+  .tour-toolbar{align-items:flex-start;flex-direction:column}
+  .tour-grid,.service-grid,.news-grid,.blog-grid,.review-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:1fr;grid-template-rows:repeat(5,240px)}
+  .gallery-item:first-child{grid-row:auto}
+  .offer{padding:30px 20px}
+  .countdown{gap:5px}
+  .count-item{min-width:58px;padding:7px}
+  .about-visual img{height:380px}
+  .about-badge{left:12px;bottom:12px}
+  .values{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column}
+  .detail-grid{grid-template-columns:1fr 1fr}
+  .modal-box{padding:25px 17px}
+}
+@media(max-width:420px){
+  .brand-copy small{display:none}
+  .trust-grid{grid-template-columns:1fr}
+  .trust-item{border-left:0!important;border-bottom:1px solid var(--line)}
+  .weather-row{grid-template-columns:1fr}
+  .tour-media{height:210px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
 }
 </style>
 </head>
 
 <body>
+<a class="skip-link" href="#main">پرش به محتوای اصلی</a>
+
+<div class="topbar">
+  <div class="container topbar-inner">
+    <div class="live-status"><span class="live-dot"></span><span>مرکز خدمات سفر نوروتور فعال است</span></div>
+    <div class="topbar-date">
+      <span id="topPersianDate">—</span>
+      <span id="topGregorianDate">—</span>
+      <strong id="topClock" class="gold">۰۰:۰۰</strong>
+    </div>
+  </div>
+</div>
 
 <header class="header" id="header">
   <div class="container header-inner">
-    <a class="brand" href="#home">
-      <span class="brand-icon"><i data-lucide="compass"></i></span>
-      <span class="brand-text"><strong>نوروتور</strong><small>سفر فراتر از انتظار</small></span>
+    <a class="brand" href="#home" aria-label="صفحه اصلی نوروتور">
+      <!-- جایگزینی لوگوی رسمی: مقدار logoUrl را در پنل مدیریت وارد کنید -->
+      <span class="brand-logo" id="brandLogo"><i data-lucide="compass"></i></span>
+      <span class="brand-copy"><strong data-bind="brandName">نوروتور</strong><small data-bind="tagline">سفر فراتر از انتظار</small></span>
     </a>
 
-    <nav class="nav" id="nav">
-      <a href="#home">صفحه اصلی</a>
+    <nav class="nav" id="nav" aria-label="منوی اصلی">
+      <a href="#home">خانه</a>
       <a href="#tours">تورها</a>
       <a href="#services">خدمات</a>
-      <a href="#experiences">تجربه سفر</a>
-      <a href="#reviews">نظرات</a>
-      <a href="#agency">نمایندگی</a>
+      <a href="#gallery">گالری</a>
+      <a href="#blog">مجله سفر</a>
+      <a href="#about">درباره ما</a>
+      <a href="#contact">تماس</a>
     </nav>
 
     <div class="header-actions">
-      <a class="phone" href="tel:+982100000000">۰۲۱-۰۰۰۰۰۰۰۰</a>
-      <button class="btn btn-gold" data-booking>رزرو سریع</button>
-      <button class="menu-btn" id="menuBtn" aria-label="منو"><i data-lucide="menu"></i></button>
+      <a class="header-phone" data-phone-link href="tel:+982100000000" data-bind="phone">۰۲۱-۰۰۰۰۰۰۰۰</a>
+      <button class="btn btn-gold" data-booking><i data-lucide="calendar-check"></i>رزرو سریع</button>
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="نمایش منو" aria-expanded="false"><i data-lucide="menu"></i></button>
     </div>
   </div>
 </header>
 
-<main>
-<section class="hero" id="home">
-  <div class="container hero-content">
-    <div class="hero-badge">✦ تجربه‌ای لوکس از سفر و مهاجرت</div>
-    <h1>جهان را با <span class="gold">نوروتور</span><br>متفاوت تجربه کنید</h1>
-    <p class="hero-desc">
-      تورهای اختصاصی داخلی و خارجی، رزرو پرواز، خدمات ویزا، وقت سفارت،
-      اقامت و مشاوره مهاجرت؛ یک مسیر مطمئن برای رسیدن به مقصد شما.
-    </p>
+<main id="main">
+  <section class="hero" id="home">
+    <div class="hero-glow"></div>
+    <div class="container hero-content">
+      <div class="hero-badge"><i data-lucide="sparkles"></i> تجربه‌ای ممتاز از سفر</div>
+      <h1>جهان را با <span class="gold">نوروتور</span><br>متفاوت تجربه کنید</h1>
+      <p class="hero-desc">
+        تورهای اختصاصی داخلی و خارجی، پرواز، هتل، ویزا و خدمات کامل سفر؛
+        از نخستین گفت‌وگو تا بازگشت، همراه مطمئن شما هستیم.
+      </p>
 
-    <div class="stats">
-      <div><strong>+۱۲ سال</strong><span>تجربه تخصصی</span></div>
-      <div><strong>+۱۸,۰۰۰</strong><span>مسافر رضایتمند</span></div>
-      <div><strong>+۳۵</strong><span>مقصد بین‌المللی</span></div>
-    </div>
-
-    <div class="search-box">
-      <div class="search-tabs">
-        <button class="search-tab active" data-type="tour"><i data-lucide="luggage"></i>جست‌وجوی تور</button>
-        <button class="search-tab" data-type="flight"><i data-lucide="plane"></i>جست‌وجوی پرواز</button>
+      <div class="hero-actions">
+        <a class="btn btn-gold" href="#tours"><i data-lucide="luggage"></i>مشاهده تورها</a>
+        <button class="btn btn-outline" data-booking><i data-lucide="headphones"></i>مشاوره رایگان سفر</button>
       </div>
 
-      <form class="search-form" id="searchForm">
-        <div class="field">
-          <label>مبدأ</label>
-          <select id="origin">
-            <option value="">انتخاب مبدأ</option>
-            <option>تهران</option><option>مشهد</option><option>شیراز</option><option>تبریز</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>مقصد</label>
-          <select id="destination">
-            <option value="">همه مقصدها</option>
-            <option>کیش</option><option>استانبول</option><option>دبی</option>
-            <option>تفلیس</option><option>مسکو</option><option>بانکوک</option><option>توکیو</option>
-          </select>
-        </div>
-        <div class="field"><label>تاریخ حرکت</label><input type="date" id="searchDate"></div>
-        <div class="field">
-          <label>مسافران</label>
-          <select><option>۱ مسافر</option><option>۲ مسافر</option><option>۳ مسافر</option><option>۴ مسافر</option></select>
-        </div>
-        <button class="btn btn-gold"><i data-lucide="search"></i>جست‌وجو</button>
-      </form>
+      <div class="hero-stats" aria-label="آمار نوروتور">
+        <div class="hero-stat"><strong class="counter" data-target="12" data-suffix="+ سال">۰</strong><span>تجربه تخصصی</span></div>
+        <div class="hero-stat"><strong class="counter" data-target="18000" data-suffix="+">۰</strong><span>مسافر همراه</span></div>
+        <div class="hero-stat"><strong class="counter" data-target="35" data-suffix="+">۰</strong><span>مقصد منتخب</span></div>
+        <div class="hero-stat"><strong>۲۴/۷</strong><span>پشتیبانی اضطراری</span></div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="trust">
-  <div class="container trust-grid">
-    <div class="trust-item"><i data-lucide="badge-check"></i><div><strong>مجری مستقیم</strong><span>بدون هزینه پنهان</span></div></div>
-    <div class="trust-item"><i data-lucide="shield-check"></i><div><strong>قرارداد شفاف</strong><span>تعهد کامل خدمات</span></div></div>
-    <div class="trust-item"><i data-lucide="headphones"></i><div><strong>پشتیبانی اختصاصی</strong><span>همراه شما در سفر</span></div></div>
-    <div class="trust-item"><i data-lucide="credit-card"></i><div><strong>پرداخت امن</strong><span>امکان پرداخت مرحله‌ای</span></div></div>
-  </div>
-</section>
-
-<section class="section" id="tours">
-  <div class="container">
-    <div class="heading">
-      <div><span class="eyebrow">مقصد بعدی شما</span><h2 class="title">تورهای منتخب نوروتور</h2><p class="subtitle">برنامه‌های داخلی و خارجی با پرواز معتبر، هتل منتخب و خدمات کامل.</p></div>
-      <strong class="gold"><span id="tourCount">۰</span> برنامه سفر</strong>
-    </div>
-
-    <div class="tour-layout">
-      <aside class="filters" id="filters">
-        <div class="filter-head"><strong>فیلتر تورها</strong><button id="reset">حذف فیلترها</button></div>
-        <div class="filter-group"><label>کشور</label><select id="country"><option value="">همه کشورها</option></select></div>
-        <div class="filter-group"><label>شهر</label><select id="city"><option value="">همه شهرها</option></select></div>
-        <div class="filter-group"><label>نوع اقامت</label><select id="stay"><option value="">همه</option><option>هتل ۵ ستاره</option><option>هتل ۴ ستاره</option><option>بوتیک هتل</option></select></div>
-        <div class="filter-group"><label>آپشن</label><select id="option"><option value="">همه خدمات</option><option>صبحانه</option><option>گشت شهری</option><option>ترانسفر فرودگاهی</option><option>راهنمای فارسی</option></select></div>
-        <div class="filter-group"><label>تاریخ حرکت</label><input type="date" id="date"></div>
-      </aside>
-
-      <div>
-        <div class="toolbar">
-          <button class="filter-toggle" id="filterToggle"><i data-lucide="sliders-horizontal"></i>فیلترها</button>
-          <div class="sort"><span>مرتب‌سازی:</span><select id="sort"><option value="recommended">پیشنهاد نوروتور</option><option value="low">کمترین قیمت</option><option value="high">بیشترین قیمت</option><option value="rating">بالاترین امتیاز</option></select></div>
+  <div class="search-shell">
+    <div class="container">
+      <div class="search-box">
+        <div class="search-tabs" role="tablist">
+          <button class="search-tab active" data-search-type="tour"><i data-lucide="luggage"></i>جست‌وجوی تور</button>
+          <button class="search-tab" data-search-type="flight"><i data-lucide="plane"></i>پرواز</button>
+          <button class="search-tab" data-search-type="visa"><i data-lucide="stamp"></i>خدمات ویزا</button>
         </div>
-        <div class="tour-grid" id="tourGrid"></div>
-        <div class="empty hidden" id="empty"><h3>توری پیدا نشد</h3><p>فیلترهای دیگری را امتحان کنید.</p><button class="btn btn-gold" id="emptyReset">نمایش همه</button></div>
+
+        <form class="search-form" id="searchForm">
+          <div class="field">
+            <label for="searchOrigin">مبدأ</label>
+            <select id="searchOrigin">
+              <option value="">انتخاب مبدأ</option>
+              <option>تهران</option><option>مشهد</option><option>شیراز</option><option>تبریز</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="searchDestination">مقصد</label>
+            <select id="searchDestination">
+              <option value="">همه مقصدها</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="searchDate">تاریخ حرکت</label>
+            <input id="searchDate" type="date">
+          </div>
+          <div class="field">
+            <label for="searchPassengers">مسافران</label>
+            <select id="searchPassengers">
+              <option>۱ مسافر</option><option>۲ مسافر</option><option>۳ مسافر</option><option>۴ مسافر یا بیشتر</option>
+            </select>
+          </div>
+          <button class="btn btn-gold"><i data-lucide="search"></i>جست‌وجو</button>
+        </form>
+      </div>
+
+      <div class="trust">
+        <div class="trust-grid">
+          <div class="trust-item"><i data-lucide="badge-check"></i><div><strong>مجری مستقیم</strong><span>قیمت و خدمات شفاف</span></div></div>
+          <div class="trust-item"><i data-lucide="shield-check"></i><div><strong>قرارداد معتبر</strong><span>تعهد روشن خدمات</span></div></div>
+          <div class="trust-item"><i data-lucide="headphones"></i><div><strong>پشتیبانی اختصاصی</strong><span>پیش، حین و پس از سفر</span></div></div>
+          <div class="trust-item"><i data-lucide="credit-card"></i><div><strong>پرداخت امن</strong><span>امکان پرداخت مرحله‌ای</span></div></div>
+        </div>
       </div>
     </div>
   </div>
-</section>
 
-<section class="section services" id="services">
-  <div class="container">
-    <div class="heading center"><div><span class="eyebrow">خدمات تخصصی</span><h2 class="title">مطمئن‌تر از هر زمان</h2><p class="subtitle">از مشاوره اولیه تا دریافت ویزا، اقامت و آغاز سفر در کنار شما هستیم.</p></div></div>
-    <div class="service-grid">
-      <article class="service"><div class="service-icon"><i data-lucide="landmark"></i></div><h3>ویزا و وقت سفارت</h3><p>بررسی مدارک، تکمیل فرم، وقت سفارت و پیگیری پرونده‌های توریستی، تحصیلی و تجاری.</p><a href="#contact">درخواست مشاوره ←</a></article>
-      <article class="service"><div class="service-icon"><i data-lucide="globe-2"></i></div><h3>مشاوره مهاجرت</h3><p>تحلیل شرایط و ارائه مسیر مناسب برای مهاجرت کاری، تحصیلی، خانوادگی و سرمایه‌گذاری.</p><a href="#contact">ارزیابی شرایط ←</a></article>
-      <article class="service"><div class="service-icon"><i data-lucide="home"></i></div><h3>اقامت بین‌المللی</h3><p>مشاوره و پیگیری پرونده اقامت موقت یا دائم با برنامه‌ریزی شفاف و مرحله‌به‌مرحله.</p><a href="#contact">مشاهده جزئیات ←</a></article>
-      <article class="service"><div class="service-icon"><i data-lucide="plane-takeoff"></i></div><h3>تور و پرواز</h3><p>طراحی سفر شخصی و سازمانی، رزرو پرواز، هتل، ترانسفر و برنامه‌های تفریحی.</p><a href="#tours">مشاهده تورها ←</a></article>
-      <article class="service"><div class="service-icon"><i data-lucide="shield-plus"></i></div><h3>بیمه سفر</h3><p>صدور بیمه مسافرتی معتبر و پشتیبانی قبل، حین و پس از سفر.</p><a href="#contact">دریافت مشاوره ←</a></article>
-      <article class="service"><div class="service-icon"><i data-lucide="briefcase"></i></div><h3>تورهای نمایشگاهی</h3><p>خدمات نمایشگاهی چین، روسیه و امارات همراه با ویزا، مترجم و ترانسفر.</p><a href="#contact">برنامه‌ریزی سفر ←</a></article>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="experiences">
-  <div class="container">
-    <div class="heading"><div><span class="eyebrow">مجله نوروتور</span><h2 class="title">تجربه‌هایی که باید زندگی کرد</h2></div></div>
-    <div class="experience-grid">
-      <article class="experience large"><img loading="lazy" src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=1200&q=80" alt="استانبول"><div class="experience-content"><span>استانبول</span><h3>از بسفر تا کوچه‌های رنگارنگ بالات</h3></div></article>
-      <article class="experience"><img loading="lazy" src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=900&q=80" alt="دبی"><div class="experience-content"><span>دبی</span><h3>تجمل و معماری آینده</h3></div></article>
-      <article class="experience"><img loading="lazy" src="https://images.unsplash.com/photo-1526481280695-3c687fd643ed?auto=format&fit=crop&w=900&q=80" alt="ژاپن"><div class="experience-content"><span>ژاپن</span><h3>میان سنت و فناوری مدرن</h3></div></article>
-    </div>
-  </div>
-</section>
-
-<section class="section reviews" id="reviews">
-  <div class="container">
-    <div class="heading center"><div><span class="eyebrow">روایت مسافران</span><h2 class="title">اعتماد ساخته‌شده از تجربه</h2></div></div>
-    <div class="review-grid">
-      <article class="review"><div class="user"><div class="user-info"><span class="avatar">ن</span><div><strong>نگار محمدی</strong><span>تور استانبول</span></div></div><span class="stars">★★★★★</span></div><p>هماهنگی پرواز، هتل و ترانسفر عالی بود و پشتیبانی در تمام سفر پاسخ‌گو بود.</p></article>
-      <article class="review gold-card"><div class="user"><div class="user-info"><span class="avatar">ا</span><div><strong>امیر رضایی</strong><span>ویزای ژاپن</span></div></div><span class="stars">★★★★★</span></div><p>پرونده با دقت بررسی شد و درباره تمام مراحل توضیح شفاف دریافت کردم.</p></article>
-      <article class="review"><div class="user"><div class="user-info"><span class="avatar">س</span><div><strong>سارا نادری</strong><span>تور دبی</span></div></div><span class="stars">★★★★★</span></div><p>سفر خانوادگی ما با جزئیات کامل و انتخاب هتل بسیار خوبی برنامه‌ریزی شده بود.</p></article>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="agency">
-  <div class="container agency">
-    <div class="agency-copy">
-      <span class="eyebrow">همکاری تجاری</span>
-      <h2 class="title">نماینده نوروتور در شهر یا کشور خود باشید</h2>
-      <p>با دسترسی به نرخ‌های همکاری، خدمات ویزا، محصولات گردشگری و پشتیبانی تخصصی، کسب‌وکار خود را توسعه دهید.</p>
-      <ul class="benefits"><li>نرخ‌های ویژه همکاری</li><li>آموزش و پشتیبانی تخصصی</li><li>همکاری داخل و خارج ایران</li><li>پنل مدیریت درخواست‌ها</li></ul>
-    </div>
-
-    <form class="form-card success-form">
-      <h3>درخواست اخذ نمایندگی</h3>
-      <p>کارشناسان نوروتور پس از بررسی با شما تماس می‌گیرند.</p>
-      <div class="form-grid">
-        <div class="field"><label>نام و نام خانوادگی</label><input required placeholder="نام کامل"></div>
-        <div class="field"><label>شماره تماس</label><input required type="tel" pattern="09[0-9]{9}" placeholder="09xxxxxxxxx"></div>
-        <div class="field"><label>شهر یا کشور</label><input required placeholder="مثلاً شیراز یا امارات"></div>
-        <div class="field"><label>نوع همکاری</label><select required><option value="">انتخاب کنید</option><option>نمایندگی داخل ایران</option><option>نمایندگی خارج ایران</option><option>همکاری سازمانی</option></select></div>
+  <section class="section reveal" id="today">
+    <div class="container">
+      <div class="heading">
+        <div>
+          <span class="eyebrow">امروز در نوروتور</span>
+          <h2 class="title">مرکز زنده سفر</h2>
+          <p class="subtitle">اطلاعات روز، پیشنهادهای فعال و ابزارهای کاربردی برنامه‌ریزی سفر.</p>
+        </div>
       </div>
-      <div class="field"><label>توضیحات</label><textarea rows="3" placeholder="سابقه فعالیت و درخواست خود را بنویسید"></textarea></div>
-      <button class="btn btn-gold btn-full">ثبت درخواست نمایندگی</button>
-    </form>
-  </div>
-</section>
 
-<section class="cta-section" id="contact">
-  <div class="container cta">
-    <div><span class="eyebrow">آماده سفر هستید؟</span><h2>سفر رؤیایی شما از یک گفت‌وگو آغاز می‌شود</h2><p>مقصد و بودجه خود را با ما در میان بگذارید.</p></div>
-    <div class="cta-actions"><button class="btn btn-gold" data-booking>ثبت درخواست رزرو</button><a class="btn btn-outline" href="tel:+982100000000">تماس با کارشناس</a></div>
-  </div>
-</section>
+      <div class="today-grid">
+        <article class="live-card">
+          <div class="live-card-head"><h3>زمان و تاریخ</h3><span>تهران</span></div>
+          <div class="clock" id="mainClock">۰۰:۰۰:۰۰</div>
+          <div class="greeting" id="greeting">روزتان بخیر</div>
+          <div class="full-date" id="fullPersianDate">—</div>
+          <div class="full-date" id="fullGregorianDate">—</div>
+        </article>
+
+        <article class="live-card">
+          <div class="live-card-head"><h3>آب‌وهوای مقصدها</h3><span>دموی پیش‌راه‌اندازی</span></div>
+          <div class="weather-row" id="weatherList"></div>
+          <small class="data-note">اطلاعات نمایشی است؛ اتصال API هواشناسی در نسخه عملیاتی انجام می‌شود.</small>
+        </article>
+
+        <article class="live-card">
+          <div class="live-card-head"><h3>نرخ‌های سفر</h3><span id="rateUpdate">به‌روزرسانی امروز</span></div>
+          <div class="rates" id="rateList"></div>
+          <small class="data-note">نرخ‌ها نمونه و غیرقابل استناد برای معامله هستند.</small>
+        </article>
+
+        <article class="live-card">
+          <div class="live-card-head"><h3 id="calendarTitle">تقویم فارسی</h3><span>امروز</span></div>
+          <div class="calendar-week"><span>ش</span><span>ی</span><span>د</span><span>س</span><span>چ</span><span>پ</span><span>ج</span></div>
+          <div class="calendar-days" id="calendarDays"></div>
+        </article>
+
+        <article class="live-card">
+          <div class="live-card-head"><h3>پیشنهاد امروز</h3><span class="gold">ظرفیت محدود</span></div>
+          <h3 id="dailyTourTitle">تور ویژه امروز</h3>
+          <p class="muted" id="dailyTourDescription" style="font-size:.75rem;margin:8px 0 18px"></p>
+          <button class="btn btn-outline btn-small" id="dailyTourButton">مشاهده پیشنهاد</button>
+        </article>
+
+        <article class="live-card">
+          <div class="live-card-head"><h3>راهنمای سریع سفر</h3><span>نکته روز</span></div>
+          <div style="display:flex;gap:11px;align-items:flex-start">
+            <div class="service-icon"><i data-lucide="lightbulb"></i></div>
+            <p id="dailyTip" class="muted" style="font-size:.76rem"></p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark reveal" id="tours">
+    <div class="container">
+      <div class="heading">
+        <div>
+          <span class="eyebrow">مقصد بعدی شما</span>
+          <h2 class="title">تورهای منتخب نوروتور</h2>
+          <p class="subtitle">برنامه‌های واقعی‌نما برای پیش‌نمایش تجاری؛ قیمت نهایی پس از استعلام تأیید می‌شود.</p>
+        </div>
+        <strong class="gold"><span id="tourCount">۰</span> برنامه سفر</strong>
+      </div>
+
+      <div class="tour-toolbar">
+        <div class="pills" id="tourFilters">
+          <button class="pill active" data-filter="all">همه تورها</button>
+          <button class="pill" data-filter="trending">پرطرفدار</button>
+          <button class="pill" data-filter="bestseller">پرفروش</button>
+          <button class="pill" data-filter="recommended">پیشنهاد نوروتور</button>
+          <button class="pill" data-filter="domestic">داخلی</button>
+          <button class="pill" data-filter="international">خارجی</button>
+        </div>
+        <select class="sort-select" id="tourSort" aria-label="مرتب‌سازی تورها">
+          <option value="recommended">پیشنهاد نوروتور</option>
+          <option value="low">کمترین قیمت</option>
+          <option value="high">بیشترین قیمت</option>
+          <option value="rating">بالاترین امتیاز</option>
+          <option value="date">نزدیک‌ترین حرکت</option>
+        </select>
+      </div>
+
+      <div class="tour-grid" id="tourGrid"></div>
+      <div class="empty hidden" id="tourEmpty">
+        <i data-lucide="map-pin-off"></i>
+        <h3>برنامه‌ای با این شرایط پیدا نشد</h3>
+        <p class="muted">مقصد یا فیلتر دیگری را امتحان کنید.</p>
+        <button class="btn btn-gold btn-small" id="resetTours">نمایش همه تورها</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="container">
+      <div class="offer">
+        <div class="offer-content">
+          <span class="eyebrow">پیشنهاد محدود نوروتور</span>
+          <h2>تخفیف رزرو زودهنگام تور استانبول</h2>
+          <p>رزرو با پیش‌پرداخت و امکان انتخاب هتل از میان گزینه‌های منتخب.</p>
+          <div class="countdown" id="countdown">
+            <div class="count-item"><strong data-days>۰۰</strong><span>روز</span></div>
+            <div class="count-item"><strong data-hours>۰۰</strong><span>ساعت</span></div>
+            <div class="count-item"><strong data-minutes>۰۰</strong><span>دقیقه</span></div>
+            <div class="count-item"><strong data-seconds>۰۰</strong><span>ثانیه</span></div>
+          </div>
+          <button class="btn btn-gold" data-booking data-tour-name="تور لوکس استانبول">دریافت پیشنهاد</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark reveal" id="services">
+    <div class="container">
+      <div class="heading center">
+        <div>
+          <span class="eyebrow">خدمات تخصصی</span>
+          <h2 class="title">مطمئن‌تر از هر زمان سفر کنید</h2>
+          <p class="subtitle">راهکار یکپارچه برای برنامه‌ریزی سفرهای شخصی، خانوادگی و سازمانی.</p>
+        </div>
+      </div>
+      <div class="service-grid" id="serviceGrid"></div>
+    </div>
+  </section>
+
+  <section class="section reveal" id="gallery">
+    <div class="container">
+      <div class="heading">
+        <div>
+          <span class="eyebrow">گالری ممتاز</span>
+          <h2 class="title">تجربه‌هایی که باید زندگی کرد</h2>
+          <p class="subtitle">الهام‌بخش سفر بعدی شما؛ از شهرهای تاریخی تا سواحل آرام.</p>
+        </div>
+      </div>
+      <div class="gallery-grid" id="galleryGrid"></div>
+    </div>
+  </section>
+
+  <section class="section section-dark reveal" id="news">
+    <div class="container">
+      <div class="heading">
+        <div>
+          <span class="eyebrow">مرکز خبر سفر</span>
+          <h2 class="title">آخرین به‌روزرسانی‌ها</h2>
+          <p class="subtitle">اخبار نمونه گردشگری، ویزا و خطوط هوایی برای نسخه پیش‌راه‌اندازی.</p>
+        </div>
+      </div>
+      <div class="news-tabs" id="newsTabs">
+        <button class="pill active" data-news="all">همه اخبار</button>
+        <button class="pill" data-news="tourism">گردشگری</button>
+        <button class="pill" data-news="visa">ویزا</button>
+        <button class="pill" data-news="airline">هواپیمایی</button>
+      </div>
+      <div class="news-grid" id="newsGrid"></div>
+    </div>
+  </section>
+
+  <section class="section reveal" id="blog">
+    <div class="container">
+      <div class="heading">
+        <div>
+          <span class="eyebrow">مجله نوروتور</span>
+          <h2 class="title">راهنمای هوشمندانه سفر</h2>
+          <p class="subtitle">مقاله‌های کوتاه برای انتخاب مقصد، مدیریت بودجه و تجربه بهتر سفر.</p>
+        </div>
+      </div>
+      <div class="blog-grid" id="blogGrid"></div>
+    </div>
+  </section>
+
+  <section class="section section-dark reveal" id="reviews">
+    <div class="container">
+      <div class="heading center">
+        <div>
+          <span class="eyebrow">روایت مسافران</span>
+          <h2 class="title">اعتماد ساخته‌شده از تجربه</h2>
+          <p class="subtitle">نظرهای نمایشی پیش از راه‌اندازی؛ در نسخه نهایی با بازخوردهای تأییدشده جایگزین می‌شوند.</p>
+        </div>
+      </div>
+      <div class="review-grid" id="reviewGrid"></div>
+    </div>
+  </section>
+
+  <section class="section reveal" id="about">
+    <div class="container about-grid">
+      <div class="about-visual">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1100&q=80" alt="تیم مشاوران سفر نوروتور">
+        <div class="about-badge"><strong>+۱۸,۰۰۰</strong><span>تجربه سفر برنامه‌ریزی‌شده و همراهی مسافران</span></div>
+      </div>
+
+      <div class="about-copy">
+        <span class="eyebrow">درباره نوروتور</span>
+        <h2 class="title">برای سفرهایی فراتر از انتظار</h2>
+        <p data-bind="aboutIntro">
+          نوروتور مجموعه‌ای تخصصی در حوزه گردشگری و خدمات سفر است که با تمرکز بر شفافیت،
+          طراحی دقیق برنامه سفر و پشتیبانی مسئولانه فعالیت می‌کند.
+        </p>
+        <p><strong class="gold">مأموریت:</strong> <span data-bind="mission">ساده‌تر، مطمئن‌تر و لذت‌بخش‌تر کردن مسیر سفر.</span></p>
+        <p><strong class="gold">چشم‌انداز:</strong> <span data-bind="vision">تبدیل‌شدن به یکی از قابل‌اعتمادترین برندهای خدمات سفر فارسی‌زبان.</span></p>
+
+        <div class="values">
+          <div class="value"><i data-lucide="shield-check"></i><div><strong>شفافیت</strong><span>اطلاعات روشن و قرارداد قابل پیگیری</span></div></div>
+          <div class="value"><i data-lucide="gem"></i><div><strong>کیفیت</strong><span>انتخاب دقیق شرکای خدماتی</span></div></div>
+          <div class="value"><i data-lucide="heart-handshake"></i><div><strong>همراهی</strong><span>پشتیبانی انسانی و مسئولانه</span></div></div>
+          <div class="value"><i data-lucide="route"></i><div><strong>تخصص</strong><span>طراحی سفر متناسب با نیاز مسافر</span></div></div>
+        </div>
+
+        <div class="licenses">
+          <div class="license-placeholder">جایگاه مجوز گردشگری</div>
+          <div class="license-placeholder">جایگاه گواهینامه</div>
+          <div class="license-placeholder">جایگاه نماد اعتماد</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark reveal" id="faq">
+    <div class="container">
+      <div class="heading center">
+        <div>
+          <span class="eyebrow">پرسش‌های متداول</span>
+          <h2 class="title">پیش از رزرو بدانید</h2>
+        </div>
+      </div>
+      <div class="faq-list" id="faqList"></div>
+    </div>
+  </section>
+
+  <section class="section reveal" id="contact">
+    <div class="container">
+      <div class="heading">
+        <div>
+          <span class="eyebrow">ارتباط با ما</span>
+          <h2 class="title">سفر شما از یک گفت‌وگو آغاز می‌شود</h2>
+          <p class="subtitle">مقصد، بودجه و سبک سفر خود را بگویید تا کارشناسان نوروتور برنامه مناسب را پیشنهاد دهند.</p>
+        </div>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-card">
+          <h3>دفتر مرکزی نوروتور</h3>
+          <div class="contact-list">
+            <div class="contact-item"><i data-lucide="map-pin"></i><div><strong>آدرس</strong><span data-bind="address">تهران، آدرس دفتر مرکزی نوروتور</span></div></div>
+            <div class="contact-item"><i data-lucide="phone"></i><div><strong>تلفن</strong><a data-phone-link href="tel:+982100000000" data-bind="phone">۰۲۱-۰۰۰۰۰۰۰۰</a></div></div>
+            <div class="contact-item"><i data-lucide="siren"></i><div><strong>شماره اضطراری سفر</strong><a data-emergency-link href="tel:+989120000000" data-bind="emergency">۰۹۱۲-۰۰۰۰۰۰۰</a></div></div>
+            <div class="contact-item"><i data-lucide="message-circle"></i><div><strong>واتساپ</strong><a data-whatsapp-link href="#" data-bind="whatsapp">۰۹۱۲-۰۰۰۰۰۰۰</a></div></div>
+            <div class="contact-item"><i data-lucide="send"></i><div><strong>تلگرام</strong><a data-telegram-link href="#" data-bind="telegram">@NOUROTOUR</a></div></div>
+            <div class="contact-item"><i data-lucide="mail"></i><div><strong>ایمیل</strong><a data-email-link href="mailto:info@noorotour.com" data-bind="email">info@noorotour.com</a></div></div>
+            <div class="contact-item"><i data-lucide="clock-3"></i><div><strong>ساعات کاری</strong><span data-bind="workingHours">شنبه تا پنج‌شنبه، ۹ تا ۱۸</span></div></div>
+          </div>
+          <div class="map-placeholder"><span><i data-lucide="map"></i><br>جایگاه نقشه Google Maps<br>قابل جایگزینی با Embed رسمی</span></div>
+        </div>
+
+        <form class="contact-form success-form">
+          <h3>درخواست مشاوره سفر</h3>
+          <p class="muted" style="font-size:.72rem;margin-bottom:17px">اطلاعات خود را ثبت کنید؛ کارشناس سفر با شما تماس می‌گیرد.</p>
+          <div class="form-grid">
+            <div class="field"><label>نام و نام خانوادگی</label><input required autocomplete="name" placeholder="نام کامل"></div>
+            <div class="field"><label>شماره تماس</label><input required type="tel" inputmode="numeric" pattern="09[0-9]{9}" autocomplete="tel" placeholder="09xxxxxxxxx"></div>
+            <div class="field"><label>مقصد موردنظر</label><input placeholder="مثلاً دبی یا استانبول"></div>
+            <div class="field"><label>بودجه تقریبی</label><select><option>نیاز به مشاوره</option><option>تا ۳۰ میلیون تومان</option><option>۳۰ تا ۷۰ میلیون تومان</option><option>بیش از ۷۰ میلیون تومان</option></select></div>
+          </div>
+          <div class="field"><label>توضیحات</label><textarea rows="5" placeholder="تعداد مسافر، تاریخ و درخواست ویژه"></textarea></div>
+          <button class="btn btn-gold btn-full"><i data-lucide="send"></i>ثبت درخواست مشاوره</button>
+        </form>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer class="footer">
   <div class="container footer-grid">
-    <div><a class="brand" href="#home"><span class="brand-icon"><i data-lucide="compass"></i></span><span class="brand-text"><strong>نوروتور</strong><small>سفر فراتر از انتظار</small></span></a><p style="margin-top:16px">برگزارکننده تورهای داخلی و خارجی و ارائه‌دهنده خدمات ویزا، اقامت و مهاجرت.</p></div>
-    <div><h3>دسترسی سریع</h3><ul><li><a href="#tours">تورهای داخلی</a></li><li><a href="#tours">تورهای خارجی</a></li><li><a href="#services">خدمات ویزا</a></li><li><a href="#agency">اخذ نمایندگی</a></li></ul></div>
-    <div><h3>مقصدهای محبوب</h3><ul><li>استانبول و دبی</li><li>روسیه و گرجستان</li><li>چین و ژاپن</li><li>کیش، مشهد و شیراز</li></ul></div>
-    <div><h3>ارتباط با ما</h3><ul><li>تهران، دفتر مرکزی نوروتور</li><li>۰۲۱-۰۰۰۰۰۰۰۰</li><li>info@noorotour.com</li><li>شنبه تا پنج‌شنبه، ۹ تا ۱۸</li></ul></div>
+    <div>
+      <a class="brand" href="#home">
+        <span class="brand-logo"><i data-lucide="compass"></i></span>
+        <span class="brand-copy"><strong data-bind="brandName">نوروتور</strong><small data-bind="tagline">سفر فراتر از انتظار</small></span>
+      </a>
+      <p style="margin-top:15px">طراحی سفرهای داخلی و خارجی و ارائه خدمات پرواز، هتل، ویزا و پشتیبانی تخصصی.</p>
+      <div class="socials">
+        <a data-instagram-link href="#" aria-label="اینستاگرام"><i data-lucide="instagram"></i></a>
+        <a data-telegram-link href="#" aria-label="تلگرام"><i data-lucide="send"></i></a>
+        <a data-whatsapp-link href="#" aria-label="واتساپ"><i data-lucide="message-circle"></i></a>
+      </div>
+    </div>
+    <div><h3>دسترسی سریع</h3><ul><li><a href="#tours">تورهای داخلی</a></li><li><a href="#tours">تورهای خارجی</a></li><li><a href="#services">ویزا و سفارت</a></li><li><a href="#blog">مجله سفر</a></li></ul></div>
+    <div><h3>مقصدهای محبوب</h3><ul><li><a href="#tours">استانبول و آنتالیا</a></li><li><a href="#tours">دبی و گرجستان</a></li><li><a href="#tours">تایلند</a></li><li><a href="#tours">کیش، قشم و شیراز</a></li></ul></div>
+    <div><h3>خدمات مشتریان</h3><ul><li><a href="#faq">پرسش‌های متداول</a></li><li><a href="#contact">پیگیری درخواست</a></li><li><a href="#contact">شرایط رزرو</a></li><li><a href="#contact">حریم خصوصی</a></li></ul></div>
   </div>
-  <div class="container footer-bottom"><span>© ۱۴۰۵ نوروتور؛ تمام حقوق محفوظ است.</span><span>حریم خصوصی · قوانین رزرو</span></div>
+  <div class="container footer-bottom">
+    <span>© <span id="footerYear">۱۴۰۵</span> نوروتور؛ تمام حقوق محفوظ است.</span>
+    <span>نسخه پیش‌راه‌اندازی تجاری · قیمت‌ها و اطلاعات نیازمند تأیید نهایی</span>
+  </div>
 </footer>
 
-<div class="modal" id="modal">
-  <div class="backdrop" data-close></div>
-  <div class="modal-box">
-    <button class="close-modal" data-close><i data-lucide="x"></i></button>
-    <span class="eyebrow">درخواست رزرو</span>
-    <h2>سفر بعدی خود را آغاز کنید</h2>
-    <p>برای تکمیل رزرو، کارشناسان نوروتور با شما تماس خواهند گرفت.</p>
+<!-- Tour details -->
+<div class="modal" id="detailModal" aria-hidden="true">
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+    <button class="icon-btn modal-close" data-close-modal aria-label="بستن"><i data-lucide="x"></i></button>
+    <div id="detailContent"></div>
+  </div>
+</div>
 
-    <form class="success-form" id="bookingForm">
+<!-- Booking -->
+<div class="modal" id="bookingModal" aria-hidden="true">
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="bookingTitle">
+    <button class="icon-btn modal-close" data-close-modal aria-label="بستن"><i data-lucide="x"></i></button>
+    <div class="modal-title">
+      <span class="eyebrow">درخواست رزرو</span>
+      <h2 id="bookingTitle">سفر بعدی خود را آغاز کنید</h2>
+      <p>ثبت فرم به معنی رزرو قطعی نیست؛ کارشناس برای بررسی ظرفیت و قیمت تماس می‌گیرد.</p>
+    </div>
+
+    <form class="success-form" id="bookingForm" style="margin-top:20px">
       <div class="form-grid">
-        <div class="field"><label>نام و نام خانوادگی</label><input required placeholder="نام کامل"></div>
-        <div class="field"><label>شماره تماس</label><input required type="tel" pattern="09[0-9]{9}" placeholder="09xxxxxxxxx"></div>
+        <div class="field"><label>نام و نام خانوادگی</label><input required autocomplete="name" placeholder="نام کامل"></div>
+        <div class="field"><label>شماره تماس</label><input required type="tel" inputmode="numeric" pattern="09[0-9]{9}" autocomplete="tel" placeholder="09xxxxxxxxx"></div>
         <div class="field"><label>تور یا مقصد</label><select required id="bookingTour"><option value="">انتخاب تور</option></select></div>
         <div class="field"><label>تعداد مسافر</label><select><option>۱ نفر</option><option>۲ نفر</option><option>۳ نفر</option><option>۴ نفر یا بیشتر</option></select></div>
         <div class="field"><label>تاریخ پیشنهادی</label><input type="date"></div>
         <div class="field"><label>روش تماس</label><select><option>تماس تلفنی</option><option>واتساپ</option><option>ایمیل</option></select></div>
       </div>
-      <div class="field"><label>توضیحات</label><textarea rows="3" placeholder="بودجه، نوع هتل یا درخواست ویژه"></textarea></div>
-      <button class="btn btn-gold btn-full">ثبت درخواست</button>
+      <div class="field" style="margin:13px 0"><label>توضیحات</label><textarea rows="3" placeholder="بودجه، نوع هتل یا درخواست ویژه"></textarea></div>
+      <button class="btn btn-gold btn-full">ثبت درخواست رزرو</button>
     </form>
   </div>
 </div>
 
-<div class="toast" id="toast"><strong class="gold">درخواست شما ثبت شد</strong><br><small>کارشناسان نوروتور به‌زودی با شما تماس می‌گیرند.</small></div>
+<!-- Local admin: Ctrl + Shift + A -->
+<aside class="admin-panel" id="adminPanel" aria-hidden="true">
+  <div class="admin-head">
+    <div><strong class="gold">NOUROTOUR Local Admin</strong><small class="muted" style="display:block">ذخیره محلی بدون سرور</small></div>
+    <button class="icon-btn" id="closeAdmin" aria-label="بستن مدیریت"><i data-lucide="x"></i></button>
+  </div>
 
-<script>
-const tours=[
- {id:1,title:"تور لوکس استانبول",country:"ترکیه",city:"استانبول",stay:"هتل ۵ ستاره",days:5,date:"2026-08-18",price:45900000,rating:4.9,badge:"پرفروش",image:"https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=900&q=80",options:["صبحانه","گشت شهری","ترانسفر فرودگاهی"]},
- {id:2,title:"تور ویژه دبی",country:"امارات",city:"دبی",stay:"هتل ۵ ستاره",days:4,date:"2026-08-25",price:52500000,rating:4.8,badge:"لوکس",image:"https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=900&q=80",options:["صبحانه","ترانسفر فرودگاهی","راهنمای فارسی"]},
- {id:3,title:"تور تفلیس و طبیعت گرجستان",country:"گرجستان",city:"تفلیس",stay:"هتل ۴ ستاره",days:6,date:"2026-09-03",price:38900000,rating:4.7,badge:"پیشنهادی",image:"https://images.unsplash.com/photo-1565008576549-57569a49371d?auto=format&fit=crop&w=900&q=80",options:["صبحانه","گشت شهری","راهنمای فارسی"]},
- {id:4,title:"تور مسکو و سن‌پترزبورگ",country:"روسیه",city:"مسکو",stay:"هتل ۵ ستاره",days:8,date:"2026-09-12",price:89900000,rating:4.9,badge:"ویژه",image:"https://images.unsplash.com/photo-1513326738677-b964603b136d?auto=format&fit=crop&w=900&q=80",options:["صبحانه","گشت شهری","ترانسفر فرودگاهی"]},
- {id:5,title:"تور رؤیایی ژاپن",country:"ژاپن",city:"توکیو",stay:"هتل ۵ ستاره",days:10,date:"2026-10-05",price:189000000,rating:5,badge:"اختصاصی",image:"https://images.unsplash.com/photo-1526481280695-3c687fd643ed?auto=format&fit=crop&w=900&q=80",options:["صبحانه","گشت شهری","راهنمای فارسی"]},
- {id:6,title:"تور ساحلی تایلند",country:"تایلند",city:"بانکوک",stay:"هتل ۴ ستاره",days:7,date:"2026-09-20",price:74900000,rating:4.6,badge:"تابستانی",image:"https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=900&q=80",options:["صبحانه","ترانسفر فرودگاهی"]},
- {id:7,title:"تور جزیره کیش",country:"ایران",city:"کیش",stay:"هتل ۵ ستاره",days:3,date:"2026-08-15",price:15900000,rating:4.8,badge:"داخلی",image:"https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?auto=format&fit=crop&w=900&q=80",options:["صبحانه","ترانسفر فرودگاهی"]},
- {id:8,title:"تور فرهنگی شیراز",country:"ایران",city:"شیراز",stay:"بوتیک هتل",days:4,date:"2026-08-29",price:12900000,rating:4.7,badge:"فرهنگی",image:"https://images.unsplash.com/photo-1562095241-8c6714fd4178?auto=format&fit=crop&w=900&q=80",options:["صبحانه","گشت شهری","راهنمای فارسی"]}
-];
+  <div class="admin-tabs">
+    <button class="pill active" data-admin-tab="general">عمومی</button>
+    <button class="pill" data-admin-tab="tours">تورها</button>
+    <button class="pill" data-admin-tab="content">محتوا</button>
+    <button class="pill" data-admin-tab="json">JSON</button>
+  </div>
 
-const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
-const fa=n=>Number(n).toLocaleString("fa-IR");
-const country=$("#country"),city=$("#city"),stay=$("#stay"),option=$("#option"),date=$("#date"),sort=$("#sort");
-const grid=$("#tourGrid"),empty=$("#empty"),modal=$("#modal"),toast=$("#toast"),bookingTour=$("#bookingTour");
-
-function unique(key){return [...new Set(tours.map(t=>t[key]))]}
-function fillSelect(el,items){items.forEach(x=>el.insertAdjacentHTML("beforeend",`<option>${x}</option>`))}
-fillSelect(country,unique("country"));fillSelect(city,unique("city"));
-tours.forEach(t=>bookingTour.insertAdjacentHTML("beforeend",`<option value="${t.title}">${t.title}</option>`));
-
-function card(t){
- return `<article class="card">
-  <div class="card-img"><img loading="lazy" src="${t.image}" alt="${t.title}">
-  <span class="badge">${t.badge}</span><span class="rating">★ ${t.rating}</span></div>
-  <div class="card-body"><span class="route">${t.country} · ${t.city}</span><h3>${t.title}</h3>
-  <div class="meta"><span>◷ ${fa(t.days)} روز</span><span>⌂ ${t.stay}</span><span>◫ ${new Date(t.date).toLocaleDateString("fa-IR")}</span></div>
-  <div class="chips">${t.options.map(x=>`<span>${x}</span>`).join("")}</div>
-  <div class="card-footer"><div class="price"><small>شروع قیمت از</small><strong>${fa(t.price)} تومان</strong></div>
-  <button class="btn btn-gold reserve-tour" data-id="${t.id}">رزرو تور</button></div></div></article>`
-}
-
-function render(){
- let list=tours.filter(t=>
-  (!country.value||t.country===country.value)&&
-  (!city.value||t.city===city.value)&&
-  (!stay.value||t.stay===stay.value)&&
-  (!option.value||t.options.includes(option.value))&&
-  (!date.value||t.date===date.value)
- );
- if(sort.value==="low")list.sort((a,b)=>a.price-b.price);
- if(sort.value==="high")list.sort((a,b)=>b.price-a.price);
- if(sort.value==="rating")list.sort((a,b)=>b.rating-a.rating);
- grid.innerHTML=list.map(card).join("");
- $("#tourCount").textContent=fa(list.length);
- empty.classList.toggle("hidden",list.length>0);
- grid.classList.toggle("hidden",list.length===0);
-
- $$(".reserve-tour").forEach(b=>b.onclick=()=>openBooking(+b.dataset.id));
-}
-[country,city,stay,option,date,sort].forEach(el=>el.addEventListener("change",render));
-
-function reset(){
- [country,city,stay,option,date].forEach(el=>el.value="");
- sort.value="recommended";render();
-}
-$("#reset").onclick=reset;$("#emptyReset").onclick=reset;
-
-function openBooking(id){
- if(id){const t=tours.find(x=>x.id===id);bookingTour.value=t.title}
- modal.classList.add("open");document.body.classList.add("lock");
-}
-function closeBooking(){modal.classList.remove("open");document.body.classList.remove("lock")}
-
-$$("[data-booking]").forEach(b=>b.onclick=()=>openBooking());
-
-$$("[data-close]").forEach(b=>b.onclick=closeBooking);
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeBooking()});
-
-$(".search-tabs").onclick=e=>{
- const btn=e.target.closest(".search-tab");if(!btn)return;
-
- $$(".search-tab").forEach(x=>x.classList.remove("active"));btn.classList.add("active");
-};
-$("#searchForm").onsubmit=e=>{
- e.preventDefault();
- const destination=$("#destination").value;
- if(destination){
-  city.value=[...city.options].some(o=>o.value===destination)?destination:"";
-  document.querySelector("#tours").scrollIntoView();render();
- }else document.querySelector("#tours").scrollIntoView();
-};
-
-$$(".success-form").forEach(form=>form.onsubmit=e=>{
- e.preventDefault();
- if(!form.checkValidity()){form.reportValidity();return}
- form.reset();closeBooking();
- toast.classList.add("show");setTimeout(()=>toast.classList.remove("show"),4000);
-});
-
-$("#menuBtn").onclick=()=>$("#nav").classList.toggle("open");
-
-$$(".nav a").forEach(a=>a.onclick=()=>$("#nav").classList.remove("open"));
-$("#filterToggle").onclick=()=>$("#filters").classList.toggle("open");
-document.addEventListener("click",e=>{
- if(innerWidth<=1000&&!e.target.closest("#filters")&&!e.target.closest("#filterToggle"))
-  $("#filters").classList.remove("open");
-});
-addEventListener("scroll",()=>$("#header").classList.toggle("scrolled",scrollY>20));
-
-const today=new Date().toISOString().split("T")[0];
-
-$$('input[type="date"]').forEach(i=>i.min=today);
-render();lucide.createIcons();
-</script>
-</body>
-</html>
+  <section class="admin-section active" data-admin-section="general">
+    <form id="generalAdminForm" class="admin-card">
+      <h3>هویت و اطلاعات تماس</h3>
