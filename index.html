@@ -8,22 +8,18 @@
   <meta name="description" content="نوروتور؛ رزرو تورهای داخلی و خارجی، پرواز، هتل، خدمات ویزا، وقت سفارت و مشاوره سفر.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://noorotour.com/">
-
   <meta property="og:locale" content="fa_IR">
   <meta property="og:type" content="website">
   <meta property="og:title" content="نوروتور | سفر فراتر از انتظار">
   <meta property="og:description" content="تور، پرواز، هتل، ویزا و خدمات تخصصی سفر">
   <meta property="og:url" content="https://noorotour.com/">
-  <meta property="og:image" content="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1600&q=85">
-
+  <meta property="og:image" content="images/hero.jpg">
   <title>نوروتور | سفر فراتر از انتظار</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://images.unsplash.com">
+  
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script defer src="https://unpkg.com/lucide@latest"></script>
-
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -43,7 +39,6 @@
     "priceRange":"$$$"
   }
   </script>
-
 <style>
 :root{
   --bg:#08090b;
@@ -101,7 +96,6 @@ ul{list-style:none}
 .skip-link:focus{top:15px}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
 .reveal.visible{opacity:1;transform:none}
-
 .eyebrow{
   display:inline-flex;align-items:center;gap:8px;
   color:var(--gold-light);font-size:.77rem;font-weight:800;letter-spacing:.02em
@@ -119,7 +113,6 @@ ul{list-style:none}
 .heading.center{text-align:center;justify-content:center}
 .heading.center .eyebrow{justify-content:center}
 .heading.center .subtitle{margin-inline:auto}
-
 .btn{
   min-height:48px;padding:0 20px;border:1px solid transparent;
   border-radius:13px;display:inline-flex;align-items:center;justify-content:center;
@@ -139,7 +132,6 @@ ul{list-style:none}
   width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--line);
   border-radius:13px;background:var(--surface)
 }
-
 /* Topbar and header */
 .topbar{
   position:relative;z-index:1002;height:34px;border-bottom:1px solid var(--line);
@@ -162,11 +154,12 @@ ul{list-style:none}
 .header-inner{height:100%;display:flex;align-items:center;justify-content:space-between;gap:22px}
 .brand{display:flex;align-items:center;gap:11px;flex-shrink:0}
 .brand-logo{
-  width:46px;height:46px;display:grid;place-items:center;border-radius:15px;
-  color:#171108;background:linear-gradient(135deg,var(--gold-light),var(--gold-dark));
+  width:76px;height:54px;display:grid;place-items:center;border-radius:12px;overflow:hidden;
+  color:#171108;background:#fff;
   box-shadow:0 10px 30px rgba(214,174,90,.15)
 }
 .brand-logo img{width:100%;height:100%;object-fit:contain;border-radius:inherit}
+.footer .brand-logo{width:86px;height:60px;border-radius:12px}
 .brand-copy{display:flex;flex-direction:column;line-height:1.25}
 .brand-copy strong{font-size:1.2rem;font-weight:900}
 .brand-copy small{font-size:.62rem;color:var(--gold-light)}
@@ -181,14 +174,13 @@ ul{list-style:none}
 .header-actions{display:flex;align-items:center;gap:9px}
 .header-phone{color:var(--muted);font-size:.72rem}
 .menu-btn{display:none}
-
 /* Hero */
 .hero{
   position:relative;min-height:760px;display:flex;align-items:center;
   padding:85px 0 110px;overflow:hidden;
   background:
     linear-gradient(90deg,rgba(6,7,9,.98),rgba(6,7,9,.73),rgba(6,7,9,.18)),
-    url("https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=2000&q=85") center/cover
+    url("images/hero.jpg") center/cover
 }
 .hero:after{
   content:"";position:absolute;inset:auto 0 0;height:34%;
@@ -214,7 +206,6 @@ ul{list-style:none}
 .hero-stat{display:flex;flex-direction:column}
 .hero-stat strong{color:var(--gold-light);font-size:1.3rem;line-height:1.4}
 .hero-stat span{color:var(--muted);font-size:.68rem}
-
 .search-shell{
   position:relative;z-index:3;margin-top:-70px;padding-bottom:15px
 }
@@ -232,7 +223,6 @@ ul{list-style:none}
   display:grid;grid-template-columns:repeat(4,1fr) auto;
   gap:12px;padding:22px;align-items:end
 }
-
 /* Forms */
 .field{display:flex;flex-direction:column;gap:6px}
 .field label{color:#d5d5d8;font-size:.72rem;font-weight:600}
@@ -246,7 +236,6 @@ ul{list-style:none}
 }
 option{background:#17191e}
 .form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
-
 /* Trust */
 .trust{margin-top:28px}
 .trust-grid{
@@ -259,7 +248,6 @@ option{background:#17191e}
 .trust-item div{display:flex;flex-direction:column}
 .trust-item strong{font-size:.8rem}
 .trust-item span{font-size:.65rem;color:var(--muted)}
-
 /* Today center */
 .today-grid{display:grid;grid-template-columns:1.05fr .95fr .95fr;gap:18px}
 .live-card{
@@ -288,7 +276,6 @@ option{background:#17191e}
 .rate-item{display:flex;align-items:center;justify-content:space-between}
 .rate-change{color:var(--success)!important}
 .data-note{display:block;margin-top:10px;color:#777;font-size:.59rem}
-
 /* Calendar */
 .calendar-week,.calendar-days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
 .calendar-week span{text-align:center;color:var(--muted);font-size:.6rem}
@@ -298,7 +285,6 @@ option{background:#17191e}
 }
 .calendar-days .muted-day{opacity:.25}
 .calendar-days .today{background:var(--gold-light);color:#171108;font-weight:900}
-
 /* Tours */
 .tour-toolbar{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:22px}
 .pills{display:flex;gap:7px;flex-wrap:wrap}
@@ -368,14 +354,13 @@ option{background:#17191e}
   padding:55px 20px;text-align:center;border:1px dashed var(--gold-line);
   border-radius:var(--radius);background:var(--surface)
 }
-
 /* Offer */
 .offer{
   position:relative;overflow:hidden;border:1px solid var(--gold-line);
   border-radius:28px;padding:48px;
   background:
     linear-gradient(90deg,rgba(16,11,4,.96),rgba(34,25,8,.82)),
-    url("https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1700&q=80") center/cover
+    url("images/offer.jpg") center/cover
 }
 .offer-content{position:relative;z-index:2;max-width:680px}
 .offer h2{font-size:clamp(1.9rem,4vw,3rem);line-height:1.4}
@@ -387,7 +372,6 @@ option{background:#17191e}
 }
 .count-item strong{display:block;color:var(--gold-light);font-size:1.3rem}
 .count-item span{font-size:.59rem;color:#bbb}
-
 /* Services */
 .service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .service{
@@ -403,7 +387,6 @@ option{background:#17191e}
 .service h3{margin:16px 0 6px}
 .service p{color:var(--muted);font-size:.76rem}
 .service a{display:inline-flex;margin-top:16px;color:var(--gold-light);font-size:.72rem}
-
 /* Gallery */
 .gallery-grid{
   display:grid;grid-template-columns:1.25fr .75fr .75fr;
@@ -420,7 +403,6 @@ option{background:#17191e}
 .gallery-caption{position:absolute;z-index:2;right:17px;left:17px;bottom:15px}
 .gallery-caption span{color:var(--gold-light);font-size:.62rem}
 .gallery-caption h3{font-size:.95rem}
-
 /* News/blog */
 .news-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px}
 .news-grid,.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
@@ -439,7 +421,6 @@ option{background:#17191e}
 .blog-body h3{font-size:.95rem;margin:4px 0 7px}
 .blog-body p{color:var(--muted);font-size:.7rem}
 .blog-meta{color:var(--gold-light);font-size:.61rem}
-
 /* Reviews */
 .review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .review{
@@ -460,7 +441,6 @@ option{background:#17191e}
 .user span{color:var(--muted);font-size:.61rem}
 .stars{color:#f5cc61;font-size:.68rem}
 .review p{margin-top:17px;color:#c5c5c8;font-size:.75rem}
-
 /* About */
 .about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:55px;align-items:center}
 .about-visual{position:relative}
@@ -486,7 +466,6 @@ option{background:#17191e}
   min-width:105px;padding:10px;border:1px dashed var(--gold-line);
   border-radius:10px;text-align:center;color:var(--muted);font-size:.59rem
 }
-
 /* FAQ */
 .faq-list{max-width:880px;margin:auto;display:grid;gap:9px}
 .faq-item{border:1px solid var(--line);border-radius:16px;background:var(--surface)}
@@ -499,7 +478,6 @@ option{background:#17191e}
 .faq-item.open{border-color:var(--gold-line)}
 .faq-item.open .faq-answer{max-height:230px}
 .faq-item.open .faq-question svg{transform:rotate(180deg)}
-
 /* Contact */
 .contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:25px}
 .contact-card,.contact-form{
@@ -516,11 +494,10 @@ option{background:#17191e}
   border:1px dashed var(--gold-line);border-radius:16px;text-align:center;
   background:
     linear-gradient(rgba(8,9,11,.78),rgba(8,9,11,.78)),
-    url("https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=900&q=70") center/cover
+    url("images/map.jpg") center/cover
 }
 .map-placeholder span{color:var(--gold-light);font-size:.72rem}
 .contact-form .field{margin-bottom:12px}
-
 /* Footer */
 .footer{padding-top:62px;background:#060709}
 .footer-grid{display:grid;grid-template-columns:1.35fr repeat(3,1fr);gap:36px;padding-bottom:42px}
@@ -533,7 +510,6 @@ option{background:#17191e}
   padding:17px 0;border-top:1px solid var(--line);
   display:flex;justify-content:space-between;gap:15px;color:#73757a;font-size:.63rem
 }
-
 /* Modal */
 .modal{
   position:fixed;z-index:2500;inset:0;padding:16px;display:grid;place-items:center;
@@ -558,7 +534,6 @@ option{background:#17191e}
 .detail-section{margin-top:18px}
 .detail-section h3{margin-bottom:7px;font-size:.9rem}
 .detail-section p{color:var(--muted);font-size:.73rem}
-
 /* Toast */
 .toast{
   position:fixed;z-index:4000;right:20px;bottom:20px;max-width:380px;
@@ -569,7 +544,6 @@ option{background:#17191e}
 .toast.show{opacity:1;visibility:visible;transform:none}
 .toast strong{color:var(--gold-light)}
 .toast small{color:var(--muted)}
-
 /* Admin */
 .admin-panel{
   position:fixed;z-index:3500;top:0;right:0;width:min(480px,100%);height:100vh;
@@ -595,7 +569,6 @@ option{background:#17191e}
 .admin-tour strong{font-size:.68rem}
 .admin-tour span{display:block;color:var(--muted);font-size:.58rem}
 .admin-json{min-height:360px!important;font:12px/1.6 monospace;direction:ltr;text-align:left}
-
 /* Responsive */
 @media(max-width:1050px){
   .nav{
@@ -665,10 +638,8 @@ option{background:#17191e}
 }
 </style>
 </head>
-
 <body>
 <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
-
 <div class="topbar">
   <div class="container topbar-inner">
     <div class="live-status"><span class="live-dot"></span><span>مرکز خدمات سفر نوروتور فعال است</span></div>
@@ -679,15 +650,13 @@ option{background:#17191e}
     </div>
   </div>
 </div>
-
 <header class="header" id="header">
   <div class="container header-inner">
     <a class="brand" href="#home" aria-label="صفحه اصلی نوروتور">
       <!-- جایگزینی لوگوی رسمی: مقدار logoUrl را در پنل مدیریت وارد کنید -->
-      <span class="brand-logo" id="brandLogo"><i data-lucide="compass"></i></span>
+      <span class="brand-logo" id="brandLogo"><img src="images/logo.png" alt="لوگوی نوروتور"></span>
       <span class="brand-copy"><strong data-bind="brandName">نوروتور</strong><small data-bind="tagline">سفر فراتر از انتظار</small></span>
     </a>
-
     <nav class="nav" id="nav" aria-label="منوی اصلی">
       <a href="#home">خانه</a>
       <a href="#tours">تورها</a>
@@ -697,7 +666,6 @@ option{background:#17191e}
       <a href="#about">درباره ما</a>
       <a href="#contact">تماس</a>
     </nav>
-
     <div class="header-actions">
       <a class="header-phone" data-phone-link href="tel:+982100000000" data-bind="phone">۰۲۱-۰۰۰۰۰۰۰۰</a>
       <button class="btn btn-gold" data-booking><i data-lucide="calendar-check"></i>رزرو سریع</button>
@@ -705,7 +673,6 @@ option{background:#17191e}
     </div>
   </div>
 </header>
-
 <main id="main">
   <section class="hero" id="home">
     <div class="hero-glow"></div>
@@ -716,12 +683,10 @@ option{background:#17191e}
         تورهای اختصاصی داخلی و خارجی، پرواز، هتل، ویزا و خدمات کامل سفر؛
         از نخستین گفت‌وگو تا بازگشت، همراه مطمئن شما هستیم.
       </p>
-
       <div class="hero-actions">
         <a class="btn btn-gold" href="#tours"><i data-lucide="luggage"></i>مشاهده تورها</a>
         <button class="btn btn-outline" data-booking><i data-lucide="headphones"></i>مشاوره رایگان سفر</button>
       </div>
-
       <div class="hero-stats" aria-label="آمار نوروتور">
         <div class="hero-stat"><strong class="counter" data-target="12" data-suffix="+ سال">۰</strong><span>تجربه تخصصی</span></div>
         <div class="hero-stat"><strong class="counter" data-target="18000" data-suffix="+">۰</strong><span>مسافر همراه</span></div>
@@ -730,7 +695,6 @@ option{background:#17191e}
       </div>
     </div>
   </section>
-
   <div class="search-shell">
     <div class="container">
       <div class="search-box">
@@ -739,7 +703,6 @@ option{background:#17191e}
           <button class="search-tab" data-search-type="flight"><i data-lucide="plane"></i>پرواز</button>
           <button class="search-tab" data-search-type="visa"><i data-lucide="stamp"></i>خدمات ویزا</button>
         </div>
-
         <form class="search-form" id="searchForm">
           <div class="field">
             <label for="searchOrigin">مبدأ</label>
@@ -767,7 +730,6 @@ option{background:#17191e}
           <button class="btn btn-gold"><i data-lucide="search"></i>جست‌وجو</button>
         </form>
       </div>
-
       <div class="trust">
         <div class="trust-grid">
           <div class="trust-item"><i data-lucide="badge-check"></i><div><strong>مجری مستقیم</strong><span>قیمت و خدمات شفاف</span></div></div>
@@ -778,7 +740,6 @@ option{background:#17191e}
       </div>
     </div>
   </div>
-
   <section class="section reveal" id="today">
     <div class="container">
       <div class="heading">
@@ -788,7 +749,6 @@ option{background:#17191e}
           <p class="subtitle">اطلاعات روز، پیشنهادهای فعال و ابزارهای کاربردی برنامه‌ریزی سفر.</p>
         </div>
       </div>
-
       <div class="today-grid">
         <article class="live-card">
           <div class="live-card-head"><h3>زمان و تاریخ</h3><span>تهران</span></div>
@@ -797,32 +757,27 @@ option{background:#17191e}
           <div class="full-date" id="fullPersianDate">—</div>
           <div class="full-date" id="fullGregorianDate">—</div>
         </article>
-
         <article class="live-card">
           <div class="live-card-head"><h3>آب‌وهوای مقصدها</h3><span>دموی پیش‌راه‌اندازی</span></div>
           <div class="weather-row" id="weatherList"></div>
           <small class="data-note">اطلاعات نمایشی است؛ اتصال API هواشناسی در نسخه عملیاتی انجام می‌شود.</small>
         </article>
-
         <article class="live-card">
           <div class="live-card-head"><h3>نرخ‌های سفر</h3><span id="rateUpdate">به‌روزرسانی امروز</span></div>
           <div class="rates" id="rateList"></div>
           <small class="data-note">نرخ‌ها نمونه و غیرقابل استناد برای معامله هستند.</small>
         </article>
-
         <article class="live-card">
           <div class="live-card-head"><h3 id="calendarTitle">تقویم فارسی</h3><span>امروز</span></div>
           <div class="calendar-week"><span>ش</span><span>ی</span><span>د</span><span>س</span><span>چ</span><span>پ</span><span>ج</span></div>
           <div class="calendar-days" id="calendarDays"></div>
         </article>
-
         <article class="live-card">
           <div class="live-card-head"><h3>پیشنهاد امروز</h3><span class="gold">ظرفیت محدود</span></div>
           <h3 id="dailyTourTitle">تور ویژه امروز</h3>
           <p class="muted" id="dailyTourDescription" style="font-size:.75rem;margin:8px 0 18px"></p>
           <button class="btn btn-outline btn-small" id="dailyTourButton">مشاهده پیشنهاد</button>
         </article>
-
         <article class="live-card">
           <div class="live-card-head"><h3>راهنمای سریع سفر</h3><span>نکته روز</span></div>
           <div style="display:flex;gap:11px;align-items:flex-start">
@@ -833,7 +788,6 @@ option{background:#17191e}
       </div>
     </div>
   </section>
-
   <section class="section section-dark reveal" id="tours">
     <div class="container">
       <div class="heading">
@@ -844,7 +798,6 @@ option{background:#17191e}
         </div>
         <strong class="gold"><span id="tourCount">۰</span> برنامه سفر</strong>
       </div>
-
       <div class="tour-toolbar">
         <div class="pills" id="tourFilters">
           <button class="pill active" data-filter="all">همه تورها</button>
@@ -862,7 +815,6 @@ option{background:#17191e}
           <option value="date">نزدیک‌ترین حرکت</option>
         </select>
       </div>
-
       <div class="tour-grid" id="tourGrid"></div>
       <div class="empty hidden" id="tourEmpty">
         <i data-lucide="map-pin-off"></i>
@@ -872,7 +824,6 @@ option{background:#17191e}
       </div>
     </div>
   </section>
-
   <section class="section reveal">
     <div class="container">
       <div class="offer">
@@ -891,7 +842,6 @@ option{background:#17191e}
       </div>
     </div>
   </section>
-
   <section class="section section-dark reveal" id="services">
     <div class="container">
       <div class="heading center">
@@ -904,7 +854,6 @@ option{background:#17191e}
       <div class="service-grid" id="serviceGrid"></div>
     </div>
   </section>
-
   <section class="section reveal" id="gallery">
     <div class="container">
       <div class="heading">
@@ -917,7 +866,6 @@ option{background:#17191e}
       <div class="gallery-grid" id="galleryGrid"></div>
     </div>
   </section>
-
   <section class="section section-dark reveal" id="news">
     <div class="container">
       <div class="heading">
@@ -936,7 +884,6 @@ option{background:#17191e}
       <div class="news-grid" id="newsGrid"></div>
     </div>
   </section>
-
   <section class="section reveal" id="blog">
     <div class="container">
       <div class="heading">
@@ -949,7 +896,6 @@ option{background:#17191e}
       <div class="blog-grid" id="blogGrid"></div>
     </div>
   </section>
-
   <section class="section section-dark reveal" id="reviews">
     <div class="container">
       <div class="heading center">
@@ -962,14 +908,12 @@ option{background:#17191e}
       <div class="review-grid" id="reviewGrid"></div>
     </div>
   </section>
-
   <section class="section reveal" id="about">
     <div class="container about-grid">
       <div class="about-visual">
-        <img loading="lazy" src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1100&q=80" alt="تیم مشاوران سفر نوروتور">
+        <img loading="lazy" src="images/about.jpg" alt="تیم مشاوران سفر نوروتور">
         <div class="about-badge"><strong>+۱۸,۰۰۰</strong><span>تجربه سفر برنامه‌ریزی‌شده و همراهی مسافران</span></div>
       </div>
-
       <div class="about-copy">
         <span class="eyebrow">درباره نوروتور</span>
         <h2 class="title">برای سفرهایی فراتر از انتظار</h2>
@@ -979,14 +923,12 @@ option{background:#17191e}
         </p>
         <p><strong class="gold">مأموریت:</strong> <span data-bind="mission">ساده‌تر، مطمئن‌تر و لذت‌بخش‌تر کردن مسیر سفر.</span></p>
         <p><strong class="gold">چشم‌انداز:</strong> <span data-bind="vision">تبدیل‌شدن به یکی از قابل‌اعتمادترین برندهای خدمات سفر فارسی‌زبان.</span></p>
-
         <div class="values">
           <div class="value"><i data-lucide="shield-check"></i><div><strong>شفافیت</strong><span>اطلاعات روشن و قرارداد قابل پیگیری</span></div></div>
           <div class="value"><i data-lucide="gem"></i><div><strong>کیفیت</strong><span>انتخاب دقیق شرکای خدماتی</span></div></div>
           <div class="value"><i data-lucide="heart-handshake"></i><div><strong>همراهی</strong><span>پشتیبانی انسانی و مسئولانه</span></div></div>
           <div class="value"><i data-lucide="route"></i><div><strong>تخصص</strong><span>طراحی سفر متناسب با نیاز مسافر</span></div></div>
         </div>
-
         <div class="licenses">
           <div class="license-placeholder">جایگاه مجوز گردشگری</div>
           <div class="license-placeholder">جایگاه گواهینامه</div>
@@ -995,7 +937,6 @@ option{background:#17191e}
       </div>
     </div>
   </section>
-
   <section class="section section-dark reveal" id="faq">
     <div class="container">
       <div class="heading center">
@@ -1007,7 +948,6 @@ option{background:#17191e}
       <div class="faq-list" id="faqList"></div>
     </div>
   </section>
-
   <section class="section reveal" id="contact">
     <div class="container">
       <div class="heading">
@@ -1017,7 +957,6 @@ option{background:#17191e}
           <p class="subtitle">مقصد، بودجه و سبک سفر خود را بگویید تا کارشناسان نوروتور برنامه مناسب را پیشنهاد دهند.</p>
         </div>
       </div>
-
       <div class="contact-grid">
         <div class="contact-card">
           <h3>دفتر مرکزی نوروتور</h3>
@@ -1032,7 +971,6 @@ option{background:#17191e}
           </div>
           <div class="map-placeholder"><span><i data-lucide="map"></i><br>جایگاه نقشه Google Maps<br>قابل جایگزینی با Embed رسمی</span></div>
         </div>
-
         <form class="contact-form success-form">
           <h3>درخواست مشاوره سفر</h3>
           <p class="muted" style="font-size:.72rem;margin-bottom:17px">اطلاعات خود را ثبت کنید؛ کارشناس سفر با شما تماس می‌گیرد.</p>
@@ -1049,17 +987,16 @@ option{background:#17191e}
     </div>
   </section>
 </main>
-
 <footer class="footer">
   <div class="container footer-grid">
     <div>
       <a class="brand" href="#home">
-        <span class="brand-logo"><i data-lucide="compass"></i></span>
+        <span class="brand-logo"><img src="images/logo.png" alt="لوگوی نوروتور"></span>
         <span class="brand-copy"><strong data-bind="brandName">نوروتور</strong><small data-bind="tagline">سفر فراتر از انتظار</small></span>
       </a>
       <p style="margin-top:15px">طراحی سفرهای داخلی و خارجی و ارائه خدمات پرواز، هتل، ویزا و پشتیبانی تخصصی.</p>
       <div class="socials">
-        <a data-instagram-link href="#" aria-label="اینستاگرام"><i data-lucide="instagram"></i></a>
+        
         <a data-telegram-link href="#" aria-label="تلگرام"><i data-lucide="send"></i></a>
         <a data-whatsapp-link href="#" aria-label="واتساپ"><i data-lucide="message-circle"></i></a>
       </div>
@@ -1073,7 +1010,6 @@ option{background:#17191e}
     <span>نسخه پیش‌راه‌اندازی تجاری · قیمت‌ها و اطلاعات نیازمند تأیید نهایی</span>
   </div>
 </footer>
-
 <!-- Tour details -->
 <div class="modal" id="detailModal" aria-hidden="true">
   <div class="modal-backdrop" data-close-modal></div>
@@ -1082,7 +1018,6 @@ option{background:#17191e}
     <div id="detailContent"></div>
   </div>
 </div>
-
 <!-- Booking -->
 <div class="modal" id="bookingModal" aria-hidden="true">
   <div class="modal-backdrop" data-close-modal></div>
@@ -1093,7 +1028,6 @@ option{background:#17191e}
       <h2 id="bookingTitle">سفر بعدی خود را آغاز کنید</h2>
       <p>ثبت فرم به معنی رزرو قطعی نیست؛ کارشناس برای بررسی ظرفیت و قیمت تماس می‌گیرد.</p>
     </div>
-
     <form class="success-form" id="bookingForm" style="margin-top:20px">
       <div class="form-grid">
         <div class="field"><label>نام و نام خانوادگی</label><input required autocomplete="name" placeholder="نام کامل"></div>
@@ -1108,21 +1042,1830 @@ option{background:#17191e}
     </form>
   </div>
 </div>
-
 <!-- Local admin: Ctrl + Shift + A -->
 <aside class="admin-panel" id="adminPanel" aria-hidden="true">
   <div class="admin-head">
     <div><strong class="gold">NOUROTOUR Local Admin</strong><small class="muted" style="display:block">ذخیره محلی بدون سرور</small></div>
     <button class="icon-btn" id="closeAdmin" aria-label="بستن مدیریت"><i data-lucide="x"></i></button>
   </div>
-
   <div class="admin-tabs">
     <button class="pill active" data-admin-tab="general">عمومی</button>
     <button class="pill" data-admin-tab="tours">تورها</button>
     <button class="pill" data-admin-tab="content">محتوا</button>
     <button class="pill" data-admin-tab="json">JSON</button>
   </div>
-
   <section class="admin-section active" data-admin-section="general">
     <form id="generalAdminForm" class="admin-card">
-      <h3>هویت و اطلاعات تماس</h3>
+      <h3>هویت و اطلاعات تماس</h3>      <div class="field">
+        <label for="adminBrandName">نام برند</label>
+        <input id="adminBrandName" name="brandName" required>
+      </div>
+      <div class="field">
+        <label for="adminTagline">شعار برند</label>
+        <input id="adminTagline" name="tagline">
+      </div>
+      <div class="field">
+        <label for="adminLogoUrl">نشانی لوگوی رسمی</label>
+        <input id="adminLogoUrl" name="logoUrl" type="url" dir="ltr" placeholder="https://example.com/logo.svg">
+      </div>
+      <div class="field">
+        <label for="adminPhone">تلفن دفتر</label>
+        <input id="adminPhone" name="phone" placeholder="۰۲۱-۰۰۰۰۰۰۰۰">
+      </div>
+      <div class="field">
+        <label for="adminEmergency">شماره اضطراری</label>
+        <input id="adminEmergency" name="emergency" placeholder="۰۹۱۲-۰۰۰۰۰۰۰">
+      </div>
+      <div class="field">
+        <label for="adminWhatsapp">واتساپ</label>
+        <input id="adminWhatsapp" name="whatsapp" placeholder="۰۹۱۲-۰۰۰۰۰۰۰">
+      </div>
+      <div class="field">
+        <label for="adminTelegram">تلگرام</label>
+        <input id="adminTelegram" name="telegram" placeholder="@NOUROTOUR">
+      </div>
+      <div class="field">
+        <label for="adminEmail">ایمیل</label>
+        <input id="adminEmail" name="email" type="email" dir="ltr">
+      </div>
+      <div class="field">
+        <label for="adminAddress">آدرس دفتر</label>
+        <textarea id="adminAddress" name="address" rows="3"></textarea>
+      </div>
+      <div class="field">
+        <label for="adminWorkingHours">ساعات کاری</label>
+        <input id="adminWorkingHours" name="workingHours">
+      </div>
+      <div class="admin-actions">
+        <button class="btn btn-gold btn-small" type="submit">ذخیره اطلاعات</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="admin-section" data-admin-section="tours">
+    <form id="tourAdminForm" class="admin-card">
+      <h3>افزودن تور جدید</h3>
+
+      <div class="form-grid">
+        <div class="field">
+          <label for="adminTourTitle">عنوان تور</label>
+          <input id="adminTourTitle" name="title" required>
+        </div>
+        <div class="field">
+          <label for="adminTourCountry">کشور</label>
+          <input id="adminTourCountry" name="country" required>
+        </div>
+        <div class="field">
+          <label for="adminTourCity">شهر</label>
+          <input id="adminTourCity" name="city" required>
+        </div>
+        <div class="field">
+          <label for="adminTourType">نوع تور</label>
+          <select id="adminTourType" name="type">
+            <option value="international">خارجی</option>
+            <option value="domestic">داخلی</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="adminTourDays">مدت سفر</label>
+          <input id="adminTourDays" name="days" type="number" min="1" value="4" required>
+        </div>
+        <div class="field">
+          <label for="adminTourPrice">قیمت، تومان</label>
+          <input id="adminTourPrice" name="price" type="number" min="0" required>
+        </div>
+        <div class="field">
+          <label for="adminTourDiscount">درصد تخفیف</label>
+          <input id="adminTourDiscount" name="discount" type="number" min="0" max="90" value="0">
+        </div>
+        <div class="field">
+          <label for="adminTourDate">تاریخ حرکت</label>
+          <input id="adminTourDate" name="date" type="date" required>
+        </div>
+        <div class="field">
+          <label for="adminTourHotel">هتل</label>
+          <input id="adminTourHotel" name="hotel" placeholder="هتل ۵ ستاره">
+        </div>
+        <div class="field">
+          <label for="adminTourAirline">هواپیمایی</label>
+          <input id="adminTourAirline" name="airline">
+        </div>
+        <div class="field">
+          <label for="adminTourCapacity">ظرفیت باقی‌مانده</label>
+          <input id="adminTourCapacity" name="capacity" type="number" min="0" value="10">
+        </div>
+        <div class="field">
+          <label for="adminTourRating">امتیاز</label>
+          <input id="adminTourRating" name="rating" type="number" min="1" max="5" step=".1" value="4.8">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="adminTourImage">نشانی تصویر</label>
+        <input id="adminTourImage" name="image" type="url" dir="ltr">
+      </div>
+      <div class="field">
+        <label for="adminTourDescription">توضیحات</label>
+        <textarea id="adminTourDescription" name="description" rows="3"></textarea>
+      </div>
+      <div class="field">
+        <label for="adminTourServices">خدمات با کاما جدا شوند</label>
+        <input id="adminTourServices" name="services" placeholder="صبحانه، ترانسفر، راهنمای فارسی">
+      </div>
+
+      <div class="admin-actions">
+        <button class="btn btn-gold btn-small" type="submit">افزودن تور</button>
+      </div>
+    </form>
+
+    <div class="admin-card">
+      <h3>مدیریت تورها</h3>
+      <div id="adminTourList"></div>
+    </div>
+  </section>
+
+  <section class="admin-section" data-admin-section="content">
+    <form id="contentAdminForm" class="admin-card">
+      <h3>درباره شرکت</h3>
+      <div class="field">
+        <label for="adminAboutIntro">معرفی شرکت</label>
+        <textarea id="adminAboutIntro" name="aboutIntro" rows="5"></textarea>
+      </div>
+      <div class="field">
+        <label for="adminMission">مأموریت</label>
+        <textarea id="adminMission" name="mission" rows="3"></textarea>
+      </div>
+      <div class="field">
+        <label for="adminVision">چشم‌انداز</label>
+        <textarea id="adminVision" name="vision" rows="3"></textarea>
+      </div>
+      <div class="admin-actions">
+        <button class="btn btn-gold btn-small" type="submit">ذخیره محتوا</button>
+      </div>
+    </form>
+
+    <div class="admin-card">
+      <h3>اطلاعات سیستم</h3>
+      <p class="muted" style="font-size:.68rem">
+        برای ویرایش خدمات، گالری، اخبار، وبلاگ، نظرات، FAQ، آب‌وهوا و نرخ‌ها
+        از بخش JSON استفاده کنید.
+      </p>
+    </div>
+  </section>
+
+  <section class="admin-section" data-admin-section="json">
+    <div class="admin-card">
+      <h3>پشتیبان‌گیری و ویرایش کامل داده‌ها</h3>
+      <p class="muted" style="font-size:.65rem;margin-bottom:10px">
+        محتوای زیر مستقیماً در LocalStorage ذخیره می‌شود. پیش از ویرایش نسخه پشتیبان بگیرید.
+      </p>
+      <div class="field">
+        <label for="adminJson">داده‌های کامل پروژه</label>
+        <textarea id="adminJson" class="admin-json" spellcheck="false"></textarea>
+      </div>
+      <div class="admin-actions">
+        <button class="btn btn-gold btn-small" id="saveJson" type="button">ذخیره JSON</button>
+        <button class="btn btn-ghost btn-small" id="exportJson" type="button">دریافت پشتیبان</button>
+        <label class="btn btn-ghost btn-small" for="importJson">ورود پشتیبان</label>
+        <input class="hidden" id="importJson" type="file" accept="application/json">
+        <button class="btn btn-danger btn-small" id="resetData" type="button">بازنشانی کامل</button>
+      </div>
+    </div>
+  </section>
+</aside>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <strong id="toastTitle">انجام شد</strong><br>
+  <small id="toastMessage">تغییرات با موفقیت ذخیره شد.</small>
+</div>
+
+<script>
+"use strict";
+
+document.addEventListener("DOMContentLoaded", () => {
+  const STORAGE_KEY = "nourotour_data_v1";
+  const FAVORITES_KEY = "nourotour_favorites_v1";
+  const OFFER_KEY = "nourotour_offer_end_v1";
+
+  const $ = (selector, context = document) => context.querySelector(selector);
+  const $$ = (selector, context = document) => [...context.querySelectorAll(selector)];
+
+  const faNumber = value =>
+    Number(value || 0).toLocaleString("fa-IR");
+
+  const faDigits = value =>
+    String(value).replace(/\d/g, number => "۰۱۲۳۴۵۶۷۸۹"[number]);
+
+  const escapeHTML = value =>
+    String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+  const slugPhone = value =>
+    String(value || "").replace(/[^\d+]/g, "");
+
+  const defaultData = {
+    general: {
+      brandName: "نوروتور",
+      tagline: "سفر فراتر از انتظار",
+      logoUrl: "images/logo.png",
+      phone: "۰۲۱-۰۰۰۰۰۰۰۰",
+      emergency: "۰۹۱۲-۰۰۰۰۰۰۰",
+      whatsapp: "۰۹۱۲-۰۰۰۰۰۰۰",
+      telegram: "@NOUROTOUR",
+      
+      email: "info@noorotour.com",
+      address: "تهران، آدرس دفتر مرکزی نوروتور",
+      workingHours: "شنبه تا پنج‌شنبه، ۹ تا ۱۸",
+      aboutIntro: "نوروتور مجموعه‌ای تخصصی در حوزه گردشگری و خدمات سفر است که با تمرکز بر شفافیت، طراحی دقیق برنامه سفر و پشتیبانی مسئولانه فعالیت می‌کند.",
+      mission: "ساده‌تر، مطمئن‌تر و لذت‌بخش‌تر کردن مسیر سفر.",
+      vision: "تبدیل‌شدن به یکی از قابل‌اعتمادترین برندهای خدمات سفر فارسی‌زبان."
+    },
+
+    tours: [
+      {
+        id: 1,
+        title: "تور لوکس استانبول",
+        country: "ترکیه",
+        city: "استانبول",
+        type: "international",
+        tags: ["trending", "bestseller", "recommended"],
+        badge: "پرفروش",
+        days: 5,
+        nights: 4,
+        date: "2026-09-12",
+        price: 58900000,
+        discount: 8,
+        rating: 4.9,
+        capacity: 7,
+        hotel: "هتل CVK Park Bosphorus",
+        airline: "ترکیش ایرلاینز",
+        services: ["صبحانه", "ترانسفر فرودگاهی", "گشت شهری", "راهنمای فارسی"],
+        description: "اقامتی ممتاز در قلب استانبول همراه با گشت بسفر، محله بالات و مراکز خرید منتخب.",
+        highlights: ["گشت اختصاصی بسفر", "بازدید از سلطان احمد", "خرید از مراکز منتخب", "پشتیبانی فارسی‌زبان"],
+        image: "images/tour-istanbul.jpg",
+        gallery: [
+          "images/tour-istanbul.jpg",
+          "images/istanbul-gallery.jpg"
+        ]
+      },
+      {
+        id: 2,
+        title: "تور ممتاز دبی",
+        country: "امارات",
+        city: "دبی",
+        type: "international",
+        tags: ["trending", "recommended"],
+        badge: "لوکس",
+        days: 4,
+        nights: 3,
+        date: "2026-09-20",
+        price: 69500000,
+        discount: 5,
+        rating: 4.8,
+        capacity: 5,
+        hotel: "هتل ۵ ستاره Marina",
+        airline: "امارات",
+        services: ["صبحانه", "ترانسفر", "بیمه سفر", "گشت شهری"],
+        description: "سفر خانوادگی به دبی با اقامت ممتاز، ترانسفر اختصاصی و برنامه تفریحی انعطاف‌پذیر.",
+        highlights: ["برج خلیفه", "دبی مال", "مارینا", "تور صحرای اختیاری"],
+        image: "images/tour-dubai.jpg",
+        gallery: []
+      },
+      {
+        id: 3,
+        title: "آنتالیا؛ ساحل مدیترانه",
+        country: "ترکیه",
+        city: "آنتالیا",
+        type: "international",
+        tags: ["bestseller", "recommended"],
+        badge: "خانوادگی",
+        days: 7,
+        nights: 6,
+        date: "2026-09-26",
+        price: 82400000,
+        discount: 10,
+        rating: 4.8,
+        capacity: 9,
+        hotel: "هتل UALL پنج ستاره",
+        airline: "پگاسوس",
+        services: ["خدمات UALL", "ترانسفر", "بیمه سفر"],
+        description: "هفت روز استراحت در ساحل مدیترانه با خدمات کامل هتل و برنامه مناسب خانواده.",
+        highlights: ["ساحل اختصاصی", "خدمات UALL", "تفریحات هتل", "ترانسفر رفت‌وبرگشت"],
+        image: "images/tour-antalya.jpg",
+        gallery: []
+      },
+      {
+        id: 4,
+        title: "تفلیس و طبیعت گرجستان",
+        country: "گرجستان",
+        city: "تفلیس",
+        type: "international",
+        tags: ["trending"],
+        badge: "طبیعت‌گردی",
+        days: 6,
+        nights: 5,
+        date: "2026-10-03",
+        price: 47500000,
+        discount: 6,
+        rating: 4.7,
+        capacity: 12,
+        hotel: "هتل ۴ ستاره مرکز شهر",
+        airline: "وارش",
+        services: ["صبحانه", "گشت شهری", "راهنمای فارسی"],
+        description: "ترکیبی از بافت تاریخی تفلیس، طبیعت قفقاز و تجربه غذاهای محلی گرجستان.",
+        highlights: ["تفلیس قدیم", "کازبگی", "میدان آزادی", "بازار محلی"],
+        image: "images/tour-tbilisi.jpg",
+        gallery: []
+      },
+      {
+        id: 5,
+        title: "بانکوک و پوکت",
+        country: "تایلند",
+        city: "بانکوک",
+        type: "international",
+        tags: ["recommended", "bestseller"],
+        badge: "ترکیبی",
+        days: 9,
+        nights: 8,
+        date: "2026-10-15",
+        price: 129500000,
+        discount: 7,
+        rating: 4.9,
+        capacity: 6,
+        hotel: "هتل‌های ۵ و ۴ ستاره",
+        airline: "قطر ایرویز",
+        services: ["صبحانه", "پرواز داخلی", "ترانسفر", "راهنمای فارسی"],
+        description: "تور ترکیبی شهر و ساحل با اقامت در بانکوک و پوکت و برنامه‌های متنوع تفریحی.",
+        highlights: ["جزایر فی‌فی", "معبد وات آرون", "بازارهای بانکوک", "ساحل پوکت"],
+        image: "images/tour-bangkok.jpg",
+        gallery: []
+      },
+      {
+        id: 6,
+        title: "کیش؛ تعطیلات طلایی",
+        country: "ایران",
+        city: "کیش",
+        type: "domestic",
+        tags: ["trending", "bestseller"],
+        badge: "داخلی",
+        days: 4,
+        nights: 3,
+        date: "2026-09-08",
+        price: 19800000,
+        discount: 4,
+        rating: 4.8,
+        capacity: 14,
+        hotel: "هتل داریوش",
+        airline: "کیش ایر",
+        services: ["صبحانه", "استقبال فرودگاهی", "تخفیف تفریحات"],
+        description: "اقامت آرام در جزیره کیش با دسترسی مناسب به ساحل و مراکز تفریحی.",
+        highlights: ["ساحل مرجان", "کشتی تفریحی", "مراکز خرید", "دوچرخه‌سواری ساحلی"],
+        image: "images/tour-kish.jpg",
+        gallery: []
+      },
+      {
+        id: 7,
+        title: "قشم و جزایر ناز",
+        country: "ایران",
+        city: "قشم",
+        type: "domestic",
+        tags: ["recommended"],
+        badge: "ماجراجویی",
+        days: 4,
+        nights: 3,
+        date: "2026-10-01",
+        price: 17400000,
+        discount: 0,
+        rating: 4.7,
+        capacity: 16,
+        hotel: "هتل آرتا",
+        airline: "قشم ایر",
+        services: ["صبحانه", "گشت جزیره", "راهنمای محلی"],
+        description: "سفر به شگفتی‌های ژئوپارک قشم، دره ستارگان، جنگل حرا و جزایر ناز.",
+        highlights: ["دره ستارگان", "جنگل حرا", "جزایر ناز", "تنگه چاهکوه"],
+        image: "images/tour-qeshm.jpg",
+        gallery: []
+      },
+      {
+        id: 8,
+        title: "شیراز؛ مسیر شعر و تاریخ",
+        country: "ایران",
+        city: "شیراز",
+        type: "domestic",
+        tags: ["recommended"],
+        badge: "فرهنگی",
+        days: 4,
+        nights: 3,
+        date: "2026-10-09",
+        price: 14900000,
+        discount: 3,
+        rating: 4.9,
+        capacity: 11,
+        hotel: "بوتیک هتل سنتی",
+        airline: "ماهان",
+        services: ["صبحانه", "گشت شهری", "راهنمای فرهنگی"],
+        description: "تجربه‌ای فرهنگی میان باغ‌های شیراز، حافظیه، تخت جمشید و بافت تاریخی.",
+        highlights: ["تخت جمشید", "حافظیه", "باغ ارم", "مسجد نصیرالملک"],
+        image: "images/tour-shiraz.jpg",
+        gallery: []
+      },
+      {
+        id: 9,
+        title: "مشهد؛ سفر آرامش",
+        country: "ایران",
+        city: "مشهد",
+        type: "domestic",
+        tags: ["bestseller"],
+        badge: "زیارتی",
+        days: 3,
+        nights: 2,
+        date: "2026-09-16",
+        price: 12800000,
+        discount: 5,
+        rating: 4.8,
+        capacity: 18,
+        hotel: "هتل ۵ ستاره نزدیک حرم",
+        airline: "ایران ایرتور",
+        services: ["صبحانه", "ناهار", "ترانسفر فرودگاهی"],
+        description: "سفر برنامه‌ریزی‌شده به مشهد با اقامت نزدیک حرم و خدمات مناسب خانواده.",
+        highlights: ["اقامت نزدیک حرم", "ترانسفر", "پشتیبانی سفر", "اتاق خانوادگی"],
+        image: "images/tour-mashhad.jpg",
+        gallery: []
+      },
+      {
+        id: 10,
+        title: "یزد؛ اقامت در دل تاریخ",
+        country: "ایران",
+        city: "یزد",
+        type: "domestic",
+        tags: ["trending"],
+        badge: "میراث جهانی",
+        days: 3,
+        nights: 2,
+        date: "2026-10-22",
+        price: 11900000,
+        discount: 0,
+        rating: 4.7,
+        capacity: 10,
+        hotel: "خانه تاریخی مرمت‌شده",
+        airline: "ایران ایر",
+        services: ["صبحانه", "گشت بافت تاریخی", "راهنما"],
+        description: "قدم‌زدن در کوچه‌های خشتی، بازدید از بادگیرها و اقامت در خانه‌ای تاریخی.",
+        highlights: ["بافت تاریخی", "باغ دولت‌آباد", "میدان امیرچخماق", "کویر"],
+        image: "images/tour-yazd.jpg",
+        gallery: []
+      }
+    ],
+
+    services: [
+      { icon: "landmark", title: "ویزا و وقت سفارت", text: "بررسی مدارک، تکمیل فرم، رزرو وقت و پیگیری پرونده‌های توریستی، تحصیلی و تجاری.", link: "#contact", action: "درخواست مشاوره" },
+      { icon: "plane-takeoff", title: "تور و پرواز", text: "طراحی سفر شخصی و سازمانی، رزرو پرواز، هتل، ترانسفر و برنامه‌های تفریحی.", link: "#tours", action: "مشاهده تورها" },
+      { icon: "hotel", title: "رزرو هتل", text: "رزرو هتل‌های معتبر داخلی و خارجی متناسب با بودجه و سبک سفر شما.", link: "#contact", action: "استعلام هتل" },
+      { icon: "shield-plus", title: "بیمه مسافرتی", text: "صدور بیمه معتبر برای سفرهای بین‌المللی با پوشش‌های متناسب با مقصد.", link: "#contact", action: "دریافت بیمه" },
+      { icon: "briefcase-business", title: "سفرهای سازمانی", text: "مدیریت سفرهای نمایشگاهی، تجاری و شرکتی همراه با گزارش و پشتیبانی.", link: "#contact", action: "همکاری سازمانی" },
+      { icon: "route", title: "طراحی سفر اختصاصی", text: "ساخت برنامه سفر شخصی بر اساس زمان، بودجه، علایق و تعداد مسافران.", link: "#contact", action: "طراحی سفر" }
+    ],
+
+    gallery: [
+      { city: "استانبول", title: "از بسفر تا کوچه‌های بالات", image: "images/tour-istanbul.jpg" },
+      { city: "دبی", title: "معماری آینده", image: "images/tour-dubai.jpg" },
+      { city: "تایلند", title: "آرامش سواحل گرمسیری", image: "images/gallery-beach.jpg" },
+      { city: "کیش", title: "آبی بی‌پایان خلیج فارس", image: "images/gallery-kish.jpg" },
+      { city: "شیراز", title: "قصه باغ و تاریخ", image: "images/tour-shiraz.jpg" }
+    ],
+
+    news: [
+      { type: "tourism", label: "گردشگری", title: "افزایش تقاضا برای سفرهای پاییزی", text: "مقصدهای فرهنگی و طبیعت‌گردی در فهرست انتخاب‌های محبوب مسافران قرار گرفته‌اند.", date: "امروز" },
+      { type: "visa", label: "ویزا", title: "یادآوری زمان مناسب تشکیل پرونده ویزا", text: "برای کاهش ریسک تأخیر، بررسی مدارک را چند هفته پیش از تاریخ سفر آغاز کنید.", date: "امروز" },
+      { type: "airline", label: "هواپیمایی", title: "توصیه به بررسی بار مجاز پیش از پرواز", text: "میزان بار مجاز در ایرلاین‌ها و کلاس‌های پروازی متفاوت است.", date: "دیروز" },
+      { type: "tourism", label: "گردشگری", title: "تورهای ترکیبی در میان انتخاب‌های پرطرفدار", text: "ترکیب شهر و ساحل برای سفرهای یک‌هفته‌ای محبوبیت بیشتری پیدا کرده است.", date: "۲ روز پیش" },
+      { type: "visa", label: "ویزا", title: "اهمیت اعتبار گذرنامه", text: "پیش از رزرو قطعی، اعتبار گذرنامه و شرایط ورود مقصد را بررسی کنید.", date: "۳ روز پیش" },
+      { type: "airline", label: "هواپیمایی", title: "پیشنهاد رزرو زودهنگام پرواز", text: "در بازه‌های پرتردد، رزرو زودتر می‌تواند گزینه‌های زمانی بیشتری فراهم کند.", date: "۴ روز پیش" }
+    ],
+
+    blog: [
+      {
+        title: "راهنمای انتخاب هتل مناسب",
+        category: "برنامه‌ریزی سفر",
+        readTime: "۶ دقیقه مطالعه",
+        text: "موقعیت، نوع اتاق، وعده غذایی و دسترسی شهری چهار معیار مهم انتخاب هتل هستند.",
+        image: "images/blog-hotel.jpg"
+      },
+      {
+        title: "چطور چمدان سبک‌تری ببندیم؟",
+        category: "نکات سفر",
+        readTime: "۴ دقیقه مطالعه",
+        text: "با انتخاب لباس‌های ترکیبی و حذف وسایل تکراری، سفر راحت‌تر و کم‌هزینه‌تری خواهید داشت.",
+        image: "images/blog-luggage.jpg"
+      },
+      {
+        title: "دبی یا استانبول؛ کدام مقصد؟",
+        category: "انتخاب مقصد",
+        readTime: "۷ دقیقه مطالعه",
+        text: "سبک تفریح، فصل سفر، بودجه و مدت اقامت به شما در انتخاب بهتر کمک می‌کنند.",
+        image: "images/blog-destination.jpg"
+      }
+    ],
+
+    reviews: [
+      { name: "نگار محمدی", trip: "تور استانبول", text: "هماهنگی پرواز، هتل و ترانسفر بسیار منظم بود و در تمام سفر پاسخ‌گویی خوبی دریافت کردیم.", rating: 5 },
+      { name: "امیر رضایی", trip: "خدمات ویزا", text: "مدارک با دقت بررسی شد و مراحل پرونده به‌صورت شفاف و قابل پیگیری توضیح داده شد.", rating: 5 },
+      { name: "سارا نادری", trip: "تور دبی", text: "انتخاب هتل برای سفر خانوادگی عالی بود و برنامه پیشنهادی با نیاز ما کاملاً هماهنگ بود.", rating: 5 }
+    ],
+
+    faq: [
+      { question: "آیا قیمت درج‌شده تورها قطعی است؟", answer: "قیمت‌ها در نسخه پیش‌راه‌اندازی نمونه هستند. قیمت نهایی پس از بررسی ظرفیت پرواز، هتل، نرخ ارز و خدمات انتخابی تأیید می‌شود." },
+      { question: "ثبت فرم رزرو به معنی رزرو قطعی است؟", answer: "خیر. ثبت فرم یک درخواست اولیه است. رزرو پس از تماس کارشناس، تأیید ظرفیت، امضای قرارداد و پرداخت مبلغ مورد توافق قطعی خواهد شد." },
+      { question: "امکان پرداخت مرحله‌ای وجود دارد؟", answer: "برای برخی تورها و خدمات، بر اساس زمان باقی‌مانده تا سفر و شرایط قرارداد، امکان پرداخت مرحله‌ای در نظر گرفته می‌شود." },
+      { question: "برای دریافت ویزا چه مدارکی لازم است؟", answer: "مدارک بر اساس کشور مقصد و نوع ویزا متفاوت‌اند. پس از ارزیابی اولیه، چک‌لیست اختصاصی پرونده در اختیار شما قرار می‌گیرد." },
+      { question: "آیا بیمه مسافرتی در تورها وجود دارد؟", answer: "در تورهای خارجی بیمه متناسب با مقصد و مدت سفر ارائه می‌شود. جزئیات پوشش در قرارداد و بیمه‌نامه درج خواهد شد." },
+      { question: "در طول سفر چگونه پشتیبانی دریافت می‌کنیم؟", answer: "شماره پشتیبانی و اطلاعات مسئول هماهنگی پیش از حرکت ارائه می‌شود و در موارد ضروری همراه مسافر خواهد بود." }
+    ],
+
+    weather: [
+      { city: "استانبول", temp: "۲۴°", status: "نیمه‌ابری", icon: "cloud-sun" },
+      { city: "دبی", temp: "۳۷°", status: "آفتابی", icon: "sun" },
+      { city: "تفلیس", temp: "۲۲°", status: "معتدل", icon: "cloud" },
+      { city: "کیش", temp: "۳۳°", status: "صاف", icon: "sun-medium" }
+    ],
+
+    rates: [
+      { name: "دلار آمریکا", value: "نمونه ۸۹,۵۰۰", change: "نمایشی" },
+      { name: "یورو", value: "نمونه ۱۰۴,۰۰۰", change: "نمایشی" },
+      { name: "درهم امارات", value: "نمونه ۲۴,۴۰۰", change: "نمایشی" },
+      { name: "لیر ترکیه", value: "نمونه ۲,۱۸۰", change: "نمایشی" }
+    ],
+
+    tips: [
+      "پیش از خرید بلیت، املای نام انگلیسی مسافر را دقیقاً با گذرنامه تطبیق دهید.",
+      "تصویر گذرنامه، بیمه و واچر هتل را علاوه بر تلفن همراه در ایمیل خود نیز نگهداری کنید.",
+      "برای پرواز خارجی حداقل سه ساعت پیش از حرکت در فرودگاه حضور داشته باشید.",
+      "پیش از سفر، قوانین بار مجاز ایرلاین و محدودیت حمل مایعات را بررسی کنید.",
+      "برای هزینه‌های پیش‌بینی‌نشده، بخشی از بودجه سفر را جدا نگه دارید."
+    ]
+  };
+
+  function cloneDefaultData() {
+    return JSON.parse(JSON.stringify(defaultData));
+  }
+
+  function loadData() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      if (!saved || typeof saved !== "object") return cloneDefaultData();
+
+      return {
+        ...cloneDefaultData(),
+        ...saved,
+        general: {
+          ...defaultData.general,
+          ...(saved.general || {})
+        }
+      };
+    } catch {
+      return cloneDefaultData();
+    }
+  }
+
+  let siteData = loadData();
+  let activeTourFilter = "all";
+  let activeNewsFilter = "all";
+  let destinationFilter = "";
+  let activeModal = null;
+
+  function saveData() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(siteData));
+  }
+
+  function refreshIcons() {
+    if (window.lucide) {
+      window.lucide.createIcons({
+        attrs: {
+          "aria-hidden": "true"
+        }
+      });
+    }
+  }
+
+  function showToast(title, message) {
+    $("#toastTitle").textContent = title;
+    $("#toastMessage").textContent = message;
+    $("#toast").classList.add("show");
+
+    clearTimeout(showToast.timeout);
+    showToast.timeout = setTimeout(() => {
+      $("#toast").classList.remove("show");
+    }, 3800);
+  }
+
+  function updateGeneralContent() {
+    const general = siteData.general;
+
+    $$("[data-bind]").forEach(element => {
+      const key = element.dataset.bind;
+      if (key in general) element.textContent = general[key];
+    });
+
+    $$("[data-phone-link]").forEach(link => {
+      link.href = `tel:${slugPhone(general.phone)}`;
+    });
+
+    $$("[data-emergency-link]").forEach(link => {
+      link.href = `tel:${slugPhone(general.emergency)}`;
+    });
+
+    $$("[data-email-link]").forEach(link => {
+      link.href = `mailto:${general.email}`;
+    });
+
+    const whatsappNumber = slugPhone(general.whatsapp)
+      .replace(/^0/, "98")
+      .replace("+", "");
+
+    $$("[data-whatsapp-link]").forEach(link => {
+      link.href = whatsappNumber
+        ? `https://wa.me/${whatsappNumber}`
+        : "#";
+      link.target = "_blank";
+      link.rel = "noopener";
+    });
+
+    const telegramUsername = String(general.telegram || "")
+      .replace("@", "")
+      .trim();
+
+    $$("[data-telegram-link]").forEach(link => {
+      link.href = telegramUsername
+        ? `https://t.me/${telegramUsername}`
+        : "#";
+      link.target = "_blank";
+      link.rel = "noopener";
+    });
+
+    $$(".brand-logo").forEach(logo => {
+      if (general.logoUrl) {
+        logo.innerHTML = `<img src="${escapeHTML(general.logoUrl)}" alt="لوگوی ${escapeHTML(general.brandName)}">`;
+      } else {
+        logo.innerHTML = `<img src="images/logo.png" alt="لوگوی ${escapeHTML(general.brandName)}">`;
+      }
+    });
+
+    document.title = `${general.brandName} | ${general.tagline}`;
+  }
+
+  function discountedPrice(tour) {
+    return Math.round(tour.price * (1 - Number(tour.discount || 0) / 100));
+  }
+
+  function formatDate(dateString) {
+    if (!dateString) return "تاریخ منعطف";
+
+    try {
+      return new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      }).format(new Date(`${dateString}T12:00:00`));
+    } catch {
+      return dateString;
+    }
+  }
+
+  function renderDestinations() {
+    const destinationSelect = $("#searchDestination");
+    const currentValue = destinationSelect.value;
+
+    const destinations = [...new Set(
+      siteData.tours.map(tour => tour.city).filter(Boolean)
+    )].sort((a, b) => a.localeCompare(b, "fa"));
+
+    destinationSelect.innerHTML =
+      `<option value="">همه مقصدها</option>` +
+      destinations.map(city =>
+        `<option value="${escapeHTML(city)}">${escapeHTML(city)}</option>`
+      ).join("");
+
+    if (destinations.includes(currentValue)) {
+      destinationSelect.value = currentValue;
+    }
+
+    const bookingTour = $("#bookingTour");
+    const bookingCurrent = bookingTour.value;
+
+    bookingTour.innerHTML =
+      `<option value="">انتخاب تور</option>` +
+      siteData.tours.map(tour =>
+        `<option value="${escapeHTML(tour.title)}">${escapeHTML(tour.title)}</option>`
+      ).join("");
+
+    if ([...bookingTour.options].some(option => option.value === bookingCurrent)) {
+      bookingTour.value = bookingCurrent;
+    }
+  }
+
+  function tourCard(tour) {
+    const finalPrice = discountedPrice(tour);
+    const services = Array.isArray(tour.services) ? tour.services : [];
+    const isFavorite = getFavorites().includes(Number(tour.id));
+
+    return `
+      <article class="tour-card">
+        <div class="tour-media">
+          <img
+            loading="lazy"
+            decoding="async"
+            src="${escapeHTML(tour.image)}"
+            alt="${escapeHTML(tour.title)}"
+          >
+          <span class="badge">${escapeHTML(tour.badge || "پیشنهادی")}</span>
+          <button
+            class="favorite ${isFavorite ? "active" : ""}"
+            type="button"
+            data-favorite="${Number(tour.id)}"
+            aria-label="${isFavorite ? "حذف از علاقه‌مندی‌ها" : "افزودن به علاقه‌مندی‌ها"}"
+          >
+            <i data-lucide="heart"></i>
+          </button>
+          <span class="rating">★ ${faDigits(tour.rating)}</span>
+          <span class="capacity">${faNumber(tour.capacity)} ظرفیت باقی‌مانده</span>
+        </div>
+
+        <div class="tour-body">
+          <span class="route">${escapeHTML(tour.country)} · ${escapeHTML(tour.city)}</span>
+          <h3 class="tour-title">${escapeHTML(tour.title)}</h3>
+          <p class="tour-description">${escapeHTML(tour.description)}</p>
+
+          <div class="tour-meta">
+            <span><i data-lucide="calendar-days"></i>${faNumber(tour.days)} روز و ${faNumber(tour.nights ?? Math.max(0, tour.days - 1))} شب</span>
+            <span><i data-lucide="hotel"></i>${escapeHTML(tour.hotel)}</span>
+            <span><i data-lucide="plane"></i>${escapeHTML(tour.airline)}</span>
+            <span><i data-lucide="calendar-check"></i>${escapeHTML(formatDate(tour.date))}</span>
+          </div>
+
+          <div class="chips">
+            ${services.slice(0, 4).map(service =>
+              `<span>${escapeHTML(service)}</span>`
+            ).join("")}
+          </div>
+
+          <div class="tour-footer">
+            <div class="price">
+              ${tour.discount
+                ? `<span class="old-price">${faNumber(tour.price)} تومان</span>
+                   <span class="discount">${faNumber(tour.discount)}٪ تخفیف</span>`
+                : `<small>شروع قیمت از</small>`
+              }
+              <strong>${faNumber(finalPrice)} تومان</strong>
+            </div>
+
+            <div class="tour-actions">
+              <button class="btn btn-ghost btn-small" type="button" data-detail="${Number(tour.id)}">جزئیات</button>
+              <button class="btn btn-gold btn-small" type="button" data-reserve="${Number(tour.id)}">رزرو</button>
+            </div>
+          </div>
+        </div>
+      </article>
+    `;
+  }
+
+  function renderTours() {
+    let tours = [...siteData.tours];
+
+    if (activeTourFilter === "domestic" || activeTourFilter === "international") {
+      tours = tours.filter(tour => tour.type === activeTourFilter);
+    } else if (activeTourFilter !== "all") {
+      tours = tours.filter(tour =>
+        Array.isArray(tour.tags) && tour.tags.includes(activeTourFilter)
+      );
+    }
+
+    if (destinationFilter) {
+      tours = tours.filter(tour => tour.city === destinationFilter);
+    }
+
+    switch ($("#tourSort").value) {
+      case "low":
+        tours.sort((a, b) => discountedPrice(a) - discountedPrice(b));
+        break;
+      case "high":
+        tours.sort((a, b) => discountedPrice(b) - discountedPrice(a));
+        break;
+      case "rating":
+        tours.sort((a, b) => b.rating - a.rating);
+        break;
+      case "date":
+        tours.sort((a, b) => new Date(a.date) - new Date(b.date));
+        break;
+      default:
+        tours.sort((a, b) => {
+          const aRecommended = a.tags?.includes("recommended") ? 1 : 0;
+          const bRecommended = b.tags?.includes("recommended") ? 1 : 0;
+          return bRecommended - aRecommended || b.rating - a.rating;
+        });
+    }
+
+    $("#tourGrid").innerHTML = tours.map(tourCard).join("");
+    $("#tourCount").textContent = faNumber(tours.length);
+    $("#tourEmpty").classList.toggle("hidden", tours.length > 0);
+    $("#tourGrid").classList.toggle("hidden", tours.length === 0);
+
+    refreshIcons();
+  }
+
+  function renderServices() {
+    $("#serviceGrid").innerHTML = siteData.services.map(service => `
+      <article class="service">
+        <div class="service-icon"><i data-lucide="${escapeHTML(service.icon)}"></i></div>
+        <h3>${escapeHTML(service.title)}</h3>
+        <p>${escapeHTML(service.text)}</p>
+        <a href="${escapeHTML(service.link || "#contact")}">${escapeHTML(service.action || "اطلاعات بیشتر")} ←</a>
+      </article>
+    `).join("");
+  }
+
+  function renderGallery() {
+    $("#galleryGrid").innerHTML = siteData.gallery.map(item => `
+      <article class="gallery-item">
+        <img loading="lazy" decoding="async" src="${escapeHTML(item.image)}" alt="${escapeHTML(item.title)}">
+        <div class="gallery-caption">
+          <span>${escapeHTML(item.city)}</span>
+          <h3>${escapeHTML(item.title)}</h3>
+        </div>
+      </article>
+    `).join("");
+  }
+
+  function renderNews() {
+    const news = activeNewsFilter === "all"
+      ? siteData.news
+      : siteData.news.filter(item => item.type === activeNewsFilter);
+
+    $("#newsGrid").innerHTML = news.map(item => `
+      <article class="news-card">
+        <span class="news-type">${escapeHTML(item.label)}</span>
+        <h3>${escapeHTML(item.title)}</h3>
+        <p>${escapeHTML(item.text)}</p>
+        <span class="news-date">${escapeHTML(item.date)}</span>
+      </article>
+    `).join("");
+  }
+
+  function renderBlog() {
+    $("#blogGrid").innerHTML = siteData.blog.map(item => `
+      <article class="blog-card">
+        <div class="blog-image">
+          <img loading="lazy" decoding="async" src="${escapeHTML(item.image)}" alt="${escapeHTML(item.title)}">
+        </div>
+        <div class="blog-body">
+          <span class="blog-meta">${escapeHTML(item.category)} · ${escapeHTML(item.readTime)}</span>
+          <h3>${escapeHTML(item.title)}</h3>
+          <p>${escapeHTML(item.text)}</p>
+        </div>
+      </article>
+    `).join("");
+  }
+
+  function renderReviews() {
+    $("#reviewGrid").innerHTML = siteData.reviews.map((review, index) => `
+      <article class="review ${index === 1 ? "featured" : ""}">
+        <div class="review-head">
+          <div class="user">
+            <span class="avatar">${escapeHTML(review.name.charAt(0))}</span>
+            <div>
+              <strong>${escapeHTML(review.name)}</strong>
+              <span>${escapeHTML(review.trip)}</span>
+            </div>
+          </div>
+          <span class="stars">${"★".repeat(Math.round(review.rating || 5))}</span>
+        </div>
+        <p>${escapeHTML(review.text)}</p>
+      </article>
+    `).join("");
+  }
+
+  function renderFAQ() {
+    $("#faqList").innerHTML = siteData.faq.map((item, index) => `
+      <article class="faq-item">
+        <button
+          class="faq-question"
+          type="button"
+          aria-expanded="false"
+          aria-controls="faq-answer-${index}"
+        >
+          <span>${escapeHTML(item.question)}</span>
+          <i data-lucide="chevron-down"></i>
+        </button>
+        <div class="faq-answer" id="faq-answer-${index}">
+          <p>${escapeHTML(item.answer)}</p>
+        </div>
+      </article>
+    `).join("");
+  }
+
+  function renderLiveWidgets() {
+    $("#weatherList").innerHTML = siteData.weather.map(item => `
+      <div class="weather-item">
+        <div>
+          <strong>${escapeHTML(item.city)}</strong>
+          <span style="display:block">${escapeHTML(item.status)}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <i class="weather-icon" data-lucide="${escapeHTML(item.icon)}"></i>
+          <strong>${escapeHTML(item.temp)}</strong>
+        </div>
+      </div>
+    `).join("");
+
+    $("#rateList").innerHTML = siteData.rates.map(item => `
+      <div class="rate-item">
+        <div>
+          <strong>${escapeHTML(item.name)}</strong>
+          <span class="rate-change" style="display:block">${escapeHTML(item.change)}</span>
+        </div>
+        <strong>${escapeHTML(item.value)}</strong>
+      </div>
+    `).join("");
+
+    const dayIndex = Math.floor(Date.now() / 86400000);
+    const dailyTour = siteData.tours[dayIndex % siteData.tours.length];
+    const dailyTip = siteData.tips[dayIndex % siteData.tips.length];
+
+    if (dailyTour) {
+      $("#dailyTourTitle").textContent = dailyTour.title;
+      $("#dailyTourDescription").textContent = dailyTour.description;
+      $("#dailyTourButton").dataset.detail = dailyTour.id;
+    }
+
+    $("#dailyTip").textContent = dailyTip || "";
+  }
+
+  function renderAll() {
+    updateGeneralContent();
+    renderDestinations();
+    renderTours();
+    renderServices();
+    renderGallery();
+    renderNews();
+    renderBlog();
+    renderReviews();
+    renderFAQ();
+    renderLiveWidgets();
+    renderAdmin();
+    refreshIcons();
+  }
+
+  function getFavorites() {
+    try {
+      const list = JSON.parse(localStorage.getItem(FAVORITES_KEY));
+      return Array.isArray(list) ? list.map(Number) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function toggleFavorite(id) {
+    const favorites = getFavorites();
+    const index = favorites.indexOf(id);
+
+    if (index >= 0) {
+      favorites.splice(index, 1);
+      showToast("حذف شد", "تور از علاقه‌مندی‌های شما حذف شد.");
+    } else {
+      favorites.push(id);
+      showToast("ذخیره شد", "تور به علاقه‌مندی‌های شما اضافه شد.");
+    }
+
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+    renderTours();
+  }
+
+  function openModal(modal) {
+    if (!modal) return;
+
+    closeAllModals();
+    activeModal = modal;
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("lock");
+
+    setTimeout(() => {
+      $(".modal-close", modal)?.focus();
+    }, 20);
+  }
+
+  function closeAllModals() {
+    $$(".modal.open").forEach(modal => {
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+    });
+
+    document.body.classList.remove("lock");
+    activeModal = null;
+  }
+
+  function openTourDetail(id) {
+    const tour = siteData.tours.find(item => Number(item.id) === Number(id));
+    if (!tour) return;
+
+    const finalPrice = discountedPrice(tour);
+    const highlights = Array.isArray(tour.highlights) ? tour.highlights : [];
+
+    $("#detailContent").innerHTML = `
+      <div class="modal-title">
+        <span class="eyebrow">${escapeHTML(tour.country)} · ${escapeHTML(tour.city)}</span>
+        <h2 id="detailTitle">${escapeHTML(tour.title)}</h2>
+        <p>${escapeHTML(tour.description)}</p>
+      </div>
+
+      <div class="detail-hero">
+        <img src="${escapeHTML(tour.image)}" alt="${escapeHTML(tour.title)}">
+      </div>
+
+      <div class="detail-grid">
+        <div class="detail-item"><small>مدت سفر</small><strong>${faNumber(tour.days)} روز و ${faNumber(tour.nights ?? tour.days - 1)} شب</strong></div>
+        <div class="detail-item"><small>هتل</small><strong>${escapeHTML(tour.hotel)}</strong></div>
+        <div class="detail-item"><small>هواپیمایی</small><strong>${escapeHTML(tour.airline)}</strong></div>
+        <div class="detail-item"><small>تاریخ حرکت</small><strong>${escapeHTML(formatDate(tour.date))}</strong></div>
+        <div class="detail-item"><small>ظرفیت</small><strong>${faNumber(tour.capacity)} نفر</strong></div>
+        <div class="detail-item"><small>امتیاز</small><strong>★ ${faDigits(tour.rating)}</strong></div>
+      </div>
+
+      <div class="detail-section">
+        <h3>خدمات تور</h3>
+        <div class="chips">
+          ${(tour.services || []).map(item => `<span>${escapeHTML(item)}</span>`).join("")}
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <h3>نقاط برجسته سفر</h3>
+        <p>${highlights.map(item => `✓ ${escapeHTML(item)}`).join("<br>")}</p>
+      </div>
+
+      <div class="tour-footer" style="padding-top:15px;border-top:1px solid var(--line)">
+        <div class="price">
+          ${tour.discount ? `<span class="old-price">${faNumber(tour.price)} تومان</span>` : ""}
+          <small>قیمت برای هر نفر از</small>
+          <strong>${faNumber(finalPrice)} تومان</strong>
+        </div>
+        <button class="btn btn-gold" type="button" data-reserve="${Number(tour.id)}">درخواست رزرو</button>
+      </div>
+    `;
+
+    openModal($("#detailModal"));
+    refreshIcons();
+  }
+
+  function openBooking(idOrTitle = "") {
+    let tourTitle = "";
+
+    if (typeof idOrTitle === "number" || /^\d+$/.test(String(idOrTitle))) {
+      const tour = siteData.tours.find(item =>
+        Number(item.id) === Number(idOrTitle)
+      );
+      if (tour) tourTitle = tour.title;
+    } else {
+      tourTitle = String(idOrTitle || "");
+    }
+
+    if (tourTitle) {
+      $("#bookingTour").value = tourTitle;
+    }
+
+    openModal($("#bookingModal"));
+  }
+
+  function updateClock() {
+    const now = new Date();
+
+    const time = new Intl.DateTimeFormat("fa-IR", {
+      timeZone: "Asia/Tehran",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false
+    }).format(now);
+
+    const shortTime = new Intl.DateTimeFormat("fa-IR", {
+      timeZone: "Asia/Tehran",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false
+    }).format(now);
+
+    const persianDate = new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    }).format(now);
+
+    const gregorianDate = new Intl.DateTimeFormat("fa-IR-u-ca-gregory", {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    }).format(now);
+
+    $("#mainClock").textContent = time;
+    $("#topClock").textContent = shortTime;
+    $("#topPersianDate").textContent = persianDate;
+    $("#topGregorianDate").textContent = gregorianDate;
+    $("#fullPersianDate").textContent = persianDate;
+    $("#fullGregorianDate").textContent = `میلادی: ${gregorianDate}`;
+    $("#footerYear").textContent = new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
+      year: "numeric"
+    }).format(now);
+
+    const tehranHour = Number(new Intl.DateTimeFormat("en-US", {
+      timeZone: "Asia/Tehran",
+      hour: "2-digit",
+      hour12: false
+    }).format(now));
+
+    let greeting = "روزتان بخیر";
+    if (tehranHour < 6) greeting = "شب آرامی داشته باشید";
+    else if (tehranHour < 12) greeting = "صبح بخیر؛ آماده یک سفر تازه‌اید؟";
+    else if (tehranHour < 17) greeting = "ظهر بخیر؛ مقصد بعدی کجاست؟";
+    else if (tehranHour < 21) greeting = "عصر بخیر؛ وقت برنامه‌ریزی سفر است";
+    else greeting = "شب بخیر؛ رؤیای سفر بعدی را بسازید";
+
+    $("#greeting").textContent = greeting;
+  }
+
+  function renderPersianCalendar() {
+    const now = new Date();
+
+    const parts = new Intl.DateTimeFormat("en-US-u-ca-persian", {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric"
+    }).formatToParts(now);
+
+    const getPart = type =>
+      Number(parts.find(part => part.type === type)?.value);
+
+    const year = getPart("year");
+    const month = getPart("month");
+    const day = getPart("day");
+
+    const monthName = new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
+      month: "long",
+      year: "numeric"
+    }).format(now);
+
+    $("#calendarTitle").textContent = monthName;
+
+    const firstGregorianDay = new Date(now);
+    firstGregorianDay.setHours(12, 0, 0, 0);
+    firstGregorianDay.setDate(firstGregorianDay.getDate() - (day - 1));
+
+    const startingPosition = (firstGregorianDay.getDay() + 1) % 7;
+    const monthLength = month <= 6 ? 31 : month <= 11 ? 30 : 29;
+
+    const nextMonthProbe = new Date(firstGregorianDay);
+    nextMonthProbe.setDate(nextMonthProbe.getDate() + monthLength);
+
+    const nextParts = new Intl.DateTimeFormat("en-US-u-ca-persian", {
+      month: "numeric",
+      day: "numeric"
+    }).formatToParts(nextMonthProbe);
+
+    const nextMonth = Number(nextParts.find(part => part.type === "month")?.value);
+    const nextDay = Number(nextParts.find(part => part.type === "day")?.value);
+    const actualMonthLength = nextMonth !== month && nextDay === 1
+      ? monthLength
+      : monthLength + 1;
+
+    let html = "";
+
+    for (let index = 0; index < startingPosition; index++) {
+      html += `<span class="muted-day"></span>`;
+    }
+
+    for (let currentDay = 1; currentDay <= actualMonthLength; currentDay++) {
+      html += `
+        <span class="${currentDay === day ? "today" : ""}">
+          ${faNumber(currentDay)}
+        </span>
+      `;
+    }
+
+    $("#calendarDays").innerHTML = html;
+  }
+
+  function setupCountdown() {
+    let target = Number(localStorage.getItem(OFFER_KEY));
+
+    if (!target || target <= Date.now()) {
+      target = Date.now() + (5 * 24 * 60 * 60 * 1000) + (7 * 60 * 60 * 1000);
+      localStorage.setItem(OFFER_KEY, String(target));
+    }
+
+    const update = () => {
+      let difference = Math.max(0, target - Date.now());
+
+      const days = Math.floor(difference / 86400000);
+      difference %= 86400000;
+
+      const hours = Math.floor(difference / 3600000);
+      difference %= 3600000;
+
+      const minutes = Math.floor(difference / 60000);
+      difference %= 60000;
+
+      const seconds = Math.floor(difference / 1000);
+
+      $("[data-days]").textContent = faDigits(String(days).padStart(2, "0"));
+      $("[data-hours]").textContent = faDigits(String(hours).padStart(2, "0"));
+      $("[data-minutes]").textContent = faDigits(String(minutes).padStart(2, "0"));
+      $("[data-seconds]").textContent = faDigits(String(seconds).padStart(2, "0"));
+    };
+
+    update();
+    setInterval(update, 1000);
+  }
+
+  function setupRevealAnimations() {
+    if (!("IntersectionObserver" in window)) {
+      $$(".reveal").forEach(item => item.classList.add("visible"));
+      return;
+    }
+
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12
+    });
+
+    $$(".reveal").forEach(item => revealObserver.observe(item));
+  }
+
+  function setupCounters() {
+    const counters = $$(".counter");
+    let started = false;
+
+    const start = () => {
+      if (started) return;
+      started = true;
+
+      counters.forEach(counter => {
+        const target = Number(counter.dataset.target);
+        const suffix = counter.dataset.suffix || "";
+        const duration = 1500;
+        const startTime = performance.now();
+
+        const animate = currentTime => {
+          const progress = Math.min((currentTime - startTime) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const value = Math.round(target * eased);
+
+          counter.textContent = `${faNumber(value)}${suffix}`;
+
+          if (progress < 1) requestAnimationFrame(animate);
+        };
+
+        requestAnimationFrame(animate);
+      });
+    };
+
+    const stats = $(".hero-stats");
+
+    if ("IntersectionObserver" in window && stats) {
+      const observer = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          start();
+          observer.disconnect();
+        }
+      });
+
+      observer.observe(stats);
+    } else {
+      start();
+    }
+  }
+
+  function openAdmin() {
+    $("#adminPanel").classList.add("open");
+    $("#adminPanel").setAttribute("aria-hidden", "false");
+    document.body.classList.add("lock");
+    renderAdmin();
+  }
+
+  function closeAdmin() {
+    $("#adminPanel").classList.remove("open");
+    $("#adminPanel").setAttribute("aria-hidden", "true");
+    document.body.classList.remove("lock");
+  }
+
+  function fillForm(form, values) {
+    if (!form) return;
+
+    [...form.elements].forEach(element => {
+      if (element.name && element.name in values) {
+        element.value = values[element.name] ?? "";
+      }
+    });
+  }
+
+  function renderAdminTourList() {
+    $("#adminTourList").innerHTML = siteData.tours.map(tour => `
+      <div class="admin-tour">
+        <div>
+          <strong>${escapeHTML(tour.title)}</strong>
+          <span>${escapeHTML(tour.city)} · ${faNumber(discountedPrice(tour))} تومان</span>
+        </div>
+        <div style="display:flex;gap:5px">
+          <button class="btn btn-ghost btn-small" type="button" data-admin-edit-tour="${Number(tour.id)}">ویرایش</button>
+          <button class="btn btn-danger btn-small" type="button" data-admin-delete-tour="${Number(tour.id)}">حذف</button>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function renderAdmin() {
+    fillForm($("#generalAdminForm"), siteData.general);
+    fillForm($("#contentAdminForm"), siteData.general);
+    renderAdminTourList();
+    $("#adminJson").value = JSON.stringify(siteData, null, 2);
+  }
+
+  function editAdminTour(id) {
+    const tour = siteData.tours.find(item => Number(item.id) === Number(id));
+    if (!tour) return;
+
+    const form = $("#tourAdminForm");
+
+    fillForm(form, {
+      ...tour,
+      services: (tour.services || []).join("، ")
+    });
+
+    form.dataset.editId = tour.id;
+    $("button[type='submit']", form).textContent = "ذخیره ویرایش";
+    form.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function downloadJSON() {
+    const blob = new Blob(
+      [JSON.stringify(siteData, null, 2)],
+      { type: "application/json;charset=utf-8" }
+    );
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = `nourotour-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    URL.revokeObjectURL(url);
+  }
+
+  $("#menuBtn").addEventListener("click", () => {
+    const isOpen = $("#nav").classList.toggle("open");
+    $("#menuBtn").setAttribute("aria-expanded", String(isOpen));
+  });
+
+  $$("#nav a").forEach(link => {
+    link.addEventListener("click", () => {
+      $("#nav").classList.remove("open");
+      $("#menuBtn").setAttribute("aria-expanded", "false");
+    });
+  });
+
+  window.addEventListener("scroll", () => {
+    $("#header").classList.toggle("scrolled", window.scrollY > 10);
+  }, { passive: true });
+
+  $$(".search-tab").forEach(button => {
+    button.addEventListener("click", () => {
+      $$(".search-tab").forEach(item => item.classList.remove("active"));
+      button.classList.add("active");
+
+      const type = button.dataset.searchType;
+
+      if (type === "visa") {
+        $("#searchDestination").previousElementSibling.textContent = "کشور مقصد";
+      } else {
+        $("#searchDestination").previousElementSibling.textContent = "مقصد";
+      }
+    });
+  });
+
+  $("#searchForm").addEventListener("submit", event => {
+    event.preventDefault();
+
+    destinationFilter = $("#searchDestination").value;
+    activeTourFilter = "all";
+
+    $$("#tourFilters .pill").forEach(button => {
+      button.classList.toggle("active", button.dataset.filter === "all");
+    });
+
+    renderTours();
+    $("#tours").scrollIntoView({ behavior: "smooth" });
+
+    showToast(
+      destinationFilter ? "نتایج آماده شد" : "همه تورها",
+      destinationFilter
+        ? `تورهای مقصد ${destinationFilter} نمایش داده شدند.`
+        : "همه برنامه‌های سفر نمایش داده شدند."
+    );
+  });
+
+  $("#tourFilters").addEventListener("click", event => {
+    const button = event.target.closest("[data-filter]");
+    if (!button) return;
+
+    activeTourFilter = button.dataset.filter;
+    destinationFilter = "";
+
+    $$("#tourFilters .pill").forEach(item =>
+      item.classList.toggle("active", item === button)
+    );
+
+    renderTours();
+  });
+
+  $("#tourSort").addEventListener("change", renderTours);
+
+  $("#resetTours").addEventListener("click", () => {
+    activeTourFilter = "all";
+    destinationFilter = "";
+    $("#searchDestination").value = "";
+
+    $$("#tourFilters .pill").forEach(button => {
+      button.classList.toggle("active", button.dataset.filter === "all");
+    });
+
+    renderTours();
+  });
+
+  $("#newsTabs").addEventListener("click", event => {
+    const button = event.target.closest("[data-news]");
+    if (!button) return;
+
+    activeNewsFilter = button.dataset.news;
+
+    $$("#newsTabs .pill").forEach(item =>
+      item.classList.toggle("active", item === button)
+    );
+
+    renderNews();
+  });
+
+  document.addEventListener("click", event => {
+    const detailButton = event.target.closest("[data-detail]");
+    const reserveButton = event.target.closest("[data-reserve]");
+    const bookingButton = event.target.closest("[data-booking]");
+    const favoriteButton = event.target.closest("[data-favorite]");
+    const closeButton = event.target.closest("[data-close-modal]");
+    const faqButton = event.target.closest(".faq-question");
+
+    if (detailButton) {
+      openTourDetail(detailButton.dataset.detail);
+      return;
+    }
+
+    if (reserveButton) {
+      closeAllModals();
+      setTimeout(() => openBooking(Number(reserveButton.dataset.reserve)), 80);
+      return;
+    }
+
+    if (bookingButton) {
+      openBooking(bookingButton.dataset.tourName || "");
+      return;
+    }
+
+    if (favoriteButton) {
+      toggleFavorite(Number(favoriteButton.dataset.favorite));
+      return;
+    }
+
+    if (closeButton) {
+      closeAllModals();
+      return;
+    }
+
+    if (faqButton) {
+      const faqItem = faqButton.closest(".faq-item");
+      const wasOpen = faqItem.classList.contains("open");
+
+      $$(".faq-item").forEach(item => {
+        item.classList.remove("open");
+        $(".faq-question", item)?.setAttribute("aria-expanded", "false");
+      });
+
+      if (!wasOpen) {
+        faqItem.classList.add("open");
+        faqButton.setAttribute("aria-expanded", "true");
+      }
+    }
+  });
+
+  $$(".success-form").forEach(form => {
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      form.reset();
+      closeAllModals();
+
+      showToast(
+        "درخواست شما ثبت شد",
+        "این ثبت در نسخه نمایشی محلی است؛ اتصال به سامانه رزرو در مرحله بعد انجام می‌شود."
+      );
+    });
+  });
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+      closeAllModals();
+      closeAdmin();
+    }
+
+    if (
+      event.ctrlKey &&
+      event.shiftKey &&
+      event.key.toLowerCase() === "a"
+    ) {
+      event.preventDefault();
+      openAdmin();
+    }
+
+    if (event.key === "Tab" && activeModal) {
+      const focusable = $$(
+        'button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])',
+        activeModal
+      );
+
+      if (!focusable.length) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+  });
+
+  $("#closeAdmin").addEventListener("click", closeAdmin);
+
+  $$(".admin-tabs [data-admin-tab]").forEach(button => {
+    button.addEventListener("click", () => {
+      const target = button.dataset.adminTab;
+
+      $$(".admin-tabs [data-admin-tab]").forEach(item =>
+        item.classList.toggle("active", item === button)
+      );
+
+      $$("[data-admin-section]").forEach(section =>
+        section.classList.toggle(
+          "active",
+          section.dataset.adminSection === target
+        )
+      );
+
+      if (target === "json") {
+        $("#adminJson").value = JSON.stringify(siteData, null, 2);
+      }
+    });
+  });
+
+  $("#generalAdminForm").addEventListener("submit", event => {
+    event.preventDefault();
+
+    const values = Object.fromEntries(new FormData(event.currentTarget));
+
+    siteData.general = {
+      ...siteData.general,
+      ...values
+    };
+
+    saveData();
+    renderAll();
+    showToast("اطلاعات ذخیره شد", "هویت برند و راه‌های ارتباطی به‌روزرسانی شدند.");
+  });
+
+  $("#contentAdminForm").addEventListener("submit", event => {
+    event.preventDefault();
+
+    const values = Object.fromEntries(new FormData(event.currentTarget));
+
+    siteData.general = {
+      ...siteData.general,
+      ...values
+    };
+
+    saveData();
+    renderAll();
+    showToast("محتوا ذخیره شد", "معرفی، مأموریت و چشم‌انداز به‌روزرسانی شدند.");
+  });
+
+  $("#tourAdminForm").addEventListener("submit", event => {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const values = Object.fromEntries(new FormData(form));
+    const editId = Number(form.dataset.editId || 0);
+
+    const existing = siteData.tours.find(tour => Number(tour.id) === editId);
+    const newId = editId || Math.max(0, ...siteData.tours.map(tour => Number(tour.id))) + 1;
+
+    const tour = {
+      id: newId,
+      title: values.title.trim(),
+      country: values.country.trim(),
+      city: values.city.trim(),
+      type: values.type,
+      tags: existing?.tags || ["recommended"],
+      badge: existing?.badge || "جدید",
+      days: Number(values.days),
+      nights: Math.max(0, Number(values.days) - 1),
+      date: values.date,
+      price: Number(values.price),
+      discount: Number(values.discount || 0),
+      rating: Number(values.rating || 4.8),
+      capacity: Number(values.capacity || 0),
+      hotel: values.hotel.trim() || "هتل منتخب",
+      airline: values.airline.trim() || "پرواز منتخب",
+      services: values.services
+        .split(/[،,]/)
+        .map(item => item.trim())
+        .filter(Boolean),
+      description: values.description.trim(),
+      highlights: existing?.highlights || ["برنامه‌ریزی تخصصی", "پشتیبانی سفر"],
+      image: values.image.trim() || "images/hero.jpg",
+      gallery: existing?.gallery || []
+    };
+
+    if (editId) {
+      const index = siteData.tours.findIndex(item => Number(item.id) === editId);
+      siteData.tours[index] = tour;
+    } else {
+      siteData.tours.unshift(tour);
+    }
+
+    saveData();
+    form.reset();
+    delete form.dataset.editId;
+    $("button[type='submit']", form).textContent = "افزودن تور";
+
+    renderAll();
+    showToast(
+      editId ? "تور ویرایش شد" : "تور افزوده شد",
+      `${tour.title} با موفقیت ذخیره شد.`
+    );
+  });
+
+  $("#adminTourList").addEventListener("click", event => {
+    const editButton = event.target.closest("[data-admin-edit-tour]");
+    const deleteButton = event.target.closest("[data-admin-delete-tour]");
+
+    if (editButton) {
+      editAdminTour(Number(editButton.dataset.adminEditTour));
+      return;
+    }
+
+    if (deleteButton) {
+      const id = Number(deleteButton.dataset.adminDeleteTour);
+      const tour = siteData.tours.find(item => Number(item.id) === id);
+
+      if (!tour) return;
+
+      if (confirm(`تور «${tour.title}» حذف شود؟`)) {
+        siteData.tours = siteData.tours.filter(item => Number(item.id) !== id);
+        saveData();
+        renderAll();
+        showToast("تور حذف شد", "اطلاعات تور از حافظه محلی پاک شد.");
+      }
+    }
+  });
+
+  $("#saveJson").addEventListener("click", () => {
+    try {
+      const parsed = JSON.parse($("#adminJson").value);
+
+      if (!parsed || typeof parsed !== "object" || !Array.isArray(parsed.tours)) {
+        throw new Error("ساختار داده معتبر نیست.");
+      }
+
+      siteData = {
+        ...cloneDefaultData(),
+        ...parsed,
+        general: {
+          ...defaultData.general,
+          ...(parsed.general || {})
+        }
+      };
+
+      saveData();
+      renderAll();
+      showToast("JSON ذخیره شد", "تمام محتوای سایت به‌روزرسانی شد.");
+    } catch (error) {
+      showToast("خطای JSON", error.message || "ساختار داده نامعتبر است.");
+    }
+  });
+
+  $("#exportJson").addEventListener("click", downloadJSON);
+
+  $("#importJson").addEventListener("change", event => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      try {
+        const parsed = JSON.parse(reader.result);
+
+        if (!parsed || !Array.isArray(parsed.tours)) {
+          throw new Error("فایل پشتیبان معتبر نیست.");
+        }
+
+        siteData = {
+          ...cloneDefaultData(),
+          ...parsed,
+          general: {
+            ...defaultData.general,
+            ...(parsed.general || {})
+          }
+        };
+
+        saveData();
+        renderAll();
+        showToast("پشتیبان بازیابی شد", "اطلاعات فایل با موفقیت وارد شد.");
+      } catch (error) {
+        showToast("خطا در ورود فایل", error.message);
+      } finally {
+        event.target.value = "";
+      }
+    };
+
+    reader.readAsText(file, "utf-8");
+  });
+
+  $("#resetData").addEventListener("click", () => {
+    const confirmed = confirm(
+      "تمام تغییرات محلی حذف و اطلاعات اولیه بازیابی شود؟"
+    );
+
+    if (!confirmed) return;
+
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(FAVORITES_KEY);
+    localStorage.removeItem(OFFER_KEY);
+
+    siteData = cloneDefaultData();
+    saveData();
+    renderAll();
+
+    showToast("بازنشانی انجام شد", "اطلاعات اولیه نوروتور بازیابی شدند.");
+  });
+
+  const today = new Date().toISOString().slice(0, 10);
+
+  $$('input[type="date"]').forEach(input => {
+    input.min = today;
+  });
+
+  updateClock();
+  renderPersianCalendar();
+  renderAll();
+  setupCountdown();
+  setupRevealAnimations();
+  setupCounters();
+
+  setInterval(updateClock, 1000);
+
+  window.addEventListener("storage", event => {
+    if (event.key === STORAGE_KEY) {
+      siteData = loadData();
+      renderAll();
+    }
+  });
+});
+</script>
+</body>
+</html>
