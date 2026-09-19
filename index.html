@@ -280,12 +280,12 @@ html.intro-ready header, html.intro-ready main, html.intro-ready footer, html.in
 .header-inner{height:100%;display:flex;align-items:center;justify-content:space-between;gap:22px}
 .brand{display:flex;align-items:center;gap:11px;flex-shrink:0}
 .brand-logo{
-  width:76px;height:54px;display:grid;place-items:center;border-radius:12px;overflow:hidden;
+  width:58px;height:58px;display:grid;place-items:center;border-radius:14px;overflow:hidden;
   color:#171108;background:#fff;
-  box-shadow:0 10px 30px rgba(214,174,90,.15)
+  box-shadow:0 10px 30px rgba(214,174,90,.18), 0 0 0 1px rgba(214,174,90,.12)
 }
-.brand-logo img{width:100%;height:100%;object-fit:contain;border-radius:inherit}
-.footer .brand-logo{width:86px;height:60px;border-radius:12px}
+.brand-logo img{width:92%;height:92%;object-fit:contain;border-radius:inherit}
+.footer .brand-logo{width:68px;height:68px;border-radius:14px}
 .brand-copy{display:flex;flex-direction:column;line-height:1.25}
 .brand-copy strong{font-size:1.2rem;font-weight:900}
 .brand-copy small{font-size:.62rem;color:var(--gold-light)}
@@ -344,11 +344,11 @@ html.intro-ready header, html.intro-ready main, html.intro-ready footer, html.in
   display:none;
 }
 .hero-brand-logo{
-  width:86px;height:60px;display:grid;place-items:center;background:#fff;border-radius:14px;
+  width:72px;height:72px;display:grid;place-items:center;background:#fff;border-radius:16px;
   box-shadow:0 14px 36px rgba(0,0,0,.38), 0 0 0 1px rgba(214,174,90,.16);
   overflow:hidden;
 }
-.hero-brand-logo img{width:84%;height:auto;object-fit:contain}
+.hero-brand-logo img{width:88%;height:88%;object-fit:contain}
 .hero-brand-name{font-size:.72rem;font-weight:900;letter-spacing:.22em;color:var(--gold-light)}
 .hero-brand-sub{font-size:.62rem;color:var(--muted);letter-spacing:.06em}
 .hero-badge{
@@ -899,7 +899,7 @@ option{background:#17191e}
     animation:introLogoEnter .9s cubic-bezier(.16,1,.3,1) both;
   }
   .hero-brand-logo{
-    width:110px;height:76px;border-radius:18px;
+    width:96px;height:96px;border-radius:20px;
     box-shadow:0 20px 50px rgba(0,0,0,.48), 0 10px 28px rgba(214,174,90,.16), 0 0 0 1px rgba(214,174,90,.18);
     transform:rotateX(8deg) rotateY(-8deg);
   }
@@ -1090,7 +1090,7 @@ option{background:#17191e}
   <div class="container header-inner">
     <a class="brand" href="#home" aria-label="صفحه اصلی نوروتور">
       <!-- جایگزینی لوگوی رسمی: مقدار logoUrl را در پنل مدیریت وارد کنید -->
-      <span class="brand-logo" id="brandLogo"><picture><source type="image/webp" srcset="images/logo.webp"><img src="images/logo.png" width="512" height="354" decoding="async" fetchpriority="high" alt="لوگوی نوروتور"></picture></span>
+      <span class="brand-logo" id="brandLogo"><picture><source type="image/webp" srcset="images/logo-falcon.webp"><img src="images/logo-falcon.png" width="512" height="512" decoding="async" fetchpriority="high" alt="لوگوی نوروتور - شاهین طلایی"></picture></span>
       <span class="brand-copy"><strong data-bind="brandName">نوروتور</strong><small data-bind="tagline">سفر فراتر از انتظار</small></span>
     </a>
     <nav class="nav" id="nav" aria-label="منوی اصلی">
@@ -1115,7 +1115,7 @@ option{background:#17191e}
     <div class="hero-glow"></div>
     <div class="container hero-content">
       <div class="hero-brand" aria-hidden="true">
-        <span class="hero-brand-logo"><picture><source type="image/webp" srcset="images/logo.webp"><img src="images/logo.png" width="512" height="354" decoding="async" alt="نوروتور"></picture></span>
+        <span class="hero-brand-logo"><picture><source type="image/webp" srcset="images/logo-falcon.webp"><img src="images/logo-falcon.png" width="512" height="512" decoding="async" alt="نوروتور"></picture></span>
         <div style="display:flex;flex-direction:column;align-items:center;line-height:1.2">
           <span class="hero-brand-name">NOUROTOUR</span>
           <span class="hero-brand-sub">نوروتور — سفر فراتر از انتظار</span>
@@ -1490,7 +1490,7 @@ option{background:#17191e}
   <div class="container footer-grid">
     <div>
       <a class="brand" href="#home">
-        <span class="brand-logo"><picture><source type="image/webp" srcset="images/logo.webp"><img src="images/logo.png" width="512" height="354" loading="lazy" decoding="async" alt="لوگوی نوروتور"></picture></span>
+        <span class="brand-logo"><picture><source type="image/webp" srcset="images/logo-falcon.webp"><img src="images/logo-falcon.png" width="512" height="512" loading="lazy" decoding="async" alt="لوگوی نوروتور"></picture></span>
         <span class="brand-copy"><strong data-bind="brandName">نوروتور</strong><small data-bind="tagline">سفر فراتر از انتظار</small></span>
       </a>
       <p style="margin-top:15px">طراحی سفرهای داخلی و خارجی و ارائه خدمات پرواز، هتل، ویزا و پشتیبانی تخصصی.</p>
@@ -1889,7 +1889,7 @@ document.addEventListener("DOMContentLoaded", () => {
     general: {
       brandName: "نوروتور",
       tagline: "سفر فراتر از انتظار",
-      logoUrl: "images/logo.png",
+      logoUrl: "images/logo-falcon.png",
       phone: "۰۲۱-۰۰۰۰۰۰۰۰",
       emergency: "۰۹۱۲-۰۰۰۰۰۰۰",
       whatsapp: "۰۹۱۲-۰۰۰۰۰۰۰",
