@@ -164,10 +164,25 @@ ul{list-style:none}
 .intro-overlay{
   position:fixed;inset:0;z-index:9999;display:grid;place-items:center;
   background:#050607;overflow:hidden;
-  transition:opacity .75s cubic-bezier(.7,0,.3,1),transform .85s cubic-bezier(.7,0,.3,1),visibility .75s;
+  transition:opacity .95s cubic-bezier(.7,0,.3,1),transform 1.05s cubic-bezier(.7,0,.3,1),filter .95s ease,visibility .95s;
 }
 .intro-overlay.dismissed{
-  opacity:0;visibility:hidden;transform:translateY(-4%) scale(1.03);pointer-events:none;
+  opacity:0;visibility:hidden;transform:scale(1.22);filter:blur(16px);pointer-events:none;
+}
+.intro-overlay.dismissed .intro-inner{
+  transform:scale(.94);opacity:0;transition:transform .85s cubic-bezier(.7,0,.3,1),opacity .65s ease;
+}
+html.intro-active{overflow:hidden}
+html.intro-active body{overflow:hidden}
+html.intro-active header, html.intro-active main, html.intro-active footer, html.intro-active .topbar{
+  transform:scale(.97);
+  filter:blur(2px);
+  transition:transform 1.1s cubic-bezier(.16,1,.3,1), filter .9s ease;
+}
+html.intro-ready header, html.intro-ready main, html.intro-ready footer, html.intro-ready .topbar{
+  transform:scale(1);
+  filter:none;
+  transition:transform 1.1s cubic-bezier(.16,1,.3,1), filter 1s ease;
 }
 .intro-bg{
   position:absolute;inset:0;
@@ -882,8 +897,7 @@ option{background:#17191e}
     <p class="intro-subtitle" data-bind="tagline">سفر فراتر از انتظار</p>
     <div class="intro-line" aria-hidden="true"></div>
     <p class="intro-desc">جهان را با نگاهی لوکس و سه‌بعدی تجربه کنید — از نخستین لحظه تا رزرو نهایی</p>
-    <button class="btn btn-gold intro-enter" id="introEnter" type="button"><svg class="icon" aria-hidden="true"><use href="#icon-sparkles"></use></svg> ورود به دنیای نوروتور</button>
-    <small class="intro-skip" id="introSkip">برای عبور سریع کلیک کنید یا Esc بزنید</small>
+    <button class="btn btn-gold intro-enter" id="introEnter" type="button"><svg class="icon" aria-hidden="true"><use href="#icon-sparkles"></use></svg> شروع ماجراجویی</button>
   </div>
 </div>
 
@@ -3119,19 +3133,12 @@ document.addEventListener("DOMContentLoaded", () => {
   function setupIntro(){
     const overlay = document.getElementById('introOverlay');
     if(!overlay) return;
-    // احترام به کاهش حرکت
     if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
       overlay.remove();
+      document.documentElement.classList.remove('intro-active');
       return;
     }
-    // اگر کاربر همین تب را قبلا دیده، نمایش کوتاه (یا مخفی)
-    const seen = sessionStorage.getItem('nourotour_intro_seen');
-    // برای نمایش همیشه جذاب اما بدون اذیت: اگر قبلا دیده، 800ms نشان بده
-    if(seen){
-      overlay.style.transition = 'opacity .55s ease, transform .6s ease, visibility .55s';
-      // اجازه ده یک فلش سریع دیده شود
-      setTimeout(()=> dismiss(), 700);
-    }
+    document.documentElement.classList.add('intro-active');
     document.body.classList.add('lock');
     // ذرات طلایی شناور
     const particles = document.getElementById('introParticles');
@@ -3154,25 +3161,19 @@ document.addEventListener("DOMContentLoaded", () => {
       if(dismissed) return;
       dismissed = true;
       overlay.classList.add('dismissed');
+      document.documentElement.classList.remove('intro-active');
+      document.documentElement.classList.add('intro-ready');
       document.body.classList.remove('lock');
-      try{ sessionStorage.setItem('nourotour_intro_seen','1'); }catch{}
-      setTimeout(()=>{ overlay.remove(); }, 900);
+      setTimeout(()=>{ document.documentElement.classList.remove('intro-ready'); }, 1300);
+      setTimeout(()=>{ overlay.remove(); }, 1050);
     }
     const enterBtn = document.getElementById('introEnter');
-    const skip = document.getElementById('introSkip');
     enterBtn?.addEventListener('click', dismiss);
-    skip?.addEventListener('click', dismiss);
-    overlay.addEventListener('click', (e)=>{
-      if(e.target === overlay) dismiss();
-    });
+    // Esc برای دسترسی‌پذیری (بدون نمایش متن)
     document.addEventListener('keydown', function esc(e){
       if(e.key === 'Escape' && !dismissed){ dismiss(); document.removeEventListener('keydown', esc); }
     });
-    // خروج خودکار سینمایی
-    const autoDelay = seen ? 900 : 3200;
-    setTimeout(dismiss, autoDelay);
-    // برای دسترسی: فوکوس روی دکمه ورود
-    setTimeout(()=> enterBtn?.focus(), 600);
+    setTimeout(()=> enterBtn?.focus(), 700);
   }
 
   function openAdmin() {
