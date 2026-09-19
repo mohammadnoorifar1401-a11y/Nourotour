@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  سایت نوروتور تک‌صفحه‌ای است؛ بنابراین تنها یک URL واقعی (ریشه) در نقشه سایت
+  قرار می‌گیرد. افزودن لنگرها (#tours و ...) به‌عنوان URL جداگانه باعث
+  اخطار «محتوای تکراری» در سرچ کنسول می‌شود و توصیه نمی‌گردد.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://nourotour.ir/</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

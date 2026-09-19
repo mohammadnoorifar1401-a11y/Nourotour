@@ -1,0 +1,20 @@
+# robots.txt — نوروتور (NOUROTOUR)
+# دامنه رسمی: https://nourotour.ir/
+
+User-agent: *
+Allow: /
+
+# بخش‌های اصلی صفحه (لنگرهای داخلی، برای راهنمای خزنده)
+# /#home      خانه و هیرو
+# /#today     ابزارهای زنده (تاریخ، ساعت، آب‌وهوا، نرخ‌ها)
+# /#tours     فهرست تورها
+# /#services  خدمات سفر
+# /#gallery   گالری تصاویر
+# /#news      اخبار
+# /#blog      مجله سفر
+# /#reviews   نظرات مسافران
+# /#about     درباره ما و نشان‌های اعتماد
+# /#faq       پرسش‌های متداول
+# /#contact   تماس و فرم مشاوره
+
+Sitemap: https://nourotour.ir/sitemap.xml
