@@ -8,8 +8,9 @@
   <meta name="description" content="نوروتور؛ رزرو تورهای داخلی و خارجی، پرواز، هتل، خدمات ویزا، وقت سفارت و مشاوره سفر.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://nourotour.ir/">
-  <link rel="icon" type="image/png" href="images/logo.png">
-  <link rel="apple-touch-icon" href="images/logo.png">
+  <link rel="icon" type="image/png" href="images/logo-falcon.png">
+  <link rel="apple-touch-icon" href="images/logo-falcon.png">
+  <link rel="preload" as="image" type="image/webp" href="images/logo-falcon.webp" fetchpriority="high">
   <link rel="preload" as="image" type="image/webp" href="images/hero-brand.webp" imagesrcset="images/hero-brand.webp 800w, images/hero-brand.webp 1408w" imagesizes="100vw" fetchpriority="high">
   <link rel="preload" as="image" type="image/webp" href="images/hero.webp" imagesrcset="images/hero-800.webp 800w, images/hero.webp 1408w" imagesizes="100vw">
   <meta property="og:locale" content="fa_IR">
@@ -165,25 +166,25 @@ ul{list-style:none}
 .intro-overlay{
   position:fixed;inset:0;z-index:9999;display:grid;place-items:center;
   background:#050607;overflow:hidden;
-  transition:opacity .95s cubic-bezier(.7,0,.3,1),transform 1.05s cubic-bezier(.7,0,.3,1),filter .95s ease,visibility .95s;
+  transition:opacity 1.25s cubic-bezier(.55,.06,.28,.99) 1.7s,transform 3s cubic-bezier(.55,.06,.28,.99),filter 1.25s ease 1.7s,visibility 0s linear 3s;
 }
 .intro-overlay.dismissed{
-  opacity:0;visibility:hidden;transform:scale(1.22);filter:blur(16px);pointer-events:none;
+  opacity:0;visibility:hidden;transform:scale(1.35);filter:blur(18px);pointer-events:none;
 }
 .intro-overlay.dismissed .intro-inner{
-  transform:scale(.94);opacity:0;transition:transform .85s cubic-bezier(.7,0,.3,1),opacity .65s ease;
+  transform:scale(.95);opacity:0;transition:transform .9s cubic-bezier(.55,.06,.28,.99),opacity .8s ease;
 }
 html.intro-active{overflow:hidden}
 html.intro-active body{overflow:hidden}
 html.intro-active header, html.intro-active main, html.intro-active footer, html.intro-active .topbar{
-  transform:scale(.97);
-  filter:blur(2px);
-  transition:transform 1.1s cubic-bezier(.16,1,.3,1), filter .9s ease;
+  transform:scale(.92);
+  filter:blur(9px);
+  will-change:transform,filter;
 }
 html.intro-ready header, html.intro-ready main, html.intro-ready footer, html.intro-ready .topbar{
   transform:scale(1);
   filter:none;
-  transition:transform 1.1s cubic-bezier(.16,1,.3,1), filter 1s ease;
+  transition:transform 2.4s cubic-bezier(.16,1,.3,1), filter 1.8s ease .25s;
 }
 .intro-bg{
   position:absolute;inset:0;
@@ -212,20 +213,23 @@ html.intro-ready header, html.intro-ready main, html.intro-ready footer, html.in
   filter:drop-shadow(0 18px 42px rgba(0,0,0,.55)) drop-shadow(0 0 32px rgba(214,174,90,.28));
   animation:introFloatCircle 3.6s ease-in-out infinite;
   transition:filter .4s ease;
+  will-change:transform,filter;
 }
 .intro-logo img{
   width:100%;height:100%;object-fit:contain;
-  border-radius:50%;
+  border-radius:0;
   filter:drop-shadow(0 4px 14px rgba(0,0,0,.28));
 }
 .intro-logo::before, .intro-logo::after{display:none}
 .intro-logo-wrap:hover .intro-logo{transform:translateY(-2px) scale(1.02)}
 @keyframes introLogoEnter{0%{opacity:0;transform:translateY(38px) scale(.86)}100%{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes introFloatCircle{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-@keyframes introSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-@keyframes introSpinZoom{0%{transform:rotate(0deg) scale(1)}100%{transform:rotate(720deg) scale(18)}}
-.intro-logo.spinning{animation:introSpin 0.85s linear infinite !important}
-.intro-logo.zooming{animation:introSpinZoom 1.15s cubic-bezier(.7,0,.2,1) forwards !important;filter:blur(1px) brightness(1.15)}
+@keyframes introSpinZoom{
+  0%{transform:rotate(0deg) scale(1)}
+  42%{transform:rotate(190deg) scale(1.07)}
+  100%{transform:rotate(540deg) scale(24)}
+}
+.intro-logo.zooming{animation:introSpinZoom 3s cubic-bezier(.6,.05,.25,1) forwards !important;filter:blur(1px) brightness(1.12)}
 .intro-title{
   font-size:clamp(1.35rem,4.6vw,2.15rem);font-weight:800;letter-spacing:-.02em;line-height:1.45;margin:0;text-align:center;
   color:#f0d9a0;
@@ -280,11 +284,11 @@ html.intro-ready header, html.intro-ready main, html.intro-ready footer, html.in
 .header-inner{height:100%;display:flex;align-items:center;justify-content:space-between;gap:22px}
 .brand{display:flex;align-items:center;gap:11px;flex-shrink:0}
 .brand-logo{
-  width:58px;height:58px;display:grid;place-items:center;border-radius:14px;overflow:hidden;
-  color:#171108;background:#fff;
-  box-shadow:0 10px 30px rgba(214,174,90,.18), 0 0 0 1px rgba(214,174,90,.12)
+  width:60px;height:60px;display:grid;place-items:center;border-radius:0;overflow:visible;
+  background:transparent;
+  filter:drop-shadow(0 8px 22px rgba(0,0,0,.5)) drop-shadow(0 0 16px rgba(214,174,90,.16));
 }
-.brand-logo img{width:92%;height:92%;object-fit:contain;border-radius:inherit}
+.brand-logo img{width:100%;height:100%;object-fit:contain}
 .footer .brand-logo{width:68px;height:68px;border-radius:14px}
 .brand-copy{display:flex;flex-direction:column;line-height:1.25}
 .brand-copy strong{font-size:1.2rem;font-weight:900}
@@ -344,11 +348,10 @@ html.intro-ready header, html.intro-ready main, html.intro-ready footer, html.in
   display:none;
 }
 .hero-brand-logo{
-  width:72px;height:72px;display:grid;place-items:center;background:#fff;border-radius:16px;
-  box-shadow:0 14px 36px rgba(0,0,0,.38), 0 0 0 1px rgba(214,174,90,.16);
-  overflow:hidden;
+  width:88px;height:88px;display:grid;place-items:center;background:transparent;
+  filter:drop-shadow(0 14px 30px rgba(0,0,0,.55)) drop-shadow(0 0 22px rgba(214,174,90,.2));
 }
-.hero-brand-logo img{width:88%;height:88%;object-fit:contain}
+.hero-brand-logo img{width:100%;height:100%;object-fit:contain}
 .hero-brand-name{font-size:.72rem;font-weight:900;letter-spacing:.22em;color:var(--gold-light)}
 .hero-brand-sub{font-size:.62rem;color:var(--muted);letter-spacing:.06em}
 .hero-badge{
@@ -899,8 +902,7 @@ option{background:#17191e}
     animation:introLogoEnter .9s cubic-bezier(.16,1,.3,1) both;
   }
   .hero-brand-logo{
-    width:96px;height:96px;border-radius:20px;
-    box-shadow:0 20px 50px rgba(0,0,0,.48), 0 10px 28px rgba(214,174,90,.16), 0 0 0 1px rgba(214,174,90,.18);
+    width:96px;height:96px;
     transform:rotateX(8deg) rotateY(-8deg);
   }
   .hero h1{
@@ -1017,7 +1019,7 @@ option{background:#17191e}
   <div class="intro-particles" id="introParticles" aria-hidden="true"></div>
   <div class="intro-inner">
     <div class="intro-logo-wrap" aria-hidden="true">
-      <span class="intro-logo" id="introLogo"><picture><source type="image/webp" srcset="images/logo-circle2.webp"><img src="images/logo-circle2.png" width="512" height="512" decoding="async" fetchpriority="high" alt="لوگوی گرد نوروتور"></picture></span>
+      <span class="intro-logo" id="introLogo"><picture><source type="image/webp" srcset="images/logo-falcon.webp"><img src="images/logo-falcon.png" width="512" height="512" decoding="async" fetchpriority="high" alt="لوگوی نوروتور - شاهین طلایی"></picture></span>
     </div>
     <h1 class="intro-title">آژانس هواپیمایی و خدمات گردشگری</h1>
     <p class="intro-subtitle">نوروتور &nbsp;|&nbsp; NOUROTOUR</p>
@@ -2582,7 +2584,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     $$(".brand-logo").forEach(logo => {
-      const src = general.logoUrl || "images/logo.png";
+      const src = general.logoUrl || "images/logo-falcon.png";
       logo.innerHTML = pictureMarkup(src, `لوگوی ${general.brandName}`, {
         lazy: false,
         width: 512,
@@ -3295,27 +3297,21 @@ document.addEventListener("DOMContentLoaded", () => {
       dismissed = true;
       const logo = document.getElementById('introLogo');
       if(logo){
-        logo.classList.add('spinning');
-        requestAnimationFrame(()=> setTimeout(()=>{
-          logo.classList.remove('spinning');
-          void logo.offsetWidth;
-          logo.classList.add('zooming');
-        }, 180));
+        logo.classList.add('zooming');
       }
       // محو متن‌ها برای تمرکز روی لوگو
       const inner = overlay.querySelector('.intro-inner');
-      if(inner) inner.style.transition = 'opacity .45s ease, transform .6s ease';
-      if(inner) { inner.style.opacity = '0'; inner.style.transform = 'scale(.96)'; }
+      if(inner) inner.style.transition = 'opacity .8s ease, transform .9s ease';
+      if(inner) { inner.style.opacity = '0'; inner.style.transform = 'scale(.95)'; }
       // زوم سینمایی به وسط لوگو
-      overlay.style.transition = 'opacity .95s cubic-bezier(.7,0,.3,1), filter .95s ease, visibility .95s';
-      overlay.style.transformOrigin = '50% 34%';
+      overlay.style.transformOrigin = '50% 36%';
       overlay.classList.add('dismissed');
       // صفحه اصلی از بلور به وضوح
       document.documentElement.classList.remove('intro-active');
       document.documentElement.classList.add('intro-ready');
       document.body.classList.remove('lock');
-      setTimeout(()=>{ document.documentElement.classList.remove('intro-ready'); }, 1400);
-      setTimeout(()=>{ overlay.remove(); }, 1250);
+      setTimeout(()=>{ document.documentElement.classList.remove('intro-ready'); }, 3000);
+      setTimeout(()=>{ overlay.remove(); }, 3100);
     }
     const enterBtn = document.getElementById('introEnter');
     enterBtn?.addEventListener('click', dismiss);
