@@ -576,6 +576,39 @@ option{background:#17191e}
   background-repeat:no-repeat
 }
 .map-placeholder span{color:var(--gold-light);font-size:.72rem}
+.map-embed{
+  position:relative;min-height:220px;margin-top:17px;overflow:hidden;
+  border:1px solid var(--gold-line);border-radius:16px;background:#08090b;
+  box-shadow:0 10px 30px rgba(0,0,0,.18)
+}
+.map-embed iframe{
+  position:absolute;inset:0;width:100%;height:100%;border:0;
+  filter:saturate(1.05) contrast(1.05)
+}
+.map-embed .map-link{
+  position:absolute;left:12px;bottom:12px;z-index:2;
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 11px;border:1px solid rgba(255,255,255,.14);border-radius:10px;
+  background:rgba(17,19,24,.92);backdrop-filter:blur(8px);
+  color:var(--gold-light);font-size:.66rem;font-weight:700
+}
+.map-embed .map-link:hover{border-color:var(--gold-line)}
+.map-fallback{
+  position:absolute;inset:0;display:grid;place-items:center;text-align:center;
+  background-color:#08090b;
+  background-image:
+    linear-gradient(rgba(8,9,11,.78),rgba(8,9,11,.78)),
+    url("images/map.jpg");
+  background-image:
+    linear-gradient(rgba(8,9,11,.78),rgba(8,9,11,.78)),
+    image-set(
+      url("images/map.webp") type("image/webp"),
+      url("images/map.jpg") type("image/jpeg")
+    );
+  background-position:center;background-size:cover;background-repeat:no-repeat;
+  color:var(--gold-light);font-size:.72rem
+}
+.map-fallback.hidden{display:none!important}
 .contact-form .field{margin-bottom:12px}
 /* Footer */
 .footer{padding-top:62px;background:#060709}
@@ -1149,7 +1182,17 @@ option{background:#17191e}
             <div class="contact-item"><svg class="icon" aria-hidden="true"><use href="#icon-mail"></use></svg><div><strong>ایمیل</strong><a data-email-link href="mailto:info@nourotour.ir" data-bind="email">info@nourotour.ir</a></div></div>
             <div class="contact-item"><svg class="icon" aria-hidden="true"><use href="#icon-clock-3"></use></svg><div><strong>ساعات کاری</strong><span data-bind="workingHours">شنبه تا پنج‌شنبه، ۹ تا ۱۸</span></div></div>
           </div>
-          <div class="map-placeholder"><span><svg class="icon" aria-hidden="true"><use href="#icon-map"></use></svg><br>جایگاه نقشه Google Maps<br>قابل جایگزینی با Embed رسمی</span></div>
+          <div class="map-embed" id="mapEmbed">
+            <iframe
+              id="mapFrame"
+              title="نقشه دفتر مرکزی نوروتور"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+            ></iframe>
+            <a id="mapLink" class="map-link" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#icon-map"></use></svg> مشاهده در نقشه</a>
+            <div class="map-fallback" id="mapFallback"><span><svg class="icon" aria-hidden="true"><use href="#icon-map"></use></svg><br>نقشه در دسترس نیست<br><small style="color:var(--muted)">نشانی Embed را در پنل مدیریت تنظیم کنید</small></span></div>
+          </div>
         </div>
         <form class="contact-form success-form" id="contactForm" data-form-type="consult" novalidate>
           <h3>درخواست مشاوره سفر</h3>
@@ -1350,6 +1393,15 @@ option{background:#17191e}
       <div class="field">
         <label for="adminWorkingHours">ساعات کاری</label>
         <input id="adminWorkingHours" name="workingHours">
+      </div>
+      <div class="field">
+        <label for="adminMapEmbedUrl">نشانی Embed نقشه (iframe src)</label>
+        <input id="adminMapEmbedUrl" name="mapEmbedUrl" type="url" dir="ltr" placeholder="https://maps.google.com/maps?q=تهران&output=embed">
+        <small class="field-hint">اگر خالی بماند، تصویر پیش‌فرض نمایش داده می‌شود. از Google Maps ← Share ← Embed a map استفاده کنید.</small>
+      </div>
+      <div class="field">
+        <label for="adminMapLinkUrl">پیوند «مشاهده در نقشه»</label>
+        <input id="adminMapLinkUrl" name="mapLinkUrl" type="url" dir="ltr" placeholder="https://maps.google.com/?q=تهران">
       </div>
       <div class="field">
         <label for="adminLeadEndpoint">نشانی دریافت درخواست‌ها (Webhook)</label>
@@ -1596,6 +1648,8 @@ document.addEventListener("DOMContentLoaded", () => {
       email: "info@nourotour.ir",
       address: "تهران، آدرس دفتر مرکزی نوروتور",
       workingHours: "شنبه تا پنج‌شنبه، ۹ تا ۱۸",
+      mapEmbedUrl: "https://maps.google.com/maps?q=%D8%AA%D9%87%D8%B1%D8%A7%D9%86&t=&z=11&ie=UTF8&iwloc=&output=embed",
+      mapLinkUrl: "https://www.google.com/maps/search/?api=1&query=%D8%AA%D9%87%D8%B1%D8%A7%D9%86",
       // نشانی دریافت درخواست‌ها (Webhook). خالی = فقط ذخیره محلی در مرورگر.
       leadEndpoint: "",
       aboutIntro: "نوروتور مجموعه‌ای تخصصی در حوزه گردشگری و خدمات سفر است که با تمرکز بر شفافیت، طراحی دقیق برنامه سفر و پشتیبانی مسئولانه فعالیت می‌کند.",
@@ -2287,6 +2341,34 @@ document.addEventListener("DOMContentLoaded", () => {
         fetchPriority: "high"
       });
     });
+
+    // نقشه تعاملی: مقداردهی iframe و پیوند "مشاهده در نقشه"
+    const mapFrame = $("#mapFrame");
+    const mapLink = $("#mapLink");
+    const mapFallback = $("#mapFallback");
+    const embedUrl = String(general.mapEmbedUrl || "").trim();
+    const linkUrl = String(general.mapLinkUrl || "").trim();
+    if (mapFrame) {
+      if (embedUrl) {
+        mapFrame.src = embedUrl;
+        mapFallback?.classList.add("hidden");
+        mapFrame.classList.remove("hidden");
+      } else {
+        mapFrame.removeAttribute("src");
+        mapFallback?.classList.remove("hidden");
+      }
+    }
+    if (mapLink) {
+      if (linkUrl) {
+        mapLink.href = linkUrl;
+        mapLink.classList.remove("hidden");
+      } else if (embedUrl) {
+        mapLink.href = embedUrl;
+        mapLink.classList.remove("hidden");
+      } else {
+        mapLink.classList.add("hidden");
+      }
+    }
 
     document.title = `${general.brandName} | ${general.tagline}`;
   }
