@@ -8,19 +8,30 @@
   <meta name="description" content="نوروتور؛ رزرو تورهای داخلی و خارجی، پرواز، هتل، خدمات ویزا، وقت سفارت و مشاوره سفر.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://nourotour.ir/">
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="apple-touch-icon" href="images/logo.png">
   <link rel="preload" as="image" href="images/hero.jpg" fetchpriority="high">
   <meta property="og:locale" content="fa_IR">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="نوروتور">
   <meta property="og:title" content="نوروتور | سفر فراتر از انتظار">
   <meta property="og:description" content="تور، پرواز، هتل، ویزا و خدمات تخصصی سفر">
   <meta property="og:url" content="https://nourotour.ir/">
-  <meta property="og:image" content="images/hero.jpg">
+  <meta property="og:image" content="https://nourotour.ir/images/hero.jpg">
+  <meta property="og:image:alt" content="نمای هوایی شهر ساحلی در غروب — نوروتور">
+  <meta property="og:image:width" content="1600">
+  <meta property="og:image:height" content="900">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="نوروتور | سفر فراتر از انتظار">
+  <meta name="twitter:description" content="تور، پرواز، هتل، ویزا و خدمات تخصصی سفر">
+  <meta name="twitter:image" content="https://nourotour.ir/images/hero.jpg">
   <title>نوروتور | سفر فراتر از انتظار</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <script defer src="https://unpkg.com/lucide@latest"></script>
+  <!-- نسخه پین‌شده تا تغییر ناگهانی CDN رفتار آیکون‌ها را نشکند -->
+  <script defer src="https://unpkg.com/lucide@1.47.0/dist/umd/lucide.min.js"></script>
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -38,6 +49,21 @@
     },
     "openingHours":"Sa-Th 09:00-18:00",
     "priceRange":"$$$"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"نوروتور",
+    "alternateName":"NOUROTOUR",
+    "url":"https://nourotour.ir/",
+    "inLanguage":"fa-IR",
+    "publisher":{
+      "@type":"TravelAgency",
+      "name":"نوروتور",
+      "url":"https://nourotour.ir/"
+    }
   }
   </script>
 <style>
@@ -120,6 +146,7 @@ ul{list-style:none}
   gap:8px;font-size:.82rem;font-weight:800;transition:.25s
 }
 .btn:hover{transform:translateY(-2px)}
+.btn:disabled{opacity:.6;cursor:progress;transform:none}
 .btn-gold{
   color:#171108;background:linear-gradient(135deg,var(--gold-light),var(--gold-dark));
   box-shadow:0 15px 38px rgba(214,174,90,.18)
@@ -236,6 +263,9 @@ ul{list-style:none}
   border-color:var(--gold);box-shadow:0 0 0 3px rgba(214,174,90,.08)
 }
 option{background:#17191e}
+.field-hint{color:var(--muted);font-size:.62rem;line-height:1.6}
+.field input:user-invalid,.field select:user-invalid,.field textarea:user-invalid{border-color:rgba(239,114,114,.75)}
+.field input:user-invalid~.field-hint{color:var(--danger)}
 .form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
 /* Trust */
 .trust{margin-top:28px}
@@ -606,6 +636,23 @@ option{background:#17191e}
 .admin-tour strong{font-size:.68rem}
 .admin-tour span{display:block;color:var(--muted);font-size:.58rem}
 .admin-json{min-height:360px!important;font:12px/1.6 monospace;direction:ltr;text-align:left}
+.admin-leads{max-height:46vh;overflow:auto}
+.admin-lead{display:flex;align-items:flex-start;justify-content:space-between;gap:9px;padding:10px 0;border-bottom:1px solid var(--line)}
+.admin-lead:last-child{border:0}
+.admin-lead strong{font-size:.7rem}
+.admin-lead span{display:block;color:var(--muted);font-size:.58rem;line-height:1.7}
+.admin-lead span[dir="ltr"]{font-family:ui-monospace,monospace}
+.lead-empty{color:var(--muted);font-size:.66rem;padding:8px 0}
+.pill-count{
+  display:inline-grid;place-items:center;min-width:18px;height:18px;margin-inline-start:6px;
+  padding:0 5px;border-radius:999px;background:rgba(214,174,90,.18);
+  color:var(--gold-light);font-size:.58rem;line-height:1
+}
+.noscript-note{
+  position:relative;z-index:5;margin:0;padding:14px 18px;text-align:center;
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold));
+  color:#14100a;font-size:.78rem;font-weight:700;line-height:1.9
+}
 /* Responsive */
 @media(max-width:1050px){
   .nav{
@@ -677,6 +724,14 @@ option{background:#17191e}
 </head>
 <body>
 <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
+<noscript>
+  <p class="noscript-note">
+    برای نمایش فهرست تورها، پرسش‌های متداول و ارسال فرم‌های مشاوره و رزرو، جاوااسکریپت مرورگر را فعال کنید.
+    برای دریافت مشاورهٔ فوری می‌توانید با شمارهٔ
+    <a href="tel:+982100000000" style="text-decoration:underline">۰۲۱-۰۰۰۰۰۰۰۰</a>
+    تماس بگیرید یا به <a href="mailto:info@nourotour.ir" style="text-decoration:underline">info@nourotour.ir</a> ایمیل بزنید.
+  </p>
+</noscript>
 <div class="topbar">
   <div class="container topbar-inner">
     <div class="live-status"><span class="live-dot"></span><span>مرکز خدمات سفر نوروتور فعال است</span></div>
@@ -1027,17 +1082,43 @@ option{background:#17191e}
           </div>
           <div class="map-placeholder"><span><i data-lucide="map"></i><br>جایگاه نقشه Google Maps<br>قابل جایگزینی با Embed رسمی</span></div>
         </div>
-        <form class="contact-form success-form">
+        <form class="contact-form success-form" id="contactForm" data-form-type="consult" novalidate>
           <h3>درخواست مشاوره سفر</h3>
           <p class="muted" style="font-size:.72rem;margin-bottom:17px">اطلاعات خود را ثبت کنید؛ کارشناس سفر با شما تماس می‌گیرد.</p>
           <div class="form-grid">
-            <div class="field"><label>نام و نام خانوادگی</label><input required autocomplete="name" placeholder="نام کامل"></div>
-            <div class="field"><label>شماره تماس</label><input required type="tel" inputmode="numeric" pattern="09[0-9]{9}" autocomplete="tel" placeholder="09xxxxxxxxx"></div>
-            <div class="field"><label>مقصد موردنظر</label><input placeholder="مثلاً دبی یا استانبول"></div>
-            <div class="field"><label>بودجه تقریبی</label><select><option>نیاز به مشاوره</option><option>تا ۳۰ میلیون تومان</option><option>۳۰ تا ۷۰ میلیون تومان</option><option>بیش از ۷۰ میلیون تومان</option></select></div>
+            <div class="field">
+              <label for="contactName">نام و نام خانوادگی</label>
+              <input id="contactName" name="fullName" required autocomplete="name" placeholder="نام کامل">
+            </div>
+            <div class="field">
+              <label for="contactPhone">شماره تماس</label>
+              <input id="contactPhone" name="phone" required type="tel" inputmode="numeric" pattern="09[0-9]{9}" autocomplete="tel" dir="ltr" placeholder="09xxxxxxxxx" aria-describedby="contactPhoneHint">
+              <small class="field-hint" id="contactPhoneHint">شماره موبایل با ۰۹ شروع می‌شود.</small>
+            </div>
+            <div class="field">
+              <label for="contactDestination">مقصد موردنظر</label>
+              <input id="contactDestination" name="destination" autocomplete="off" placeholder="مثلاً دبی یا استانبول">
+            </div>
+            <div class="field">
+              <label for="contactBudget">بودجه تقریبی</label>
+              <select id="contactBudget" name="budget">
+                <option>نیاز به مشاوره</option>
+                <option>تا ۳۰ میلیون تومان</option>
+                <option>۳۰ تا ۷۰ میلیون تومان</option>
+                <option>بیش از ۷۰ میلیون تومان</option>
+              </select>
+            </div>
           </div>
-          <div class="field"><label>توضیحات</label><textarea rows="5" placeholder="تعداد مسافر، تاریخ و درخواست ویژه"></textarea></div>
-          <button class="btn btn-gold btn-full"><i data-lucide="send"></i>ثبت درخواست مشاوره</button>
+          <div class="field">
+            <label for="contactMessage">توضیحات</label>
+            <textarea id="contactMessage" name="message" rows="5" placeholder="تعداد مسافر، تاریخ و درخواست ویژه"></textarea>
+          </div>
+          <!-- تله ضدربات: برای کاربر واقعی پنهان است و نباید پر شود -->
+          <div class="hidden" aria-hidden="true">
+            <label for="contactCompany">شرکت (این فیلد را خالی بگذارید)</label>
+            <input id="contactCompany" name="company" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <button class="btn btn-gold btn-full" type="submit"><i data-lucide="send"></i>ثبت درخواست مشاوره</button>
         </form>
       </div>
     </div>
@@ -1101,17 +1182,48 @@ option{background:#17191e}
       <h2 id="bookingTitle">سفر بعدی خود را آغاز کنید</h2>
       <p>ثبت فرم به معنی رزرو قطعی نیست؛ کارشناس برای بررسی ظرفیت و قیمت تماس می‌گیرد.</p>
     </div>
-    <form class="success-form" id="bookingForm" style="margin-top:20px">
+    <form class="success-form" id="bookingForm" data-form-type="booking" style="margin-top:20px" novalidate>
       <div class="form-grid">
-        <div class="field"><label>نام و نام خانوادگی</label><input required autocomplete="name" placeholder="نام کامل"></div>
-        <div class="field"><label>شماره تماس</label><input required type="tel" inputmode="numeric" pattern="09[0-9]{9}" autocomplete="tel" placeholder="09xxxxxxxxx"></div>
-        <div class="field"><label>تور یا مقصد</label><select required id="bookingTour"><option value="">انتخاب تور</option></select></div>
-        <div class="field"><label>تعداد مسافر</label><select><option>۱ نفر</option><option>۲ نفر</option><option>۳ نفر</option><option>۴ نفر یا بیشتر</option></select></div>
-        <div class="field"><label>تاریخ پیشنهادی</label><input type="date"></div>
-        <div class="field"><label>روش تماس</label><select><option>تماس تلفنی</option><option>واتساپ</option><option>ایمیل</option></select></div>
+        <div class="field">
+          <label for="bookingName">نام و نام خانوادگی</label>
+          <input id="bookingName" name="fullName" required autocomplete="name" placeholder="نام کامل">
+        </div>
+        <div class="field">
+          <label for="bookingPhone">شماره تماس</label>
+          <input id="bookingPhone" name="phone" required type="tel" inputmode="numeric" pattern="09[0-9]{9}" autocomplete="tel" dir="ltr" placeholder="09xxxxxxxxx" aria-describedby="bookingPhoneHint">
+          <small class="field-hint" id="bookingPhoneHint">شماره موبایل با ۰۹ شروع می‌شود.</small>
+        </div>
+        <div class="field">
+          <label for="bookingTour">تور یا مقصد</label>
+          <select id="bookingTour" name="tour" required><option value="">انتخاب تور</option></select>
+        </div>
+        <div class="field">
+          <label for="bookingTravelers">تعداد مسافر</label>
+          <select id="bookingTravelers" name="travelers">
+            <option>۱ نفر</option><option>۲ نفر</option><option>۳ نفر</option><option>۴ نفر یا بیشتر</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="bookingDate">تاریخ پیشنهادی</label>
+          <input id="bookingDate" name="preferredDate" type="date" dir="ltr">
+        </div>
+        <div class="field">
+          <label for="bookingContactMethod">روش تماس</label>
+          <select id="bookingContactMethod" name="contactMethod">
+            <option>تماس تلفنی</option><option>واتساپ</option><option>ایمیل</option>
+          </select>
+        </div>
       </div>
-      <div class="field" style="margin:13px 0"><label>توضیحات</label><textarea rows="3" placeholder="بودجه، نوع هتل یا درخواست ویژه"></textarea></div>
-      <button class="btn btn-gold btn-full">ثبت درخواست رزرو</button>
+      <div class="field" style="margin:13px 0">
+        <label for="bookingMessage">توضیحات</label>
+        <textarea id="bookingMessage" name="message" rows="3" placeholder="بودجه، نوع هتل یا درخواست ویژه"></textarea>
+      </div>
+      <!-- تله ضدربات: برای کاربر واقعی پنهان است و نباید پر شود -->
+      <div class="hidden" aria-hidden="true">
+        <label for="bookingWebsite">وب‌سایت (این فیلد را خالی بگذارید)</label>
+        <input id="bookingWebsite" name="website" type="text" tabindex="-1" autocomplete="off">
+      </div>
+      <button class="btn btn-gold btn-full" type="submit">ثبت درخواست رزرو</button>
     </form>
   </div>
 </div>
@@ -1125,6 +1237,7 @@ option{background:#17191e}
     <button class="pill active" data-admin-tab="general">عمومی</button>
     <button class="pill" data-admin-tab="tours">تورها</button>
     <button class="pill" data-admin-tab="content">محتوا</button>
+    <button class="pill" data-admin-tab="leads">درخواست‌ها<span class="pill-count" id="leadCount" hidden>۰</span></button>
     <button class="pill" data-admin-tab="json">JSON</button>
   </div>
   <section class="admin-section active" data-admin-section="general">
@@ -1168,6 +1281,15 @@ option{background:#17191e}
       <div class="field">
         <label for="adminWorkingHours">ساعات کاری</label>
         <input id="adminWorkingHours" name="workingHours">
+      </div>
+      <div class="field">
+        <label for="adminLeadEndpoint">نشانی دریافت درخواست‌ها (Webhook)</label>
+        <input id="adminLeadEndpoint" name="leadEndpoint" type="url" dir="ltr" autocomplete="off" placeholder="https://formspree.io/f/xxxxxxxx">
+        <small class="field-hint">
+          در صورت پر بودن، فرم‌های مشاوره و رزرو با <code>POST</code> و فرمت JSON به این نشانی
+          فرستاده می‌شوند (سرویس باید CORS را برای <span dir="ltr">nourotour.ir</span> باز کرده باشد).
+          اگر خالی بماند، درخواست‌ها فقط در همین مرورگر و در تب «درخواست‌ها» ذخیره می‌شوند.
+        </small>
       </div>
       <div class="admin-actions">
         <button class="btn btn-gold btn-small" type="submit">ذخیره اطلاعات</button>
@@ -1286,6 +1408,23 @@ option{background:#17191e}
     </div>
   </section>
 
+  <section class="admin-section" data-admin-section="leads">
+    <div class="admin-card">
+      <h3>درخواست‌های مشاوره و رزرو</h3>
+      <p class="muted" style="font-size:.65rem;margin-bottom:10px">
+        فرم‌های عمومی در حافظهٔ همین مرورگر (<span dir="ltr">localStorage</span>) ذخیره می‌شوند تا با
+        تازه‌سازی صفحه از بین نروند. برای دریافت واقعی روی سرور یا CRM، نشانی Webhook را در تب
+        «عمومی» وارد کنید.
+      </p>
+      <div class="admin-leads" id="adminLeadList"></div>
+      <div class="admin-actions">
+        <button class="btn btn-ghost btn-small" id="exportLeadsCsv" type="button">خروجی CSV</button>
+        <button class="btn btn-ghost btn-small" id="exportLeadsJson" type="button">خروجی JSON</button>
+        <button class="btn btn-danger btn-small" id="clearLeads" type="button">پاک‌سازی همه</button>
+      </div>
+    </div>
+  </section>
+
   <section class="admin-section" data-admin-section="json">
     <div class="admin-card">
       <h3>پشتیبان‌گیری و ویرایش کامل داده‌ها</h3>
@@ -1319,6 +1458,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const STORAGE_KEY = "nourotour_data_v1";
   const FAVORITES_KEY = "nourotour_favorites_v1";
   const OFFER_KEY = "nourotour_offer_end_v1";
+  const LEADS_KEY = "nourotour_leads_v1";
+  const MAX_LEADS = 200;
 
   const $ = (selector, context = document) => context.querySelector(selector);
   const $$ = (selector, context = document) => [...context.querySelectorAll(selector)];
@@ -1353,6 +1494,8 @@ document.addEventListener("DOMContentLoaded", () => {
       email: "info@nourotour.ir",
       address: "تهران، آدرس دفتر مرکزی نوروتور",
       workingHours: "شنبه تا پنج‌شنبه، ۹ تا ۱۸",
+      // نشانی دریافت درخواست‌ها (Webhook). خالی = فقط ذخیره محلی در مرورگر.
+      leadEndpoint: "",
       aboutIntro: "نوروتور مجموعه‌ای تخصصی در حوزه گردشگری و خدمات سفر است که با تمرکز بر شفافیت، طراحی دقیق برنامه سفر و پشتیبانی مسئولانه فعالیت می‌کند.",
       mission: "ساده‌تر، مطمئن‌تر و لذت‌بخش‌تر کردن مسیر سفر.",
       vision: "تبدیل‌شدن به یکی از قابل‌اعتمادترین برندهای خدمات سفر فارسی‌زبان."
@@ -1712,6 +1855,254 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function saveData() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(siteData));
+  }
+
+  /* ————— دریافت و نگهداری درخواست‌های فرم (مشاوره و رزرو) ————— */
+
+  const LEAD_LABELS = {
+    fullName: "نام و نام خانوادگی",
+    phone: "شماره تماس",
+    destination: "مقصد موردنظر",
+    budget: "بودجه تقریبی",
+    tour: "تور یا مقصد",
+    travelers: "تعداد مسافر",
+    preferredDate: "تاریخ پیشنهادی",
+    contactMethod: "روش تماس",
+    message: "توضیحات"
+  };
+
+  const LEAD_KINDS = {
+    consult: "درخواست مشاوره",
+    booking: "درخواست رزرو"
+  };
+
+  const LEAD_COLUMNS = [
+    "id",
+    "kind",
+    "createdAt",
+    "fullName",
+    "phone",
+    "tour",
+    "destination",
+    "travelers",
+    "preferredDate",
+    "contactMethod",
+    "budget",
+    "message",
+    "syncState",
+    "pageUrl"
+  ];
+
+  function loadLeads() {
+    try {
+      const list = JSON.parse(localStorage.getItem(LEADS_KEY));
+      return Array.isArray(list) ? list : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function persistLeads(leads) {
+    try {
+      localStorage.setItem(LEADS_KEY, JSON.stringify(leads.slice(0, MAX_LEADS)));
+    } catch {
+      showToast(
+        "ذخیره محلی ناموفق",
+        "حافظهٔ مرورگر در دسترس نیست؛ درخواست فقط در همین نشست نمایش داده می‌شود."
+      );
+    }
+  }
+
+  function createLeadId() {
+    if (window.crypto?.randomUUID) return window.crypto.randomUUID();
+
+    return `lead-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+  }
+
+  function faDateTime(iso) {
+    const date = new Date(iso);
+    if (Number.isNaN(date.getTime())) return iso;
+
+    try {
+      return new Intl.DateTimeFormat("fa-IR", {
+        dateStyle: "short",
+        timeStyle: "short"
+      }).format(date);
+    } catch {
+      return date.toLocaleString();
+    }
+  }
+
+  /** ارسال به Webhook اختیاری؛ در صورت نبود یا خطا، جریان کاربر قطع نمی‌شود. */
+  async function syncLead(lead) {
+    const endpoint = String(siteData.general?.leadEndpoint || "").trim();
+
+    if (!endpoint) {
+      lead.syncState = "local";
+      return lead;
+    }
+
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(lead)
+      });
+
+      lead.syncState = response.ok ? "sent" : `failed:${response.status}`;
+    } catch (error) {
+      lead.syncState = "failed";
+    }
+
+    return lead;
+  }
+
+  function saveLead(form, values) {
+    const lead = {
+      id: createLeadId(),
+      kind: form.dataset.formType || "consult",
+      createdAt: new Date().toISOString(),
+      pageUrl: window.location.href,
+      syncState: "pending",
+      ...values
+    };
+
+    const leads = loadLeads();
+    leads.unshift(lead);
+    persistLeads(leads);
+    renderAdminLeads();
+
+    return lead;
+  }
+
+  function deleteLead(id) {
+    persistLeads(loadLeads().filter(lead => String(lead.id) !== String(id)));
+    renderAdminLeads();
+  }
+
+  function renderAdminLeads() {
+    const list = $("#adminLeadList");
+    if (!list) return;
+
+    const leads = loadLeads();
+
+    const badge = $("#leadCount");
+    if (badge) {
+      badge.textContent = faNumber(leads.length);
+      badge.hidden = leads.length === 0;
+    }
+
+    if (!leads.length) {
+      list.innerHTML =
+        '<p class="lead-empty">هنوز درخواستی ثبت نشده است. فرم مشاوره یا رزرو را در صفحهٔ اصلی امتحان کنید.</p>';
+      return;
+    }
+
+    const syncLabel = state => {
+      if (state === "sent") return "ارسال شد";
+      if (state === "local") return "ذخیرهٔ محلی";
+      if (state === "pending") return "در انتظار ارسال";
+      return `ارسال ناموفق${String(state).includes(":") ? ` (${String(state).split(":")[1]})` : ""}`;
+    };
+
+    list.innerHTML = leads.map(lead => {
+      const rows = Object.entries(lead)
+        .filter(([key, value]) => LEAD_LABELS[key] && String(value ?? "").trim() !== "")
+        .map(([key, value]) => `${LEAD_LABELS[key]}: ${escapeHTML(value)}`)
+        .join(" · ");
+
+      return `
+        <div class="admin-lead">
+          <div>
+            <strong>${escapeHTML(LEAD_KINDS[lead.kind] || "درخواست")}</strong>
+            <span>${escapeHTML(faDateTime(lead.createdAt))} — ${escapeHTML(syncLabel(lead.syncState))}</span>
+            <span>${rows || "بدون جزئیات"}</span>
+            ${lead.phone ? `<span dir="ltr">${escapeHTML(lead.phone)}</span>` : ""}
+          </div>
+          <button class="btn btn-danger btn-small" type="button" data-admin-delete-lead="${escapeHTML(lead.id)}">حذف</button>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function downloadFile(filename, content, mime) {
+    const blob = new Blob([content], { type: `${mime};charset=utf-8` });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    URL.revokeObjectURL(url);
+  }
+
+  function exportLeads(format) {
+    const leads = loadLeads();
+
+    if (!leads.length) {
+      showToast("چیزی برای خروجی نیست", "ابتدا یک فرم مشاوره یا رزرو ثبت کنید.");
+      return;
+    }
+
+    const stamp = new Date().toISOString().slice(0, 10);
+
+    if (format === "json") {
+      downloadFile(
+        `nourotour-leads-${stamp}.json`,
+        JSON.stringify(leads, null, 2),
+        "application/json"
+      );
+      return;
+    }
+
+    const cell = value => {
+      const text = String(value ?? "").trim();
+      return `"${text.replaceAll('"', '""')}"`;
+    };
+
+    const csv = [
+      LEAD_COLUMNS.map(cell).join(","),
+      ...leads.map(lead => LEAD_COLUMNS.map(key => cell(lead[key])).join(","))
+    ].join("\r\n");
+
+    // BOM برای نمایش درست فارسی در Excel
+    downloadFile(`nourotour-leads-${stamp}.csv`, `\uFEFF${csv}`, "text/csv");
+  }
+
+  /** داده‌های ساخت‌یافتهٔ پرسش‌های متداول، همگام با محتوای نمایش داده‌شده. */
+  function injectFaqSchema() {
+    const questions = (siteData.faq || []).filter(
+      item => String(item?.question || "").trim() && String(item?.answer || "").trim()
+    );
+
+    const existing = $("#faqSchema");
+
+    if (!questions.length) {
+      existing?.remove();
+      return;
+    }
+
+    const script = existing || document.createElement("script");
+
+    script.type = "application/ld+json";
+    script.id = "faqSchema";
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": questions.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
+        }
+      }))
+    });
+
+    if (!existing) document.head.appendChild(script);
   }
 
   function refreshIcons() {
@@ -2086,6 +2477,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderBlog();
     renderReviews();
     renderFAQ();
+    injectFaqSchema();
     renderLiveWidgets();
     renderAdmin();
     refreshIcons();
@@ -2468,6 +2860,7 @@ document.addEventListener("DOMContentLoaded", () => {
     fillForm($("#generalAdminForm"), siteData.general);
     fillForm($("#contentAdminForm"), siteData.general);
     renderAdminTourList();
+    renderAdminLeads();
     $("#adminJson").value = JSON.stringify(siteData, null, 2);
   }
 
@@ -2649,7 +3042,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   $$(".success-form").forEach(form => {
-    form.addEventListener("submit", event => {
+    form.addEventListener("submit", async event => {
       event.preventDefault();
 
       if (!form.checkValidity()) {
@@ -2657,13 +3050,72 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+      const data = new FormData(form);
+      const honeypot = ["company", "website"].find(
+        key => String(data.get(key) || "").trim() !== ""
+      );
+
+      // ربات‌ها تلهٔ پنهان را پر می‌کنند؛ بدون ذخیره‌سازی، پاسخ موفق نمایش می‌دهیم.
+      if (honeypot) {
+        form.reset();
+        return;
+      }
+
+      const values = {};
+
+      for (const [key, value] of data.entries()) {
+        if (key === "company" || key === "website") continue;
+
+        const text = String(value ?? "").trim();
+        if (text) values[key] = text;
+      }
+
+      const submitButton = $("button[type='submit']", form);
+      const submitLabel = submitButton?.innerHTML ?? "";
+
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.innerHTML = "در حال ثبت…";
+      }
+
+      const lead = saveLead(form, values);
+      const synced = await syncLead(lead);
+
+      // ذخیره وضعیت نهایی همگام‌سازی
+      persistLeads(
+        loadLeads().map(item =>
+          String(item.id) === String(synced.id) ? { ...item, syncState: synced.syncState } : item
+        )
+      );
+      renderAdminLeads();
+
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.innerHTML = submitLabel;
+      }
+
       form.reset();
       closeAllModals();
+      refreshIcons();
 
-      showToast(
-        "درخواست شما ثبت شد",
-        "این ثبت در نسخه نمایشی محلی است؛ اتصال به سامانه رزرو در مرحله بعد انجام می‌شود."
-      );
+      const kindLabel = LEAD_KINDS[lead.kind] || "درخواست شما";
+
+      if (synced.syncState === "sent") {
+        showToast(
+          `${kindLabel} ارسال شد`,
+          "درخواست به سامانهٔ دریافت معرفی‌شده در پنل مدیریت ارسال شد؛ کارشناسان به‌زودی تماس می‌گیرند."
+        );
+      } else if (synced.syncState === "local") {
+        showToast(
+          `${kindLabel} ثبت شد`,
+          "در این نسخه درخواست در همین مرورگر ذخیره می‌شود (پنل مدیریت ← تب «درخواست‌ها»). برای دریافت روی سرور، نشانی Webhook را در تب «عمومی» وارد کنید."
+        );
+      } else {
+        showToast(
+          `${kindLabel} ثبت شد`,
+          "ارسال به نشانی Webhook ناموفق بود؛ درخواست در همین مرورگر ذخیره شد و می‌توانید آن را از تب «درخواست‌ها» خروجی بگیرید."
+        );
+      }
     });
   });
 
@@ -2836,6 +3288,30 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  $("#adminLeadList").addEventListener("click", event => {
+    const deleteButton = event.target.closest("[data-admin-delete-lead]");
+    if (!deleteButton) return;
+
+    deleteLead(deleteButton.dataset.adminDeleteLead);
+    showToast("درخواست حذف شد", "این رکورد از حافظهٔ محلی مرورگر پاک شد.");
+  });
+
+  $("#exportLeadsCsv").addEventListener("click", () => exportLeads("csv"));
+  $("#exportLeadsJson").addEventListener("click", () => exportLeads("json"));
+
+  $("#clearLeads").addEventListener("click", () => {
+    if (!loadLeads().length) {
+      showToast("لیست خالی است", "درخواستی برای پاک‌سازی وجود ندارد.");
+      return;
+    }
+
+    if (!confirm("همهٔ درخواست‌های ذخیره‌شده در این مرورگر پاک شوند؟")) return;
+
+    persistLeads([]);
+    renderAdminLeads();
+    showToast("پاک‌سازی انجام شد", "همهٔ درخواست‌های محلی حذف شدند.");
+  });
+
   $("#saveJson").addEventListener("click", () => {
     try {
       const parsed = JSON.parse($("#adminJson").value);
@@ -2936,6 +3412,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (event.key === STORAGE_KEY) {
       siteData = loadData();
       renderAll();
+    }
+
+    if (event.key === LEADS_KEY) {
+      renderAdminLeads();
     }
   });
 });
