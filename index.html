@@ -159,6 +159,90 @@ ul{list-style:none}
   width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--line);
   border-radius:13px;background:var(--surface)
 }
+
+/* Intro / Splash — cinematic 3D brand reveal */
+.intro-overlay{
+  position:fixed;inset:0;z-index:9999;display:grid;place-items:center;
+  background:#050607;overflow:hidden;
+  transition:opacity .75s cubic-bezier(.7,0,.3,1),transform .85s cubic-bezier(.7,0,.3,1),visibility .75s;
+}
+.intro-overlay.dismissed{
+  opacity:0;visibility:hidden;transform:translateY(-4%) scale(1.03);pointer-events:none;
+}
+.intro-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 820px 620px at 75% -8%, rgba(214,174,90,.18), transparent 60%),
+    radial-gradient(ellipse 900px 700px at -12% 110%, rgba(214,174,90,.08), transparent 62%),
+    radial-gradient(ellipse 600px 400px at 50% 0%, rgba(255,255,255,.04), transparent 70%),
+    linear-gradient(180deg, #0a0c0e 0%, #07080a 55%, #050607 100%);
+}
+.intro-glow{
+  position:absolute;width:720px;height:720px;left:50%;top:46%;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(circle, rgba(214,174,90,.14), transparent 68%);
+  filter:blur(14px);animation:introGlow 4.5s ease-in-out infinite alternate;
+}
+@keyframes introGlow{0%{transform:translate(-50%,-50%) scale(1);opacity:.9}100%{transform:translate(-50%,-50%) scale(1.08);opacity:1}}
+.intro-particles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.intro-particle{position:absolute;width:2px;height:2px;background:var(--gold-light);border-radius:50%;opacity:0;box-shadow:0 0 6px var(--gold);animation:particleFloat linear infinite}
+@keyframes particleFloat{0%{transform:translateY(105vh) translateX(0);opacity:0}10%{opacity:.65}90%{opacity:.5}100%{transform:translateY(-8vh) translateX(18px);opacity:0}}
+.intro-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;padding:28px 22px;max-width:560px;width:100%}
+.intro-logo-wrap{perspective:1200px;margin-bottom:22px;animation:introLogoEnter 1.15s cubic-bezier(.16,1,.3,1) forwards}
+.intro-logo{
+  width:168px;height:118px;display:grid;place-items:center;border-radius:22px;overflow:hidden;
+  background:#fff;position:relative;
+  box-shadow:
+    0 26px 70px rgba(0,0,0,.55),
+    0 10px 30px rgba(214,174,90,.18),
+    0 0 0 1px rgba(214,174,90,.22),
+    0 1px 0 1px rgba(255,255,255,.75) inset;
+  transform:rotateX(14deg) rotateY(-14deg) translateZ(0);
+  transform-style:preserve-3d;
+  animation:introFloat 3.4s ease-in-out infinite;
+  transition:transform .55s cubic-bezier(.2,.8,.2,1);
+}
+.intro-logo::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(135deg, rgba(255,255,255,.55), transparent 45%, transparent 80%, rgba(214,174,90,.12));
+  pointer-events:none;
+}
+.intro-logo::after{
+  content:"";position:absolute;inset:auto -14px -14px -14px;height:22px;
+  background:linear-gradient(to top, rgba(214,174,90,.18), transparent);
+  filter:blur(12px);transform:translateZ(-20px);opacity:.9;
+}
+.intro-logo img{width:82%;height:auto;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,.08))}
+.intro-logo-wrap:hover .intro-logo{transform:rotateX(6deg) rotateY(-6deg) translateZ(18px) scale(1.015)}
+@keyframes introLogoEnter{0%{opacity:0;transform:translateY(38px) scale(.88) rotateX(22deg)}100%{opacity:1;transform:translateY(0) scale(1) rotateX(0)}}
+@keyframes introFloat{0%,100%{transform:rotateX(14deg) rotateY(-14deg) translateY(0)}50%{transform:rotateX(10deg) rotateY(-10deg) translateY(-9px)}}
+.intro-title{
+  font-size:clamp(2.9rem,9vw,4.6rem);font-weight:900;letter-spacing:-.05em;line-height:1;margin:0;
+  background:linear-gradient(135deg, #fff7d6 0%, #f4da91 18%, #d6ae5a 48%, #b88c2e 75%, #9b7125 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 10px 28px rgba(214,174,90,.22)) drop-shadow(0 2px 0 rgba(0,0,0,.35));
+  transform:translateZ(30px);animation:introText 1s .32s both;
+}
+.intro-subtitle{
+  margin-top:6px;color:var(--gold-light);font-size:.92rem;font-weight:800;letter-spacing:.22em;
+  opacity:0;animation:introText 1s .52s forwards;
+}
+.intro-line{width:88px;height:1px;margin:18px auto;background:linear-gradient(90deg, transparent, var(--gold) 50%, transparent);opacity:0;animation:introText 1s .62s forwards}
+.intro-desc{color:#d0d0d3;font-size:.86rem;line-height:1.8;max-width:380px;opacity:0;animation:introText 1s .72s forwards}
+.intro-enter{margin-top:28px;min-width:228px;min-height:52px;font-size:.88rem;letter-spacing:.02em;opacity:0;animation:introText 1s .9s forwards, introPulse 2.4s 1.6s infinite}
+@keyframes introText{0%{opacity:0;transform:translateY(18px)}100%{opacity:1;transform:none}}
+@keyframes introPulse{0%,100%{box-shadow:0 15px 38px rgba(214,174,90,.18), 0 0 0 1px rgba(214,174,90,.15)}50%{box-shadow:0 22px 50px rgba(214,174,90,.34), 0 0 0 1px rgba(214,174,90,.22)}}
+.intro-skip{margin-top:16px;color:#7a7c80;font-size:.64rem;cursor:pointer;opacity:0;animation:introText 1s 1.12s forwards;user-select:none}
+.intro-skip:hover{color:var(--muted)}
+@media(max-width:600px){
+  .intro-logo{width:138px;height:96px;border-radius:18px}
+  .intro-title{font-size:3.1rem}
+  .intro-desc{font-size:.82rem}
+}
+@media(prefers-reduced-motion:reduce){
+  .intro-overlay{display:none !important}
+}
+
 /* Topbar and header */
 .topbar{
   position:relative;z-index:1002;height:34px;border-bottom:1px solid var(--line);
@@ -785,6 +869,24 @@ option{background:#17191e}
 </style>
 </head>
 <body>
+
+<div class="intro-overlay" id="introOverlay" role="dialog" aria-modal="true" aria-label="معرفی نوروتور">
+  <div class="intro-bg" aria-hidden="true"></div>
+  <div class="intro-glow" aria-hidden="true"></div>
+  <div class="intro-particles" id="introParticles" aria-hidden="true"></div>
+  <div class="intro-inner">
+    <div class="intro-logo-wrap" aria-hidden="true">
+      <span class="intro-logo"><picture><source type="image/webp" srcset="images/logo.webp"><img src="images/logo.png" width="512" height="354" decoding="async" fetchpriority="high" alt="لوگوی سه‌بعدی نوروتور"></picture></span>
+    </div>
+    <h1 class="intro-title" data-bind="brandName">نوروتور</h1>
+    <p class="intro-subtitle" data-bind="tagline">سفر فراتر از انتظار</p>
+    <div class="intro-line" aria-hidden="true"></div>
+    <p class="intro-desc">جهان را با نگاهی لوکس و سه‌بعدی تجربه کنید — از نخستین لحظه تا رزرو نهایی</p>
+    <button class="btn btn-gold intro-enter" id="introEnter" type="button"><svg class="icon" aria-hidden="true"><use href="#icon-sparkles"></use></svg> ورود به دنیای نوروتور</button>
+    <small class="intro-skip" id="introSkip">برای عبور سریع کلیک کنید یا Esc بزنید</small>
+  </div>
+</div>
+
 <!-- Lucide icons subset v1.47.0, ISC license: https://lucide.dev/license -->
 <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
 <symbol id="icon-calendar-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v3" /> <path d="M16 2v3" /> <rect x="3" y="3" width="18" height="18" rx="2" /> <path d="M3 9h18" /> <path d="m9 15 2 2 4-4" /></symbol>
@@ -3013,6 +3115,66 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+
+  function setupIntro(){
+    const overlay = document.getElementById('introOverlay');
+    if(!overlay) return;
+    // احترام به کاهش حرکت
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      overlay.remove();
+      return;
+    }
+    // اگر کاربر همین تب را قبلا دیده، نمایش کوتاه (یا مخفی)
+    const seen = sessionStorage.getItem('nourotour_intro_seen');
+    // برای نمایش همیشه جذاب اما بدون اذیت: اگر قبلا دیده، 800ms نشان بده
+    if(seen){
+      overlay.style.transition = 'opacity .55s ease, transform .6s ease, visibility .55s';
+      // اجازه ده یک فلش سریع دیده شود
+      setTimeout(()=> dismiss(), 700);
+    }
+    document.body.classList.add('lock');
+    // ذرات طلایی شناور
+    const particles = document.getElementById('introParticles');
+    if(particles){
+      for(let i=0;i<18;i++){
+        const dot = document.createElement('span');
+        dot.className = 'intro-particle';
+        dot.style.left = Math.random()*100 + '%';
+        dot.style.animationDuration = (6 + Math.random()*7) + 's';
+        dot.style.animationDelay = (Math.random()*4) + 's';
+        dot.style.opacity = (0.35 + Math.random()*0.4).toFixed(2);
+        const size = 1 + Math.random()*2;
+        dot.style.width = size + 'px';
+        dot.style.height = size + 'px';
+        particles.appendChild(dot);
+      }
+    }
+    let dismissed = false;
+    function dismiss(){
+      if(dismissed) return;
+      dismissed = true;
+      overlay.classList.add('dismissed');
+      document.body.classList.remove('lock');
+      try{ sessionStorage.setItem('nourotour_intro_seen','1'); }catch{}
+      setTimeout(()=>{ overlay.remove(); }, 900);
+    }
+    const enterBtn = document.getElementById('introEnter');
+    const skip = document.getElementById('introSkip');
+    enterBtn?.addEventListener('click', dismiss);
+    skip?.addEventListener('click', dismiss);
+    overlay.addEventListener('click', (e)=>{
+      if(e.target === overlay) dismiss();
+    });
+    document.addEventListener('keydown', function esc(e){
+      if(e.key === 'Escape' && !dismissed){ dismiss(); document.removeEventListener('keydown', esc); }
+    });
+    // خروج خودکار سینمایی
+    const autoDelay = seen ? 900 : 3200;
+    setTimeout(dismiss, autoDelay);
+    // برای دسترسی: فوکوس روی دکمه ورود
+    setTimeout(()=> enterBtn?.focus(), 600);
+  }
+
   function openAdmin() {
     $("#adminPanel").classList.add("open");
     $("#adminPanel").setAttribute("aria-hidden", "false");
@@ -3599,6 +3761,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderAll();
   setupCountdown();
   setupRevealAnimations();
+  setupIntro();
   setupCounters();
 
   setInterval(updateClock, 1000);
