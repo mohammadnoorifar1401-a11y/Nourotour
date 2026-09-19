@@ -10,6 +10,7 @@
   <link rel="canonical" href="https://nourotour.ir/">
   <link rel="icon" type="image/png" href="images/logo-falcon.png">
   <link rel="apple-touch-icon" href="images/logo-falcon.png">
+  <link rel="preload" as="image" type="image/webp" href="images/logo-falcon.webp" fetchpriority="high">
   <link rel="preload" as="image" type="image/webp" href="images/hero-brand.webp" imagesrcset="images/hero-brand.webp 800w, images/hero-brand.webp 1408w" imagesizes="100vw" fetchpriority="high">
   <link rel="preload" as="image" type="image/webp" href="images/hero.webp" imagesrcset="images/hero-800.webp 800w, images/hero.webp 1408w" imagesizes="100vw">
   <meta property="og:locale" content="fa_IR">
@@ -178,6 +179,7 @@ html.intro-active body{overflow:hidden}
 html.intro-active header, html.intro-active main, html.intro-active footer, html.intro-active .topbar{
   transform:scale(.92);
   filter:blur(9px);
+  will-change:transform,filter;
 }
 html.intro-ready header, html.intro-ready main, html.intro-ready footer, html.intro-ready .topbar{
   transform:scale(1);
@@ -222,13 +224,11 @@ html.intro-ready header, html.intro-ready main, html.intro-ready footer, html.in
 .intro-logo-wrap:hover .intro-logo{transform:translateY(-2px) scale(1.02)}
 @keyframes introLogoEnter{0%{opacity:0;transform:translateY(38px) scale(.86)}100%{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes introFloatCircle{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-@keyframes introSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 @keyframes introSpinZoom{
   0%{transform:rotate(0deg) scale(1)}
   42%{transform:rotate(190deg) scale(1.07)}
   100%{transform:rotate(540deg) scale(24)}
 }
-.intro-logo.spinning{animation:introSpin 2.6s linear infinite !important}
 .intro-logo.zooming{animation:introSpinZoom 3s cubic-bezier(.6,.05,.25,1) forwards !important;filter:blur(1px) brightness(1.12)}
 .intro-title{
   font-size:clamp(1.35rem,4.6vw,2.15rem);font-weight:800;letter-spacing:-.02em;line-height:1.45;margin:0;text-align:center;
