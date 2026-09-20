@@ -1657,12 +1657,19 @@ option{background:#17191e}
       </div>
       <div class="field">
         <label for="adminLeadEndpoint">نشانی دریافت درخواست‌ها (Webhook)</label>
-        <input id="adminLeadEndpoint" name="leadEndpoint" type="url" dir="ltr" autocomplete="off" placeholder="https://formspree.io/f/xxxxxxxx">
+        <input id="adminLeadEndpoint" name="leadEndpoint" type="url" dir="ltr" autocomplete="off" placeholder="https://script.google.com/macros/s/…/exec">
         <small class="field-hint">
-          در صورت پر بودن، فرم‌های مشاوره و رزرو با <code>POST</code> و فرمت JSON به این نشانی
-          فرستاده می‌شوند (سرویس باید CORS را برای <span dir="ltr">nourotour.ir</span> باز کرده باشد).
-          اگر خالی بماند، درخواست‌ها فقط در همین مرورگر و در تب «درخواست‌ها» ذخیره می‌شوند.
+          فرم‌های مشاوره و رزرو با <code>POST</code> و بدنهٔ JSON به این نشانی فرستاده می‌شوند.
+          نشانی پیش‌فرض (Google Apps Script ← Google Sheets) داخل <code>index.html</code> برای همهٔ
+          بازدیدکنندگان فعال است؛ مقدار این فیلد فقط در همین مرورگر آن را جایگزین می‌کند و اگر خالی بماند،
+          همان پیش‌فرض استفاده می‌شود.
+          برای نشانی‌های <span dir="ltr">script.google.com</span> درخواست به‌صورت
+          <code>text/plain</code> (بدون preflight) ارسال می‌شود تا خطای CORS رخ ندهد.
         </small>
+        <div class="admin-actions" style="margin-top:10px">
+          <button class="btn btn-outline btn-small" type="button" id="adminLeadTestBtn">ارسال درخواست آزمایشی</button>
+          <span id="adminLeadTestResult" class="field-hint" dir="auto" aria-live="polite"></span>
+        </div>
       </div>
       <div class="admin-actions">
         <button class="btn btn-gold btn-small" type="submit">ذخیره اطلاعات</button>
@@ -1833,6 +1840,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const OFFER_KEY = "nourotour_offer_end_v1";
   const LEADS_KEY = "nourotour_leads_v1";
   const MAX_LEADS = 200;
+  // حداکثر زمان انتظار برای پاسخ Webhook (میلی‌ثانیه)؛ Apps Script در اجرای سرد چند ثانیه طول می‌کشد.
+  const LEAD_SYNC_TIMEOUT = 15000;
 
   const $ = (selector, context = document) => context.querySelector(selector);
   const $$ = (selector, context = document) => [...context.querySelectorAll(selector)];
@@ -1902,8 +1911,11 @@ document.addEventListener("DOMContentLoaded", () => {
       workingHours: "شنبه تا پنج‌شنبه، ۹ تا ۱۸",
       mapEmbedUrl: "https://maps.google.com/maps?q=%D8%AA%D9%87%D8%B1%D8%A7%D9%86&t=&z=11&ie=UTF8&iwloc=&output=embed",
       mapLinkUrl: "https://www.google.com/maps/search/?api=1&query=%D8%AA%D9%87%D8%B1%D8%A7%D9%86",
-      // نشانی دریافت درخواست‌ها (Webhook). خالی = فقط ذخیره محلی در مرورگر.
-      leadEndpoint: "",
+      // نشانی دریافت درخواست‌ها (Webhook) برای همهٔ بازدیدکنندگان.
+      // Google Apps Script متصل به Google Sheets (کد: integrations/google-apps-script/Code.gs).
+      // مقدار پنل مدیریت فقط در همان مرورگر ذخیره می‌شود؛ نشانی سراسری باید همین‌جا باشد.
+      leadEndpoint:
+        "https://script.google.com/macros/s/AKfycbxm7nnIkic08wYopqEZxxgwpO6YliSXviZr2GMHDh2PnhvJhJpUxPNe8ux0aAhaRkee/exec",
       aboutIntro: "نوروتور مجموعه‌ای تخصصی در حوزه گردشگری و خدمات سفر است که با تمرکز بر شفافیت، طراحی دقیق برنامه سفر و پشتیبانی مسئولانه فعالیت می‌کند.",
       mission: "ساده‌تر، مطمئن‌تر و لذت‌بخش‌تر کردن مسیر سفر.",
       vision: "تبدیل‌شدن به یکی از قابل‌اعتمادترین برندهای خدمات سفر فارسی‌زبان."
@@ -2242,13 +2254,20 @@ document.addEventListener("DOMContentLoaded", () => {
       const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
       if (!saved || typeof saved !== "object") return cloneDefaultData();
 
+      const general = {
+        ...defaultData.general,
+        ...(saved.general || {})
+      };
+
+      // نشانی Webhook خالی در تنظیمات ذخیره‌شده یعنی «پیش‌فرض»؛ نباید نشانی سراسری را حذف کند.
+      if (!String(general.leadEndpoint || "").trim()) {
+        general.leadEndpoint = defaultData.general.leadEndpoint;
+      }
+
       return {
         ...cloneDefaultData(),
         ...saved,
-        general: {
-          ...defaultData.general,
-          ...(saved.general || {})
-        }
+        general
       };
     } catch {
       return cloneDefaultData();
@@ -2281,7 +2300,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const LEAD_KINDS = {
     consult: "درخواست مشاوره",
-    booking: "درخواست رزرو"
+    booking: "درخواست رزرو",
+    test: "ارسال آزمایشی"
   };
 
   const LEAD_COLUMNS = [
@@ -2341,25 +2361,110 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  /** ارسال به Webhook اختیاری؛ در صورت نبود یا خطا، جریان کاربر قطع نمی‌شود. */
-  async function syncLead(lead) {
-    const endpoint = String(siteData.general?.leadEndpoint || "").trim();
+  /**
+   * آیا نشانی، وب‌اپ Google Apps Script است؟
+   * Apps Script به درخواست OPTIONS (preflight مرورگر) پاسخ نمی‌دهد؛ بنابراین باید «درخواست ساده»
+   * فرستاده شود (بدنهٔ JSON با Content-Type: text/plain) وگرنه مرورگر درخواست را با خطای CORS
+   * مسدود می‌کند و doPost هرگز اجرا نمی‌شود.
+   */
+  function isAppsScriptEndpoint(url) {
+    try {
+      const host = new URL(url, window.location.href).hostname;
+      return host === "script.google.com" || host === "script.googleusercontent.com";
+    } catch {
+      return false;
+    }
+  }
+
+  /**
+   * پاسخ سرویس گیرنده را ارزیابی می‌کند.
+   * اگر خود سرویس اعلام خطا کند ({status:"error"} یا {ok:false}) نتیجه ناموفق است.
+   * برای Apps Script، پاسخ غیر JSON (مثلاً صفحهٔ ورود گوگل یا صفحهٔ خطا) هم ناموفق شمرده می‌شود؛
+   * چون یعنی داده‌ای ذخیره نشده است.
+   */
+  async function readSyncResult(response, strictJson) {
+    let text = "";
+
+    try {
+      text = await response.text();
+    } catch {
+      text = "";
+    }
+
+    const detail = text.replace(/\s+/g, " ").trim().slice(0, 200);
+
+    try {
+      const data = JSON.parse(text);
+
+      if (data && (data.status === "error" || data.ok === false)) {
+        return { state: "failed:script", detail };
+      }
+
+      return { state: "sent", detail };
+    } catch {
+      return {
+        state: strictJson ? "failed:script" : "sent",
+        detail: strictJson ? `پاسخ JSON نبود: ${detail || "(خالی)"}` : detail
+      };
+    }
+  }
+
+  /** بدنهٔ ارسالی به Webhook: رکورد + زمان شمسی خوانا برای Google Sheets. */
+  function buildLeadPayload(lead) {
+    return JSON.stringify({
+      ...lead,
+      createdAtFa: faDateTime(lead.createdAt),
+      site: "nourotour.ir"
+    });
+  }
+
+  /**
+   * ارسال به Webhook اختیاری؛ در صورت نبود یا خطا، جریان کاربر قطع نمی‌شود.
+   * نتیجه در `lead.syncState` و توضیح کوتاه (پاسخ سرویس یا خطا) در `lead.syncDetail` ثبت می‌شود.
+   */
+  async function syncLead(lead, endpointOverride) {
+    const endpoint = String(
+      endpointOverride ?? siteData.general?.leadEndpoint ?? ""
+    ).trim();
 
     if (!endpoint) {
       lead.syncState = "local";
       return lead;
     }
 
+    const appsScript = isAppsScriptEndpoint(endpoint);
+    const controller = typeof AbortController === "function" ? new AbortController() : null;
+    const timer = controller ? setTimeout(() => controller.abort(), LEAD_SYNC_TIMEOUT) : null;
+
     try {
       const response = await fetch(endpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(lead)
+        // text/plain = درخواست ساده (بدون preflight) — تنها حالتی که Apps Script از مرورگر می‌پذیرد.
+        headers: {
+          "Content-Type": appsScript ? "text/plain;charset=utf-8" : "application/json"
+        },
+        body: buildLeadPayload(lead),
+        redirect: "follow",
+        signal: controller ? controller.signal : undefined
       });
 
-      lead.syncState = response.ok ? "sent" : `failed:${response.status}`;
+      if (response.ok) {
+        const result = await readSyncResult(response, appsScript);
+        lead.syncState = result.state;
+        lead.syncDetail = result.detail;
+      } else {
+        lead.syncState = `failed:${response.status}`;
+        lead.syncDetail = `HTTP ${response.status}`;
+      }
     } catch (error) {
-      lead.syncState = "failed";
+      const aborted = error?.name === "AbortError";
+      lead.syncState = aborted ? "failed:timeout" : "failed";
+      // TypeError: Failed to fetch = معمولاً CORS یا قطع شبکه؛ خودِ مرورگر جزئیات را در Console می‌نویسد.
+      lead.syncDetail = aborted
+        ? `بدون پاسخ پس از ${Math.round(LEAD_SYNC_TIMEOUT / 1000)} ثانیه`
+        : String(error?.message || error || "خطای شبکه").slice(0, 200);
+    } finally {
+      if (timer) clearTimeout(timer);
     }
 
     return lead;
@@ -2423,7 +2528,11 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="admin-lead">
           <div>
             <strong>${escapeHTML(LEAD_KINDS[lead.kind] || "درخواست")}</strong>
-            <span>${escapeHTML(faDateTime(lead.createdAt))} — ${escapeHTML(syncLabel(lead.syncState))}</span>
+            <span>${escapeHTML(faDateTime(lead.createdAt))} — ${escapeHTML(syncLabel(lead.syncState))}${
+              String(lead.syncState || "").startsWith("failed") && lead.syncDetail
+                ? ` <span dir="auto" title="${escapeHTML(lead.syncDetail)}">· ${escapeHTML(String(lead.syncDetail).slice(0, 80))}</span>`
+                : ""
+            }</span>
             <span>${rows || "بدون جزئیات"}</span>
             ${lead.phone ? `<span dir="ltr">${escapeHTML(lead.phone)}</span>` : ""}
           </div>
@@ -3588,7 +3697,9 @@ document.addEventListener("DOMContentLoaded", () => {
       // ذخیره وضعیت نهایی همگام‌سازی
       persistLeads(
         loadLeads().map(item =>
-          String(item.id) === String(synced.id) ? { ...item, syncState: synced.syncState } : item
+          String(item.id) === String(synced.id)
+            ? { ...item, syncState: synced.syncState, syncDetail: synced.syncDetail || "" }
+            : item
         )
       );
       renderAdminLeads();
@@ -3604,20 +3715,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const kindLabel = LEAD_KINDS[lead.kind] || "درخواست شما";
 
+      // پیام‌ها برای بازدیدکنندهٔ عمومی نوشته شده‌اند؛ جزئیات فنی در پنل مدیریت ← «درخواست‌ها» دیده می‌شود.
       if (synced.syncState === "sent") {
         showToast(
           `${kindLabel} ارسال شد`,
-          "درخواست به سامانهٔ دریافت معرفی‌شده در پنل مدیریت ارسال شد؛ کارشناسان به‌زودی تماس می‌گیرند."
+          "درخواست شما با موفقیت به کارشناسان نوروتور رسید؛ در ساعات کاری با شما تماس می‌گیریم."
         );
       } else if (synced.syncState === "local") {
         showToast(
           `${kindLabel} ثبت شد`,
-          "در این نسخه درخواست در همین مرورگر ذخیره می‌شود (پنل مدیریت ← تب «درخواست‌ها»). برای دریافت روی سرور، نشانی Webhook را در تب «عمومی» وارد کنید."
+          "درخواست در همین مرورگر ذخیره شد (نشانی دریافت روی سرور تنظیم نشده است). برای پیگیری سریع‌تر می‌توانید با شماره‌های بخش تماس نیز در ارتباط باشید."
         );
       } else {
         showToast(
-          `${kindLabel} ثبت شد`,
-          "ارسال به نشانی Webhook ناموفق بود؛ درخواست در همین مرورگر ذخیره شد و می‌توانید آن را از تب «درخواست‌ها» خروجی بگیرید."
+          `${kindLabel} ثبت شد، اما ارسال آنلاین انجام نشد`,
+          "اتصال به سامانهٔ دریافت برقرار نشد؛ لطفاً برای اطمینان از طریق تماس تلفنی یا واتساپ با ما در ارتباط باشید یا چند دقیقهٔ دیگر دوباره تلاش کنید."
         );
       }
     });
@@ -3695,6 +3807,49 @@ document.addEventListener("DOMContentLoaded", () => {
     saveData();
     renderAll();
     showToast("اطلاعات ذخیره شد", "هویت برند و راه‌های ارتباطی به‌روزرسانی شدند.");
+  });
+
+  /* ارسال آزمایشی به Webhook از پنل مدیریت؛ نتیجه (یا خطا) همان‌جا نمایش داده می‌شود. */
+  $("#adminLeadTestBtn")?.addEventListener("click", async event => {
+    const button = event.currentTarget;
+    const output = $("#adminLeadTestResult");
+    const endpoint =
+      String($("#adminLeadEndpoint")?.value || "").trim() ||
+      String(siteData.general?.leadEndpoint || "").trim();
+
+    if (!endpoint) {
+      if (output) output.textContent = "نشانی Webhook خالی است.";
+      return;
+    }
+
+    button.disabled = true;
+    if (output) output.textContent = "در حال ارسال…";
+
+    const lead = await syncLead(
+      {
+        id: `test-${Date.now()}`,
+        kind: "test",
+        createdAt: new Date().toISOString(),
+        pageUrl: window.location.href,
+        fullName: "ارسال آزمایشی از پنل مدیریت",
+        phone: "09120000000",
+        message: "اگر این ردیف را در Google Sheets می‌بینید، اتصال فرم به سرور درست کار می‌کند."
+      },
+      endpoint
+    );
+
+    button.disabled = false;
+
+    if (!output) return;
+
+    if (lead.syncState === "sent") {
+      output.textContent = `✅ ارسال شد — پاسخ سرویس: ${lead.syncDetail || "بدون بدنه"}`;
+    } else {
+      const hint = isAppsScriptEndpoint(endpoint)
+        ? " (بررسی کنید: Deploy با دسترسی «Anyone»، نسخهٔ جدید بعد از هر تغییر کد، و خطاهای doPost در بخش Executions)"
+        : "";
+      output.textContent = `❌ ناموفق (${lead.syncState}) — ${lead.syncDetail || "بدون جزئیات"}${hint}`;
+    }
   });
 
   $("#contentAdminForm").addEventListener("submit", event => {
