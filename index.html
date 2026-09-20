@@ -1656,11 +1656,11 @@ option{background:#17191e}
         <input id="adminMapLinkUrl" name="mapLinkUrl" type="url" dir="ltr" placeholder="https://maps.google.com/?q=تهران">
       </div>
       <div class="field">
-        <label for="adminLeadEndpoint">نشانی دریافت درخواست‌ها (Webhook)</label>
-        <input id="adminLeadEndpoint" name="leadEndpoint" type="url" dir="ltr" autocomplete="off" placeholder="https://formspree.io/f/xxxxxxxx">
+        <label for="adminLeadEndpoint">نشانی دریافت درخواست‌ها (Google Apps Script)</label>
+        <input id="adminLeadEndpoint" name="leadEndpoint" type="url" dir="ltr" autocomplete="off" placeholder="https://script.google.com/macros/s/.../exec">
         <small class="field-hint">
-          در صورت پر بودن، فرم‌های مشاوره و رزرو با <code>POST</code> و فرمت JSON به این نشانی
-          فرستاده می‌شوند (سرویس باید CORS را برای <span dir="ltr">nourotour.ir</span> باز کرده باشد).
+          لینک Web App گوگل را اینجا بگذارید (همان لینکی که الان دارید). فرم‌ها با <code>text/plain</code> ارسال می‌شوند تا مشکل CORS پیش نیاید.
+          کد صحیح Apps Script در پوشه <code>google-apps-script/Code.gs</code> قرار دارد.
           اگر خالی بماند، درخواست‌ها فقط در همین مرورگر و در تب «درخواست‌ها» ذخیره می‌شوند.
         </small>
       </div>
@@ -1902,8 +1902,8 @@ document.addEventListener("DOMContentLoaded", () => {
       workingHours: "شنبه تا پنج‌شنبه، ۹ تا ۱۸",
       mapEmbedUrl: "https://maps.google.com/maps?q=%D8%AA%D9%87%D8%B1%D8%A7%D9%86&t=&z=11&ie=UTF8&iwloc=&output=embed",
       mapLinkUrl: "https://www.google.com/maps/search/?api=1&query=%D8%AA%D9%87%D8%B1%D8%A7%D9%86",
-      // نشانی دریافت درخواست‌ها (Webhook). خالی = فقط ذخیره محلی در مرورگر.
-      leadEndpoint: "",
+      // نشانی دریافت درخواست‌ها (Webhook) - Google Apps Script Web App
+      leadEndpoint: "https://script.google.com/macros/s/AKfycbxWTcIbk2a3ot9XUaqke2L40JOL6Wc7uhpdNkyAQVPHy2I1aORhaeWICiip0tv0_Zhg/exec",
       aboutIntro: "نوروتور مجموعه‌ای تخصصی در حوزه گردشگری و خدمات سفر است که با تمرکز بر شفافیت، طراحی دقیق برنامه سفر و پشتیبانی مسئولانه فعالیت می‌کند.",
       mission: "ساده‌تر، مطمئن‌تر و لذت‌بخش‌تر کردن مسیر سفر.",
       vision: "تبدیل‌شدن به یکی از قابل‌اعتمادترین برندهای خدمات سفر فارسی‌زبان."
@@ -2341,7 +2341,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  /** ارسال به Webhook اختیاری؛ در صورت نبود یا خطا، جریان کاربر قطع نمی‌شود. */
+  /** ارسال به Webhook اختیاری؛ سازگار با Google Apps Script */
   async function syncLead(lead) {
     const endpoint = String(siteData.general?.leadEndpoint || "").trim();
 
@@ -2351,14 +2351,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
+      // نکته مهم برای Google Apps Script:
+      // استفاده از text/plain از preflight جلوگیری می‌کند و CORS را دور می‌زند
+      // Apps Script از هدر application/json برای preflight پشتیبانی نمی‌کند
       const response = await fetch(endpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(lead)
       });
 
-      lead.syncState = response.ok ? "sent" : `failed:${response.status}`;
+      // Google Apps Script گاهی redirect می‌دهد، fetch آن را دنبال می‌کند
+      // اگر پاسخ JSON باشد و ok باشد، موفق محسوب می‌شود
+      if (response.type === "opaque") {
+        // در حالت no-cors، پاسخ opaque است اما درخواست رسیده
+        lead.syncState = "sent";
+      } else {
+        lead.syncState = response.ok ? "sent" : `failed:${response.status}`;
+      }
     } catch (error) {
+      console.warn("Sync failed:", error);
       lead.syncState = "failed";
     }
 
