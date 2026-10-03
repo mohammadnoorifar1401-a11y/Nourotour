@@ -1,6 +1,6 @@
 /**
  * نوروتور — گیرندهٔ درخواست‌های فرم مشاوره و رزرو (Google Apps Script → Google Sheets)
- * نسخهٔ ۲
+ * نسخهٔ ۳
  *
  * این فایل را به‌جای محتوای Code.gs در پروژهٔ Apps Script بگذارید و «ذخیره» کنید.
  *
@@ -21,11 +21,6 @@
  * (preflight پشتیبانی نمی‌شود). سایت، بدنهٔ JSON را با Content-Type: text/plain می‌فرستد و این
  * اسکریپت آن را از `e.postData.contents` می‌خواند. پارامترهای فرم معمولی (x-www-form-urlencoded)
  * هم پشتیبانی می‌شود.
- *
- * تست دستی از ترمینال:
- *   curl -L -X POST "<نشانی exec>" -H "Content-Type: text/plain" \
- *        -d '{"kind":"consult","fullName":"تست","phone":"09120000000","destination":"استانبول"}'
- *   پاسخ موفق: {"status":"ok","id":"…","row":N}
  */
 
 var CONFIG = {
@@ -37,7 +32,15 @@ var CONFIG = {
   // برای دریافت ایمیل با هر درخواست، نشانی را بنویسید (مثلاً "info@nourotour.ir"). خالی = بدون ایمیل.
   NOTIFY_EMAIL: "",
   // منطقهٔ زمانی ستون «زمان دریافت».
-  TIMEZONE: "Asia/Tehran"
+  TIMEZONE: "Asia/Tehran",
+
+  // --- Telegram (اختیاری) ---
+  // توصیهٔ امنیتی: این دو مقدار را در Script Properties بگذارید:
+  // TELEGRAM_BOT_TOKEN و TELEGRAM_CHAT_ID
+  // و این‌جا خالی بگذارید تا secrets داخل مخزن کد قرار نگیرند.
+  TELEGRAM_BOT_TOKEN: "",
+  TELEGRAM_CHAT_ID: "",
+  TELEGRAM_API_BASE: "https://api.telegram.org"
 };
 
 // ستون‌های برگه به ترتیب: [کلید در JSON ارسالی سایت، عنوان ستون]
@@ -69,7 +72,7 @@ var KIND_LABELS = {
 
 /** بررسی سلامت: باز کردن نشانی /exec در مرورگر باید {"status":"ok"} برگرداند. */
 function doGet() {
-  return jsonResponse_({ status: "ok", service: "nourotour-leads", version: 2 });
+  return jsonResponse_({ status: "ok", service: "nourotour-leads", version: 3 });
 }
 
 /** دریافت یک درخواست از سایت و افزودن یک ردیف به Google Sheets. */
@@ -106,7 +109,9 @@ function doPost(e) {
     sheet.appendRow(row);
     var rowNumber = sheet.getLastRow();
 
+    // اعلان‌ها (غیرمسدودکننده)
     notify_(lead);
+    notifyTelegram_(lead, rowNumber);
 
     return jsonResponse_({ status: "ok", id: String(lead.id || ""), row: rowNumber });
   } catch (err) {
@@ -202,6 +207,83 @@ function notify_(lead) {
   } catch (err) {
     console.warn("email notification failed: " + err);
   }
+}
+
+/** اعلان تلگرام اختیاری برای هر درخواست. */
+function notifyTelegram_(lead, rowNumber) {
+  var token = getConfigValue_("TELEGRAM_BOT_TOKEN", CONFIG.TELEGRAM_BOT_TOKEN);
+  var chatId = getConfigValue_("TELEGRAM_CHAT_ID", CONFIG.TELEGRAM_CHAT_ID);
+
+  if (!token || !chatId) return;
+
+  try {
+    var apiBase = String(CONFIG.TELEGRAM_API_BASE || "https://api.telegram.org").replace(/\/$/, "");
+    var url = apiBase + "/bot" + token + "/sendMessage";
+
+    var payload = {
+      chat_id: String(chatId),
+      text: buildTelegramMessage_(lead, rowNumber),
+      parse_mode: "HTML",
+      disable_web_page_preview: true
+    };
+
+    var response = UrlFetchApp.fetch(url, {
+      method: "post",
+      contentType: "application/json; charset=utf-8",
+      payload: JSON.stringify(payload),
+      muteHttpExceptions: true
+    });
+
+    var code = response.getResponseCode();
+    if (code < 200 || code >= 300) {
+      console.warn("telegram notify failed: HTTP " + code + " body=" + response.getContentText());
+    }
+  } catch (err) {
+    console.warn("telegram notify error: " + err);
+  }
+}
+
+function buildTelegramMessage_(lead, rowNumber) {
+  var lines = [
+    "<b>📥 درخواست جدید نوروتور</b>",
+    "",
+    "<b>نوع:</b> " + escHtml_(lead.kindLabel || KIND_LABELS[lead.kind] || lead.kind || "—"),
+    "<b>نام:</b> " + escHtml_(lead.fullName || "—"),
+    "<b>موبایل:</b> " + escHtml_(lead.phone || "—"),
+    "<b>مقصد:</b> " + escHtml_(lead.destination || lead.tour || "—"),
+    "<b>تعداد مسافر:</b> " + escHtml_(lead.travelers || "—"),
+    "<b>تاریخ پیشنهادی:</b> " + escHtml_(lead.preferredDate || "—"),
+    "<b>روش تماس:</b> " + escHtml_(lead.contactMethod || "—"),
+    "<b>بودجه:</b> " + escHtml_(lead.budget || "—"),
+    "<b>توضیحات:</b> " + escHtml_(lead.message || "—"),
+    "",
+    "<b>زمان:</b> " + escHtml_(lead.receivedAt || "—"),
+    "<b>Lead ID:</b> <code>" + escHtml_(lead.id || "") + "</code>",
+    "<b>Sheet Row:</b> <code>" + escHtml_(String(rowNumber || "")) + "</code>"
+  ];
+
+  if (lead.pageUrl) {
+    lines.push("<b>صفحه:</b> " + escHtml_(lead.pageUrl));
+  }
+
+  return lines.join("\n");
+}
+
+function escHtml_(value) {
+  return String(value == null ? "" : value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function getConfigValue_(key, fallbackValue) {
+  try {
+    var value = PropertiesService.getScriptProperties().getProperty(key);
+    if (value != null && String(value).trim() !== "") return String(value).trim();
+  } catch (ignored) {}
+  return String(fallbackValue || "").trim();
 }
 
 function jsonResponse_(payload) {
