@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تست ارسال به تلگرام - نوروتور</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Tahoma, Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            line-height: 1.8;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        button {
+            background: #0088cc;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+        }
+        button:hover {
+            background: #006699;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 تست ارسال فرم به تلگرام</h1>
+        <p>این صفحه برای تست اتصال فرم به گروه تلگرام است.</p>
+
+        <div id="successMessage" class="success hidden">
+            ✅ پیام با موفقیت به گروه تلگرام ارسال شد!
+        </div>
+
+        <div id="errorMessage" class="error hidden">
+            ❌ خطا در ارسال پیام. لطفاً دوباره تلاش کنید.
+        </div>
+
+        <form id="testForm">
+            <div class="form-group">
+                <label for="kind">نوع درخواست:</label>
+                <select id="kind" name="kind" required>
+                    <option value="consult">درخواست مشاوره</option>
+                    <option value="booking">درخواست رزرو</option>
+                    <option value="test">آزمایشی</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="fullName">نام و نام خانوادگی:</label>
+                <input type="text" id="fullName" name="fullName" required placeholder="مثال: علی احمدی">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">شماره تماس:</label>
+                <input type="tel" id="phone" name="phone" required placeholder="مثال: 09121234567">
+            </div>
+
+            <div class="form-group">
+                <label for="destination">مقصد:</label>
+                <input type="text" id="destination" name="destination" placeholder="مثال: استانبول">
+            </div>
+
+            <div class="form-group">
+                <label for="travelers">تعداد مسافر:</label>
+                <input type="text" id="travelers" name="travelers" placeholder="مثال: 2 نفر">
+            </div>
+
+            <div class="form-group">
+                <label for="preferredDate">تاریخ پیشنهادی:</label>
+                <input type="text" id="preferredDate" name="preferredDate" placeholder="مثال: ۱۴۰۳/۰۸/۱۵">
+            </div>
+
+            <div class="form-group">
+                <label for="budget">بودجه تقریبی:</label>
+                <input type="text" id="budget" name="budget" placeholder="مثال: ۵۰ میلیون تومان">
+            </div>
+
+            <div class="form-group">
+                <label for="message">توضیحات:</label>
+                <textarea id="message" name="message" placeholder="توضیحات خود را بنویسید..."></textarea>
+            </div>
+
+            <button type="submit" id="submitBtn">📤 ارسال به تلگرام</button>
+        </form>
+    </div>
+
+    <script>
+        // تنظیمات تلگرام
+        const TELEGRAM_CONFIG = {
+            botToken: '8898159650:AAEqqUDMSx3BOwzITqvq-a-mrXLI-tWIhNE',
+            chatId: '-1004463990161'
+        };
+
+        // فرم و المان‌های DOM
+        const form = document.getElementById('testForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // تابع فرمت کردن پیام
+        function formatMessage(data) {
+            const kindLabels = {
+                consult: '🔔 درخواست مشاوره',
+                booking: '✈️ درخواست رزرو',
+                test: '🧪 ارسال آزمایشی'
+            };
+
+            const now = new Date();
+            const persianTime = now.toLocaleDateString('fa-IR') + ' ' + 
+                               now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute: '2-digit'});
+
+            let message = `<b>${kindLabels[data.kind] || 'درخواست جدید'}</b>\n`;
+            message += `━━━━━━━━━━━━━━━━━━━\n\n`;
+
+            if (data.fullName) message += `👤 <b>نام:</b> ${escapeHtml(data.fullName)}\n`;
+            if (data.phone) message += `📱 <b>تلفن:</b> <code>${escapeHtml(data.phone)}</code>\n`;
+            if (data.destination) message += `📍 <b>مقصد:</b> ${escapeHtml(data.destination)}\n`;
+            if (data.travelers) message += `👥 <b>تعداد مسافر:</b> ${escapeHtml(data.travelers)}\n`;
+            if (data.preferredDate) message += `📅 <b>تاریخ:</b> ${escapeHtml(data.preferredDate)}\n`;
+            if (data.budget) message += `💰 <b>بودجه:</b> ${escapeHtml(data.budget)}\n`;
+            
+            if (data.message) {
+                message += `\n💬 <b>توضیحات:</b>\n${escapeHtml(data.message)}\n`;
+            }
+
+            message += `\n━━━━━━━━━━━━━━━━━━━\n`;
+            message += `🕐 <b>زمان:</b> ${persianTime}\n`;
+            message += `🆔 <b>شناسه:</b> <code>test-${Date.now()}</code>\n`;
+            message += `\n🌐 <a href="https://nourotour.ir">nourotour.ir</a>`;
+
+            return message;
+        }
+
+        // تابع escape کردن HTML
+        function escapeHtml(text) {
+            if (!text) return '';
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return String(text).replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // تابع ارسال به تلگرام
+        async function sendToTelegram(data) {
+            const message = formatMessage(data);
+            const url = `https://api.telegram.org/bot${TELEGRAM_CONFIG.botToken}/sendMessage`;
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CONFIG.chatId,
+                    text: message,
+                    parse_mode: 'HTML',
+                    disable_web_page_preview: true
+                })
+            });
+
+            return response.json();
+        }
+
+        // مدیریت ارسال فرم
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // مخفی کردن پیام‌های قبلی
+            successMessage.classList.add('hidden');
+            errorMessage.classList.add('hidden');
+
+            // غیرفعال کردن دکمه
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ در حال ارسال...';
+
+            try {
+                // جمع‌آوری داده‌های فرم
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData.entries());
+
+                // ارسال به تلگرام
+                const result = await sendToTelegram(data);
+
+                if (result.ok) {
+                    // موفقیت
+                    successMessage.classList.remove('hidden');
+                    form.reset();
+                    
+                    // اسکرول به بالا
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    throw new Error(result.description || 'خطای ناشناخته');
+                }
+            } catch (error) {
+                console.error('خطا:', error);
+                errorMessage.classList.remove('hidden');
+                errorMessage.textContent = `❌ خطا: ${error.message}`;
+            } finally {
+                // فعال کردن دوباره دکمه
+                submitBtn.disabled = false;
+                submitBtn.textContent = '📤 ارسال به تلگرام';
+            }
+        });
+
+        console.log('✅ فرم تست تلگرام آماده است');
+    </script>
+</body>
+</html>
