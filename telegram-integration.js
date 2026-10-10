@@ -227,30 +227,48 @@
     // روش ۲: رصد فرم‌های HTML
     log('تابع submitLead یافت نشد، رصد فرم‌های HTML...', 'warn');
     
-    const forms = document.querySelectorAll('form');
-    log(`${forms.length} فرم پیدا شد`, 'info');
     
-    forms.forEach((form, index) => {
-      form.addEventListener('submit', async function(e) {
+    // فقط فرم‌های مشاوره و رزرو (کلاس success-form) به تلگرام فرستاده می‌شوند.
+    // فرم‌های پنل مدیریت و جست‌وجو عمداً نادیده گرفته می‌شوند.
+    const leadForms = Array.from(document.querySelectorAll('form.success-form'));
+    log(`${leadForms.length} فرم درخواست پیدا شد`, 'info');
+
+    leadForms.forEach((form, index) => {
+      form.addEventListener('submit', function() {
+        // همان شرط‌های فرم اصلی سایت: فرم معتبر باشد و تلهٔ ربات خالی باشد
+        if (!form.checkValidity()) return;
+
+        const trap = ['company', 'website'].find(key => {
+          const field = form.elements.namedItem(key);
+          return field && String(field.value || '').trim() !== '';
+        });
+        if (trap) return;
+
         log(`فرم ${index + 1} ارسال شد`, 'info');
-        
-        // جمع‌آوری داده‌های فرم
+
+        // جمع‌آوری داده‌های فرم (خواندن همزمان با submit؛ قبل از reset فرم اصلی)
         const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
-        
-        // اضافه کردن اطلاعات تکمیلی
+        const data = {};
+        for (const [key, value] of formData.entries()) {
+          if (key === 'company' || key === 'website') continue;
+          const text = String(value ?? '').trim();
+          if (text) data[key] = text;
+        }
+
+        // نوع فرم (consult یا booking) برای عنوان پیام
+        data.kind = form.dataset.formType || 'consult';
         data.id = data.id || `lead-${Date.now()}`;
         data.createdAtFa = getPersianDateTime();
         data.pageUrl = window.location.href;
-        
+
         // ارسال به تلگرام (بدون مسدود کردن فرم)
         sendToTelegram(data).catch(err => {
           log(`هشدار: ${err.message}`, 'warn');
         });
       });
     });
-    
-    return forms.length > 0;
+
+    return leadForms.length > 0;
   }
 
   // ═══════════════════════════════════════════════════════════════
