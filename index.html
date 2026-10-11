@@ -1656,13 +1656,12 @@ option{background:#17191e}
         <input id="adminMapLinkUrl" name="mapLinkUrl" type="url" dir="ltr" placeholder="https://maps.google.com/?q=تهران">
       </div>
       <div class="field">
-        <label for="adminLeadEndpoint">نشانی دریافت درخواست‌ها (Webhook)</label>
+        <label for="adminLeadEndpoint">نشانی Webhook (فقط برای آزمایش دستی)</label>
         <input id="adminLeadEndpoint" name="leadEndpoint" type="url" dir="ltr" autocomplete="off" placeholder="https://script.google.com/macros/s/…/exec">
         <small class="field-hint">
-          فرم‌های مشاوره و رزرو با <code>POST</code> و بدنهٔ JSON به این نشانی فرستاده می‌شوند.
-          نشانی پیش‌فرض (Google Apps Script ← Google Sheets) داخل <code>index.html</code> برای همهٔ
-          بازدیدکنندگان فعال است؛ مقدار این فیلد فقط در همین مرورگر آن را جایگزین می‌کند و اگر خالی بماند،
-          همان پیش‌فرض استفاده می‌شود.
+          ارسال درخواست‌ها به Google Sheets حذف شده است؛ فرم‌های مشاوره و رزرو از این پس
+          فقط به تلگرام فرستاده می‌شوند. این نشانی و دکمهٔ «ارسال درخواست آزمایشی» صرفاً
+          برای آزمایش دستی Webhook از پنل مدیریت است و روی فرم‌های سایت اثر ندارد.
           برای نشانی‌های <span dir="ltr">script.google.com</span> درخواست به‌صورت
           <code>text/plain</code> (بدون preflight) ارسال می‌شود تا خطای CORS رخ ندهد.
         </small>
@@ -1911,11 +1910,12 @@ document.addEventListener("DOMContentLoaded", () => {
       workingHours: "شنبه تا پنج‌شنبه، ۹ تا ۱۸",
       mapEmbedUrl: "https://maps.google.com/maps?q=%D8%AA%D9%87%D8%B1%D8%A7%D9%86&t=&z=11&ie=UTF8&iwloc=&output=embed",
       mapLinkUrl: "https://www.google.com/maps/search/?api=1&query=%D8%AA%D9%87%D8%B1%D8%A7%D9%86",
-      // نشانی دریافت درخواست‌ها (Webhook) برای همهٔ بازدیدکنندگان.
-      // Google Apps Script متصل به Google Sheets (کد: integrations/google-apps-script/Code.gs).
-      // مقدار پنل مدیریت فقط در همان مرورگر ذخیره می‌شود؛ نشانی سراسری باید همین‌جا باشد.
-      leadEndpoint:
-        "https://script.google.com/macros/s/AKfycbxm7nnIkic08wYopqEZxxgwpO6YliSXviZr2GMHDh2PnhvJhJpUxPNe8ux0aAhaRkee/exec",
+      // تغییر دوم (بازسازی commit گم‌شدهٔ 107e824): ارسال به Google Sheets حذف شد.
+      // از این پس تنها کانال دریافت درخواست‌های مشاوره و رزرو، تلگرام است
+      // (telegram-integration.js ← window.NourotourTelegram.send).
+      // این نشانی دیگر برای فرم‌های سایت استفاده نمی‌شود و فقط «ارسال آزمایشی» دستی
+      // از پنل مدیریت (دکمهٔ آزمایش Webhook) در صورت پر شدن، به آن می‌فرستد.
+      leadEndpoint: "",
       aboutIntro: "نوروتور مجموعه‌ای تخصصی در حوزه گردشگری و خدمات سفر است که با تمرکز بر شفافیت، طراحی دقیق برنامه سفر و پشتیبانی مسئولانه فعالیت می‌کند.",
       mission: "ساده‌تر، مطمئن‌تر و لذت‌بخش‌تر کردن مسیر سفر.",
       vision: "تبدیل‌شدن به یکی از قابل‌اعتمادترین برندهای خدمات سفر فارسی‌زبان."
@@ -2419,10 +2419,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /**
+   * ارسال به Webhook (Google Apps Script ← Google Sheets).
+   * پس از تغییر دوم، فرم‌های عمومی سایت دیگر از این تابع استفاده نمی‌کنند؛
+   * تنها «ارسال درخواست آزمایشی» در پنل مدیریت به‌صورت دستی آن را صدا می‌زند.
    * ارسال به Webhook اختیاری؛ در صورت نبود یا خطا، جریان کاربر قطع نمی‌شود.
    * نتیجه در `lead.syncState` و توضیح کوتاه (پاسخ سرویس یا خطا) در `lead.syncDetail` ثبت می‌شود.
    */
-  async function syncLead(lead, endpointOverride) {
+  async function syncLeadToAppsScript(lead, endpointOverride) {
     const endpoint = String(
       endpointOverride ?? siteData.general?.leadEndpoint ?? ""
     ).trim();
@@ -2467,6 +2470,28 @@ document.addEventListener("DOMContentLoaded", () => {
       if (timer) clearTimeout(timer);
     }
 
+    return lead;
+  }
+
+  /**
+   * تغییر دوم (بازسازی commit گم‌شدهٔ 107e824): ارسال به Google Sheets حذف شد؛
+   * تنها کانال دریافت درخواست‌ها تلگرام است و ارسال از طریق ماژول
+   * telegram-integration.js (window.NourotourTelegram.send) انجام می‌شود.
+   * نتیجه در `lead.syncState` ثبت می‌شود تا پیام مناسب به بازدیدکننده نمایش داده شود.
+   */
+  async function syncLead(lead) {
+    const telegramSend = window.NourotourTelegram?.send;
+
+    if (typeof telegramSend !== "function") {
+      lead.syncState = "local";
+      lead.syncDetail = "ماژول تلگرام بارگذاری نشد؛ درخواست در همین مرورگر ذخیره شد";
+      return lead;
+    }
+
+    const ok = await telegramSend({ ...lead, createdAtFa: faDateTime(lead.createdAt) });
+
+    lead.syncState = ok ? "sent" : "failed:telegram";
+    lead.syncDetail = ok ? "ارسال به تلگرام" : "خطا در ارسال به تلگرام";
     return lead;
   }
 
@@ -3825,7 +3850,7 @@ document.addEventListener("DOMContentLoaded", () => {
     button.disabled = true;
     if (output) output.textContent = "در حال ارسال…";
 
-    const lead = await syncLead(
+    const lead = await syncLeadToAppsScript(
       {
         id: `test-${Date.now()}`,
         kind: "test",
