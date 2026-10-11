@@ -1594,7 +1594,11 @@ option{background:#17191e}
 <!-- Local admin: Ctrl + Shift + A -->
 <aside class="admin-panel" id="adminPanel" aria-hidden="true">
   <div class="admin-head">
-    <div><strong class="gold">NOUROTOUR Local Admin</strong><small class="muted" style="display:block">ذخیره محلی بدون سرور</small></div>
+    <div>
+      <strong class="gold">NOUROTOUR Local Admin</strong>
+      <small class="muted" style="display:block">ذخیره محلی بدون سرور</small>
+      <small class="muted" style="display:block;font-size:.58rem;line-height:1.5">باز کردن روی گوشی: ۵ ضربه روی لوگو یا نشانی <code dir="ltr">#admin</code></small>
+    </div>
     <button class="icon-btn" id="closeAdmin" aria-label="بستن مدیریت"><svg class="icon" aria-hidden="true"><use href="#icon-x"></use></svg></button>
   </div>
   <div class="admin-tabs">
@@ -2398,12 +2402,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const data = JSON.parse(text);
+      const relayMessage = [data?.message, data?.hint]
+        .filter(value => typeof value === "string" && value.trim())
+        .map(value => value.trim())
+        .join(" — ");
+      const syncDetail = (relayMessage || detail).replace(/\s+/g, " ").trim().slice(0, 200);
 
       if (data && (data.status === "error" || data.ok === false)) {
-        return { state: "failed:script", detail };
+        return { state: "failed:script", detail: syncDetail };
       }
 
-      return { state: "sent", detail };
+      return { state: "sent", detail: syncDetail };
     } catch {
       return {
         state: strictJson ? "failed:script" : "sent",
@@ -3394,6 +3403,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
+  let dismissIntroOverlay = null;
+
   function setupIntro(){
     const overlay = document.getElementById('introOverlay');
     if(!overlay) return;
@@ -3441,6 +3452,7 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(()=>{ document.documentElement.classList.remove('intro-ready'); }, 3000);
       setTimeout(()=>{ overlay.remove(); }, 3100);
     }
+    dismissIntroOverlay = dismiss;
     const enterBtn = document.getElementById('introEnter');
     enterBtn?.addEventListener('click', dismiss);
     document.addEventListener('keydown', function esc(e){
@@ -3454,6 +3466,35 @@ document.addEventListener("DOMContentLoaded", () => {
     $("#adminPanel").setAttribute("aria-hidden", "false");
     document.body.classList.add("lock");
     renderAdmin();
+  }
+
+  function setupAdminAccess() {
+    const OPEN_TAPS = 5;
+    const TAP_WINDOW = 3000;
+    let taps = 0;
+    let firstTapAt = 0;
+
+    const open = () => {
+      dismissIntroOverlay?.();
+      openAdmin();
+      showToast("پنل مدیریت باز شد", "روی گوشی: ۵ ضربه روی لوگو یا نشانی #admin؛ برای بستن، ✕ گوشهٔ بالا.");
+    };
+
+    $("#brandLogo")?.addEventListener("click", () => {
+      const now = Date.now();
+      if (now - firstTapAt > TAP_WINDOW) { taps = 0; firstTapAt = now; }
+      taps += 1;
+      if (taps >= OPEN_TAPS) { taps = 0; open(); }
+    });
+
+    let hash = "";
+    try {
+      hash = decodeURIComponent(String(location.hash || "")).replace(/^#/, "").trim().toLowerCase();
+    } catch {
+      hash = String(location.hash || "").replace(/^#/, "").toLowerCase();
+    }
+    const params = new URLSearchParams(String(location.search || ""));
+    if (hash === "admin" || hash === "مدیریت" || params.has("admin")) open();
   }
 
   function closeAdmin() {
@@ -4082,6 +4123,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setupCountdown();
   setupRevealAnimations();
   setupIntro();
+  setupAdminAccess();
   setupCounters();
 
   setInterval(updateClock, 1000);
