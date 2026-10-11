@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تست ارسال به تلگرام - نوروتور</title>
+    <title>تست رلهٔ سروری تلگرام - نوروتور</title>
     <style>
         * {
             margin: 0;
@@ -94,11 +94,11 @@
 </head>
 <body>
     <div class="container">
-        <h1>🧪 تست ارسال فرم به تلگرام</h1>
-        <p>این صفحه برای تست اتصال فرم به گروه تلگرام است.</p>
+        <h1>🧪 تست رلهٔ سروری تلگرام</h1>
+        <p>این صفحه با همان مسیر فرم‌های سایت تست می‌کند: درخواست به وب‌اپ Google Apps Script می‌رود و <strong>سرور گوگل</strong> پیام را به گروه تلگرام می‌فرستد (چون api.telegram.org از ایران برای مرورگر بازدیدکننده در دسترس نیست). اگر پیام در گروه رسید، مسیر سالم است.</p>
 
         <div id="successMessage" class="success hidden">
-            ✅ پیام با موفقیت به گروه تلگرام ارسال شد!
+            ✅ پیام از طریق سرور گوگل به گروه تلگرام رسید!
         </div>
 
         <div id="errorMessage" class="error hidden">
@@ -150,133 +150,73 @@
                 <textarea id="message" name="message" placeholder="توضیحات خود را بنویسید..."></textarea>
             </div>
 
-            <button type="submit" id="submitBtn">📤 ارسال به تلگرام</button>
+            <button type="submit" id="submitBtn">📤 ارسال آزمایشی از طریق رله</button>
         </form>
     </div>
 
     <script>
-        // تنظیمات تلگرام
-        const TELEGRAM_CONFIG = {
-            botToken: '8898159650:AAEqqUDMSx3BOwzITqvq-a-mrXLI-tWIhNE',
-            chatId: '-1004463990161'
-        };
+        "use strict";
 
-        // فرم و المان‌های DOM
+        // نشانی رله؛ اگر لازم شد، همان مقدار leadEndpoint در index.html را اینجا بگذارید.
+        const RELAY_URL =
+            (window.NOUROTOUR_RELAY_URL || '').trim() ||
+            'https://script.google.com/macros/s/AKfycbxm7nnIkic08wYopqEZxxgwpO6YliSXviZr2GMHDh2PnhvJhJpUxPNe8ux0aAhaRkee/exec';
+
         const form = document.getElementById('testForm');
         const submitBtn = document.getElementById('submitBtn');
         const successMessage = document.getElementById('successMessage');
         const errorMessage = document.getElementById('errorMessage');
 
-        // تابع فرمت کردن پیام
-        function formatMessage(data) {
-            const kindLabels = {
-                consult: '🔔 درخواست مشاوره',
-                booking: '✈️ درخواست رزرو',
-                test: '🧪 ارسال آزمایشی'
-            };
-
-            const now = new Date();
-            const persianTime = now.toLocaleDateString('fa-IR') + ' ' + 
-                               now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute: '2-digit'});
-
-            let message = `<b>${kindLabels[data.kind] || 'درخواست جدید'}</b>\n`;
-            message += `━━━━━━━━━━━━━━━━━━━\n\n`;
-
-            if (data.fullName) message += `👤 <b>نام:</b> ${escapeHtml(data.fullName)}\n`;
-            if (data.phone) message += `📱 <b>تلفن:</b> <code>${escapeHtml(data.phone)}</code>\n`;
-            if (data.destination) message += `📍 <b>مقصد:</b> ${escapeHtml(data.destination)}\n`;
-            if (data.travelers) message += `👥 <b>تعداد مسافر:</b> ${escapeHtml(data.travelers)}\n`;
-            if (data.preferredDate) message += `📅 <b>تاریخ:</b> ${escapeHtml(data.preferredDate)}\n`;
-            if (data.budget) message += `💰 <b>بودجه:</b> ${escapeHtml(data.budget)}\n`;
-            
-            if (data.message) {
-                message += `\n💬 <b>توضیحات:</b>\n${escapeHtml(data.message)}\n`;
-            }
-
-            message += `\n━━━━━━━━━━━━━━━━━━━\n`;
-            message += `🕐 <b>زمان:</b> ${persianTime}\n`;
-            message += `🆔 <b>شناسه:</b> <code>test-${Date.now()}</code>\n`;
-            message += `\n🌐 <a href="https://nourotour.ir">nourotour.ir</a>`;
-
-            return message;
-        }
-
-        // تابع escape کردن HTML
-        function escapeHtml(text) {
-            if (!text) return '';
-            const map = {
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#039;'
-            };
-            return String(text).replace(/[&<>"']/g, m => map[m]);
-        }
-
-        // تابع ارسال به تلگرام
-        async function sendToTelegram(data) {
-            const message = formatMessage(data);
-            const url = `https://api.telegram.org/bot${TELEGRAM_CONFIG.botToken}/sendMessage`;
-
-            const response = await fetch(url, {
+        /**
+         * ارسال به رلهٔ سروری (Apps Script → تلگرام).
+         * قالب‌بندی پیام سمت سرور انجام می‌شود؛ پس اینجا فقط داده خام می‌فرستیم.
+         */
+        async function sendViaRelay(data) {
+            const response = await fetch(RELAY_URL, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    chat_id: TELEGRAM_CONFIG.chatId,
-                    text: message,
-                    parse_mode: 'HTML',
-                    disable_web_page_preview: true
-                })
+                // text/plain = درخواست ساده (بدون preflight) تا Apps Script خطای CORS ندهد.
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({ ...data, site: 'nourotour.ir', pageUrl: window.location.href }),
+                redirect: 'follow'
             });
 
-            return response.json();
+            const text = await response.text();
+            let result = null;
+            try { result = JSON.parse(text); } catch (ignored) {}
+
+            if (response.ok && result && result.status === 'ok') return result;
+            throw new Error((result && result.message) || text || ('HTTP ' + response.status));
         }
 
-        // مدیریت ارسال فرم
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // مخفی کردن پیام‌های قبلی
             successMessage.classList.add('hidden');
             errorMessage.classList.add('hidden');
 
-            // غیرفعال کردن دکمه
             submitBtn.disabled = true;
             submitBtn.textContent = '⏳ در حال ارسال...';
 
             try {
-                // جمع‌آوری داده‌های فرم
-                const formData = new FormData(form);
-                const data = Object.fromEntries(formData.entries());
+                const data = Object.fromEntries(new FormData(form).entries());
+                const result = await sendViaRelay({ ...data, id: 'test-page-' + Date.now() });
 
-                // ارسال به تلگرام
-                const result = await sendToTelegram(data);
-
-                if (result.ok) {
-                    // موفقیت
-                    successMessage.classList.remove('hidden');
-                    form.reset();
-                    
-                    // اسکرول به بالا
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                } else {
-                    throw new Error(result.description || 'خطای ناشناخته');
-                }
+                successMessage.classList.remove('hidden');
+                successMessage.textContent = '✅ پیام از طریق سرور گوگل به گروه تلگرام رسید! (messageId: ' + (result.messageId || '—') + ')';
+                form.reset();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             } catch (error) {
                 console.error('خطا:', error);
                 errorMessage.classList.remove('hidden');
-                errorMessage.textContent = `❌ خطا: ${error.message}`;
+                errorMessage.textContent = '❌ خطا: ' + error.message +
+                    ' — بررسی کنید: کد جدید در Apps Script ذخیره شده و Deploy با «New version» منتشر شده باشد.';
             } finally {
-                // فعال کردن دوباره دکمه
                 submitBtn.disabled = false;
-                submitBtn.textContent = '📤 ارسال به تلگرام';
+                submitBtn.textContent = '📤 ارسال آزمایشی از طریق رله';
             }
         });
 
-        console.log('✅ فرم تست تلگرام آماده است');
+        console.log('✅ صفحهٔ تست رلهٔ تلگرام آماده است');
     </script>
 </body>
 </html>

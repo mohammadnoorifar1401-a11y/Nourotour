@@ -1,187 +1,80 @@
 /**
- * نوروتور — ارسال اطلاع‌رسانی فرم‌ها به تلگرام
- * 
- * این فایل را می‌توانید مستقیماً در index.html قرار دهید یا به‌عنوان یک فایل جداگانه لود کنید.
- * وقتی کاربر فرم درخواست سفر/مشاوره را ارسال می‌کند، اطلاعات به تلگرام هم ارسال می‌شود.
+ * نوروتور — اطلاع‌رسانی فرم‌ها به تلگرام از طریق «رلهٔ سروری»
+ *
+ * ⚠️ این فایل دیگر مثل قبل مستقیم به `api.telegram.org` وصل نمی‌شود:
+ *    - `api.telegram.org` از ایران فیلتر است و ارسال از مرورگر بازدیدکننده هرگز نمی‌رسید.
+ *    - توکن ربات هم نباید داخل مرورگر باشد.
+ * اکنون درخواست به وب‌اپ Google Apps Script (رله) می‌رود و سرور گوگل پیام را به تلگرام می‌دهد:
+ *
+ *     فرم سایت → <نشانی رله> (/exec) → سرور گوگل → api.telegram.org → گروه تلگرام
+ *
+ * استفاده (پیشنهادی: به‌جای این فایل، همان ماژول اصلی را لود کنید):
+ *   <script src="telegram-integration.js"></script>
+ *
+ * در index.html فعلی، خودِ فرم از تابع `sendLeadToRelay` استفاده می‌کند و این فایل
+ * فقط برای سازگاری با صفحه‌های قدیمی نگه داشته شده است.
  */
 
-(function() {
+(function () {
   'use strict';
 
-  // تنظیمات تلگرام
-  const TELEGRAM_CONFIG = {
-    botToken: '8898159650:AAEqqUDMSx3BOwzITqvq-a-mrXLI-tWIhNE',
-    chatId: '-1004463990161'
-  };
+  // نشانی رله: همان مقدار `leadEndpoint` در index.html
+  var RELAY_URL =
+    (typeof window !== 'undefined' && String(window.NOUROTOUR_RELAY_URL || '').trim()) ||
+    'https://script.google.com/macros/s/AKfycbxm7nnIkic08wYopqEZxxgwpO6YliSXviZr2GMHDh2PnhvJhJpUxPNe8ux0aAhaRkee/exec';
 
   /**
-   * ارسال پیام به گروه تلگرام
-   * @param {Object} leadData - اطلاعات فرم ارسال شده
-   * @returns {Promise<boolean>} - موفقیت ارسال
+   * ارسال درخواست فرم به رلهٔ سروری (سرور گوگل پیام را به تلگرام می‌رساند).
+   * @param {Object} leadData اطلاعات فرم
+   * @returns {Promise<boolean>} موفقیت ارسال
    */
   async function sendToTelegram(leadData) {
-    try {
-      const message = formatLeadMessage(leadData);
-      const url = `https://api.telegram.org/bot${TELEGRAM_CONFIG.botToken}/sendMessage`;
-
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          chat_id: TELEGRAM_CONFIG.chatId,
-          text: message,
-          parse_mode: 'HTML',
-          disable_web_page_preview: true
-        })
-      });
-
-      const result = await response.json();
-      
-      if (!result.ok) {
-        console.error('خطا در ارسال به تلگرام:', result);
-        return false;
-      }
-
-      console.log('✅ پیام با موفقیت به تلگرام ارسال شد');
-      return true;
-    } catch (error) {
-      console.error('خطا در ارسال به تلگرام:', error);
+    if (!RELAY_URL) {
+      console.warn('[Nourotour relay] نشانی رله تنظیم نشده است');
       return false;
     }
-  }
 
-  /**
-   * فرمت کردن اطلاعات فرم برای نمایش در تلگرام
-   * @param {Object} lead - اطلاعات فرم
-   * @returns {string} - پیام فرمت شده
-   */
-  function formatLeadMessage(lead) {
-    const kindLabels = {
-      consult: '🔔 درخواست مشاوره',
-      booking: '✈️ درخواست رزرو',
-      test: '🧪 ارسال آزمایشی'
-    };
+    var payload = Object.assign({ site: 'nourotour.ir' }, leadData || {});
+    var controller = typeof AbortController === 'function' ? new AbortController() : null;
+    var timer = controller ? setTimeout(function () { controller.abort(); }, 15000) : null;
 
-    const kindEmoji = {
-      consult: '💬',
-      booking: '🎫',
-      test: '🧪'
-    };
+    try {
+      var response = await fetch(RELAY_URL, {
+        method: 'POST',
+        // text/plain = درخواست ساده (بدون preflight)؛ Apps Script از مرورگر همین را می‌پذیرد.
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload),
+        redirect: 'follow',
+        signal: controller ? controller.signal : undefined
+      });
 
-    const emoji = kindEmoji[lead.kind] || '📋';
-    const title = kindLabels[lead.kind] || 'درخواست جدید';
+      var text = await response.text();
+      var data = null;
 
-    let message = `<b>${emoji} ${title}</b>\n`;
-    message += `━━━━━━━━━━━━━━━━━━━\n\n`;
+      try { data = JSON.parse(text); } catch (ignored) {}
 
-    // اطلاعات اصلی
-    if (lead.fullName) {
-      message += `👤 <b>نام:</b> ${escapeHtml(lead.fullName)}\n`;
-    }
+      if (response.ok && data && data.status === 'ok') {
+        console.log('✅ پیام از طریق سرور گوگل به تلگرام رسید');
+        return true;
+      }
 
-    if (lead.phone) {
-      message += `📱 <b>تلفن:</b> <code>${escapeHtml(lead.phone)}</code>\n`;
-    }
-
-    // اطلاعات سفر
-    if (lead.tour) {
-      message += `🎯 <b>تور:</b> ${escapeHtml(lead.tour)}\n`;
-    }
-
-    if (lead.destination) {
-      message += `📍 <b>مقصد:</b> ${escapeHtml(lead.destination)}\n`;
-    }
-
-    if (lead.travelers) {
-      message += `👥 <b>تعداد مسافر:</b> ${escapeHtml(lead.travelers)}\n`;
-    }
-
-    if (lead.preferredDate) {
-      message += `📅 <b>تاریخ پیشنهادی:</b> ${escapeHtml(lead.preferredDate)}\n`;
-    }
-
-    if (lead.budget) {
-      message += `💰 <b>بودجه:</b> ${escapeHtml(lead.budget)}\n`;
-    }
-
-    if (lead.contactMethod) {
-      message += `📞 <b>روش تماس:</b> ${escapeHtml(lead.contactMethod)}\n`;
-    }
-
-    // توضیحات
-    if (lead.message) {
-      message += `\n💬 <b>توضیحات:</b>\n${escapeHtml(lead.message)}\n`;
-    }
-
-    // اطلاعات تکمیلی
-    message += `\n━━━━━━━━━━━━━━━━━━━\n`;
-    
-    if (lead.createdAtFa) {
-      message += `🕐 <b>زمان:</b> ${escapeHtml(lead.createdAtFa)}\n`;
-    }
-
-    if (lead.id) {
-      message += `🆔 <b>شناسه:</b> <code>${escapeHtml(lead.id)}</code>\n`;
-    }
-
-    // لینک به سایت
-    message += `\n🌐 <a href="https://nourotour.ir">nourotour.ir</a>`;
-
-    return message;
-  }
-
-  /**
-   * تبدیل کاراکترهای HTML به متن امن
-   */
-  function escapeHtml(text) {
-    if (!text) return '';
-    const map = {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#039;'
-    };
-    return String(text).replace(/[&<>"']/g, m => map[m]);
-  }
-
-  /**
-   * Hook به تابع submitLead موجود در سایت
-   */
-  function hookFormSubmission() {
-    // اگر تابع submitLead از قبل وجود دارد، آن را wrap می‌کنیم
-    if (window.submitLead && typeof window.submitLead === 'function') {
-      const originalSubmitLead = window.submitLead;
-      
-      window.submitLead = async function(leadData) {
-        // ابتدا فرم را به روش عادی ارسال می‌کنیم (Google Sheets)
-        const result = await originalSubmitLead(leadData);
-        
-        // سپس به تلگرام هم ارسال می‌کنیم (در پس‌زمینه)
-        // این کار نباید باعث توقف فرآیند اصلی شود
-        sendToTelegram(leadData).catch(err => {
-          console.warn('ارسال به تلگرام با خطا مواجه شد:', err);
-        });
-        
-        return result;
-      };
-      
-      console.log('✅ Telegram notifier متصل شد');
-    } else {
-      console.warn('⚠️ تابع submitLead یافت نشد. لطفاً مطمئن شوید که این اسکریپت بعد از اسکریپت اصلی سایت بارگذاری می‌شود.');
+      console.error('[Nourotour relay] ارسال ناموفق:', (data && data.message) || text || ('HTTP ' + response.status));
+      return false;
+    } catch (error) {
+      console.error('[Nourotour relay] خطا در تماس با رله:', error);
+      return false;
+    } finally {
+      if (timer) clearTimeout(timer);
     }
   }
 
-  // اجرای خودکار بعد از بارگذاری صفحه
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', hookFormSubmission);
-  } else {
-    hookFormSubmission();
-  }
+  // اگر صفحه از ماژول اصلی استفاده می‌کند، آن را ترجیح می‌دهیم (یک مسیر ارسال، بدون پیام تکراری).
+  window.NourotourTelegram = window.NourotourTelegram || {
+    send: sendToTelegram,
+    version: 'relay-compat'
+  };
 
-  // در دسترس قرار دادن تابع برای استفاده مستقیم
   window.sendToTelegram = sendToTelegram;
 
+  console.log('ℹ️ telegram-notifier.js اکنون فقط کلاینت رلهٔ سروری است (بدون توکن و بدون تماس مستقیم با تلگرام)');
 })();

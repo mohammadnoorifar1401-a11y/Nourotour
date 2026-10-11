@@ -1,131 +1,42 @@
 # 🔌 ادغام‌های نوروتور
 
-این پوشه شامل تمام ادغام‌ها و اتصالات سایت نوروتور به سرویس‌های خارجی است.
+این پوشه شامل ادغام‌های سایت نوروتور با سرویس‌های خارجی است.
 
-## 📁 ساختار پوشه
+## 📁 ساختار
 
 ```
 integrations/
-├── google-apps-script/     # اتصال به Google Sheets
-│   ├── Code.gs             # اسکریپت Apps Script
-│   └── README.md           # راهنمای نصب
+├── google-apps-script/     # رلهٔ سروری: Apps Script → تلگرام (مسیر اصلی و فعال ✅)
+│   ├── Code.gs             # کد رله (بدون Google Sheets)
+│   └── README.md           # راهنمای نصب/به‌روزرسانی و عیب‌یابی
 │
-├── telegram/               # اتصال به تلگرام  
-│   └── README.md           # مستندات کامل
-│
-├── telegram-notifier.js    # ماژول اصلی ارسال به تلگرام
-├── telegram-simple.html    # صفحه تست تلگرام
-├── INSTALL.md              # راهنمای نصب گام‌به‌گام
+├── telegram/README.md      # مستندات قدیمی (منسوخ؛ به‌جایش google-apps-script/README.md)
+├── telegram-notifier.js    # کلاینت قدیمی رله (سازگاری با صفحه‌های قدیمی)
+├── telegram-simple.html    # صفحهٔ تست رله (اختیاری)
+├── INSTALL.md              # راهنمای قدیمی (منسوخ)
 └── README.md               # این فایل
 ```
 
-## 🎯 ادغام‌های موجود
+## 🎯 مسیر فعال ارسال درخواست‌ها
 
-### 1️⃣ Google Sheets (فعال ✅)
-
-**وضعیت:** در حال اجرا  
-**مسیر:** `google-apps-script/`  
-**عملکرد:** ذخیره درخواست‌های فرم در Google Sheets
-
-**اطلاعات بیشتر:** [`google-apps-script/README.md`](google-apps-script/README.md)
-
----
-
-### 2️⃣ Telegram Bot (جدید 🆕)
-
-**وضعیت:** آماده نصب  
-**ربات:** [@nourotour_ir_bot](https://t.me/nourotour_ir_bot)  
-**عملکرد:** ارسال خودکار درخواست‌ها به گروه تلگرام
-
-**ویژگی‌ها:**
-- ✅ ارسال فوری به گروه تلگرام
-- ✅ فرمت زیبا با emoji و HTML
-- ✅ عدم تداخل با Google Sheets
-- ✅ کار در پس‌زمینه (non-blocking)
-
-**فایل‌ها:**
-- `telegram-notifier.js` - ماژول اصلی
-- `telegram-simple.html` - صفحه تست
-- [`INSTALL.md`](INSTALL.md) - راهنمای نصب کامل
-- [`telegram/README.md`](telegram/README.md) - مستندات تکمیلی
-
-**شروع سریع:**
-```html
-<!-- اضافه کردن به انتهای index.html -->
-<script src="integrations/telegram-notifier.js"></script>
+```
+فرم سایت → وب‌اپ Apps Script (/exec در script.google.com) → سرور گوگل → api.telegram.org → گروه تلگرام
 ```
 
-**راهنمای کامل:** [`INSTALL.md`](INSTALL.md)
+**چرا این‌طور؟** قبلاً پیام تلگرام از مرورگر بازدیدکننده به `api.telegram.org` فرستاده می‌شد؛ ولی این
+دامنه از ایران فیلتر است، پس فرم ثبت می‌شد و **پیامی نمی‌رسید**. حالا ارسال از سمت سرور گوگل انجام
+می‌شود. Google Sheets هم دیگر در مسیر نیست و هیچ داده‌ای در آن ثبت نمی‌شود.
 
----
-
-## 🚀 نصب
-
-برای نصب هر ادغام، به README مربوط به آن مراجعه کنید:
-
-1. **Google Sheets:** [`google-apps-script/README.md`](google-apps-script/README.md)
-2. **Telegram:** [`INSTALL.md`](INSTALL.md)
+- کد رله: [`google-apps-script/Code.gs`](google-apps-script/Code.gs)
+- راهنمای راه‌اندازی/به‌روزرسانی و عیب‌یابی: [`google-apps-script/README.md`](google-apps-script/README.md)
+- کلاینت مرورگر: [`../telegram-integration.js`](../telegram-integration.js) — فقط درخواست را به رله می‌دهد؛ **هیچ توکن تلگرامی در مرورگر نیست**.
 
 ## 🧪 تست
 
-### تست Google Sheets
-```bash
-# ارسال درخواست تست به Google Apps Script endpoint
-curl -X POST "YOUR_GOOGLE_APPS_SCRIPT_URL" \
-  -H "Content-Type: application/json" \
-  -d '{"kind":"test","fullName":"تست","phone":"09120000000"}'
-```
+1. از داخل سایت: `Ctrl + Shift + A` → تب «عمومی» → **«ارسال درخواست آزمایشی»**.
+2. یا صفحهٔ تست: [`telegram-simple.html`](telegram-simple.html).
 
-### تست Telegram
-باز کردن فایل تست:
-```
-https://nourotour.ir/integrations/telegram-simple.html
-```
+## ⚠️ فایل‌های منسوخ
 
-## 📊 جریان داده
-
-```
-فرم سایت
-    │
-    ├──► Google Sheets (ذخیره دائمی)
-    │
-    └──► Telegram Group (اطلاع‌رسانی فوری)
-```
-
-## 🔐 امنیت
-
-### توصیه‌های امنیتی:
-
-1. **Google Sheets:**
-   - ✅ فقط با ایمیل خودتان اجرا شود
-   - ✅ دسترسی "Anyone" برای Web App (الزامی برای CORS)
-
-2. **Telegram:**
-   - ⚠️ توکن در کد جاوااسکریپت قابل مشاهده است
-   - ✅ ربات را فقط در گروه خصوصی استفاده کنید
-   - 🔒 برای امنیت بیشتر از Cloudflare Worker استفاده کنید
-
-## 🛠️ ادغام‌های آینده
-
-- [ ] Cloudflare Worker (proxy امن برای تلگرام)
-- [ ] WhatsApp Business API
-- [ ] اتصال به CRM
-- [ ] Google Analytics Events
-- [ ] Email notifications
-
-## 📞 پشتیبانی
-
-اگر سوال یا مشکلی دارید:
-- 📝 [GitHub Issues](https://github.com/mohammadnoorifar1401-a11y/Nourotour/issues)
-- 📧 Email: mohammad.noorifar.1401@gmail.com
-- 💬 Telegram: در گروه نوروتور
-
-## 📄 لایسنس
-
-MIT License - استفاده آزاد برای پروژه‌های تجاری و شخصی
-
----
-
-**نسخه:** 1.0.0  
-**آخرین به‌روزرسانی:** ۱۴۰۳/۰۷/۱۹  
-**سازگاری:** تمام مرورگرهای مدرن
+`telegram/README.md` و `INSTALL.md` مربوط به دورهٔ قبل‌اند (ارسال مستقیم مرورگر → تلگرام که از ایران
+کار نمی‌کرد). برای نصب فعلی فقط از راهنمای `google-apps-script/README.md` استفاده کنید.
