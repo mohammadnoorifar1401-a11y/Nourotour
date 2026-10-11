@@ -192,83 +192,13 @@
 
   /**
    * اتصال به سیستم فرم موجود سایت
+   * تغییر دوم: فرم سایت (index.html ← syncLead) خودش ارسال به تلگرام را از طریق
+   * window.NourotourTelegram.send انجام می‌دهد؛ بنابراین شنوندهٔ جداگانه روی فرم‌ها
+   * دیگر لازم نیست و وجود هر دو، باعث ارسال دو پیام تلگرام برای هر درخواست می‌شد.
    */
   function hookToExistingForm() {
-    // روش ۱: اگر تابع submitLead وجود دارد
-    if (window.submitLead && typeof window.submitLead === 'function') {
-      log('تابع submitLead پیدا شد، در حال اتصال...', 'info');
-      
-      const originalSubmitLead = window.submitLead;
-      
-      window.submitLead = async function(leadData) {
-        log('فرم در حال ارسال...', 'info');
-        
-        try {
-          // ارسال به Google Sheets (روش اصلی)
-          const result = await originalSubmitLead(leadData);
-          
-          // ارسال همزمان به تلگرام (بدون انتظار)
-          sendToTelegram(leadData).catch(err => {
-            log(`هشدار: ${err.message}`, 'warn');
-          });
-          
-          return result;
-          
-        } catch (error) {
-          log(`خطا در ارسال فرم: ${error.message}`, 'error');
-          throw error;
-        }
-      };
-      
-      log('✅ اتصال تلگرام فعال شد', 'success');
-      return true;
-    }
-    
-    // روش ۲: رصد فرم‌های HTML
-    log('تابع submitLead یافت نشد، رصد فرم‌های HTML...', 'warn');
-    
-    
-    // فقط فرم‌های مشاوره و رزرو (کلاس success-form) به تلگرام فرستاده می‌شوند.
-    // فرم‌های پنل مدیریت و جست‌وجو عمداً نادیده گرفته می‌شوند.
-    const leadForms = Array.from(document.querySelectorAll('form.success-form'));
-    log(`${leadForms.length} فرم درخواست پیدا شد`, 'info');
-
-    leadForms.forEach((form, index) => {
-      form.addEventListener('submit', function() {
-        // همان شرط‌های فرم اصلی سایت: فرم معتبر باشد و تلهٔ ربات خالی باشد
-        if (!form.checkValidity()) return;
-
-        const trap = ['company', 'website'].find(key => {
-          const field = form.elements.namedItem(key);
-          return field && String(field.value || '').trim() !== '';
-        });
-        if (trap) return;
-
-        log(`فرم ${index + 1} ارسال شد`, 'info');
-
-        // جمع‌آوری داده‌های فرم (خواندن همزمان با submit؛ قبل از reset فرم اصلی)
-        const formData = new FormData(form);
-        const data = {};
-        for (const [key, value] of formData.entries()) {
-          if (key === 'company' || key === 'website') continue;
-          const text = String(value ?? '').trim();
-          if (text) data[key] = text;
-        }
-
-        // نوع فرم (consult یا booking) برای عنوان پیام
-        data.kind = form.dataset.formType || 'consult';
-        data.id = data.id || `lead-${Date.now()}`;
-        data.createdAtFa = getPersianDateTime();
-        data.pageUrl = window.location.href;
-
-        // ارسال به تلگرام (بدون مسدود کردن فرم)
-        sendToTelegram(data).catch(err => {
-          log(`هشدار: ${err.message}`, 'warn');
-        });
-      });
-    });
-
-    return leadForms.length > 0;
+    log('ماژول تلگرام آماده است؛ ارسال توسط فرم سایت از طریق NourotourTelegram.send انجام می‌شود', 'success');
+    return true;
   }
 
   // ═══════════════════════════════════════════════════════════════
