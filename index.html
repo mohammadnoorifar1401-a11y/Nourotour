@@ -1009,6 +1009,44 @@ option{background:#17191e}
   *,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
   .reveal{opacity:1;transform:none}
 }
+/* انتخابگر تاریخ شمسی */
+.date-field{position:relative}
+.date-field .date-input{cursor:pointer;caret-color:transparent}
+.date-field .date-input::placeholder{color:var(--muted)}
+.jalali-panel{
+  position:absolute;top:calc(100% + 8px);inset-inline:0;min-width:264px;z-index:60;
+  padding:12px;border:1px solid var(--gold-line);border-radius:16px;
+  background:#16181d;box-shadow:0 18px 44px rgba(0,0,0,.55)
+}
+.jalali-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.jalali-title{color:var(--gold-light);font-size:.84rem;font-weight:800}
+.jalali-nav{
+  display:grid;place-items:center;width:32px;height:32px;padding:0;cursor:pointer;
+  border:1px solid var(--gold-line);border-radius:9px;color:var(--gold-light);
+  background:rgba(214,174,90,.06);font-size:1rem;line-height:1
+}
+.jalali-nav:hover{background:rgba(214,174,90,.14)}
+.jalali-weekdays,.jalali-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.jalali-weekdays{margin-bottom:4px}
+.jalali-weekdays span{text-align:center;color:var(--muted);font-size:.62rem;font-weight:700;padding:3px 0}
+.jalali-day{
+  min-height:36px;padding:0;cursor:pointer;border:1px solid transparent;border-radius:9px;
+  background:transparent;color:var(--text);font:inherit;font-size:.78rem
+}
+.jalali-day:hover:not(:disabled){border-color:var(--gold-line);background:rgba(214,174,90,.08)}
+.jalali-day:disabled{color:#565962;cursor:not-allowed;opacity:.55}
+.jalali-day.is-today{border-color:var(--gold)}
+.jalali-day.is-selected{
+  background:linear-gradient(135deg,var(--gold-light),var(--gold-dark));
+  color:#171108;font-weight:800;border-color:transparent
+}
+.jalali-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px}
+.jalali-action{
+  padding:5px 10px;cursor:pointer;border:1px solid var(--gold-line);border-radius:9px;
+  background:rgba(214,174,90,.05);color:var(--gold-light);font:inherit;font-size:.7rem;font-weight:700
+}
+.jalali-action:hover{background:rgba(214,174,90,.14)}
+@media(max-width:420px){.jalali-day{min-height:40px}}
 </style>
 </head>
 <body>
@@ -1163,7 +1201,7 @@ option{background:#17191e}
               <option value="">همه مقصدها</option>
             </select>
           </div>
-          <div class="field">
+          <div class="field date-field" data-jalali-date>
             <label for="searchDate">تاریخ حرکت</label>
             <input id="searchDate" type="date">
           </div>
@@ -1567,9 +1605,9 @@ option{background:#17191e}
             <option>۱ نفر</option><option>۲ نفر</option><option>۳ نفر</option><option>۴ نفر یا بیشتر</option>
           </select>
         </div>
-        <div class="field">
+        <div class="field date-field" data-jalali-date>
           <label for="bookingDate">تاریخ پیشنهادی</label>
-          <input id="bookingDate" name="preferredDate" type="date" dir="ltr">
+          <input id="bookingDate" name="preferredDate" type="date" dir="ltr" placeholder="انتخاب تاریخ (شمسی)">
         </div>
         <div class="field">
           <label for="bookingContactMethod">روش تماس</label>
@@ -1718,7 +1756,7 @@ option{background:#17191e}
           <label for="adminTourDiscount">درصد تخفیف</label>
           <input id="adminTourDiscount" name="discount" type="number" min="0" max="90" value="0">
         </div>
-        <div class="field">
+        <div class="field date-field" data-jalali-date>
           <label for="adminTourDate">تاریخ حرکت</label>
           <input id="adminTourDate" name="date" type="date" required>
         </div>
@@ -3546,6 +3584,8 @@ document.addEventListener("DOMContentLoaded", () => {
       ...tour,
       services: (tour.services || []).join("، ")
     });
+    syncJalaliPickers();
+    syncJalaliPickers();
 
     form.dataset.editId = tour.id;
     $("button[type='submit']", form).textContent = "ذخیره ویرایش";
@@ -3933,6 +3973,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const values = Object.fromEntries(new FormData(form));
     const editId = Number(form.dataset.editId || 0);
 
+    if (!values.date) {
+      showToast("تاریخ ناقص است", "تاریخ حرکت تور را از تقویم شمسی انتخاب کنید.");
+      $("#adminTourDate").focus();
+      return;
+    }
+
     const existing = siteData.tours.find(tour => Number(tour.id) === editId);
     const newId = editId || Math.max(0, ...siteData.tours.map(tour => Number(tour.id))) + 1;
 
@@ -3972,6 +4018,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     saveData();
     form.reset();
+    syncJalaliPickers();
     delete form.dataset.editId;
     $("button[type='submit']", form).textContent = "افزودن تور";
 
@@ -4111,11 +4158,350 @@ document.addEventListener("DOMContentLoaded", () => {
     showToast("بازنشانی انجام شد", "اطلاعات اولیه نوروتور بازیابی شدند.");
   });
 
-  const today = new Date().toISOString().slice(0, 10);
+  /* ————— انتخابگر تاریخ شمسی (جست‌وجو، رزرو و پنل مدیریت) —————
+     فیلد type="date" بومی، تقویمش را از زبان سیستم‌عامل می‌گیرد و برای کاربر فارسی
+     میلادی نمایش داده می‌شود. این‌جا آن را به ورودی متنی فقط‌خواندنی + پنل تقویم شمسی
+     سفارشی تبدیل می‌کنیم. مقدار ذخیره‌شده همچنان میلادی ISO می‌ماند تا رلهٔ تلگرام،
+     مرتب‌سازی تورها و پنل مدیریت بدون تغییر کار کنند. اگر مرورگر تقویم شمسی را
+     پشتیبانی نکند، همان انتخابگر بومی سر جایش می‌ماند. */
 
-  $$('input[type="date"]').forEach(input => {
-    input.min = today;
+  const jalaliPickers = new Map();
+
+  const jalaliDayFormatter = new Intl.DateTimeFormat("en-US-u-ca-persian", {
+    timeZone: "UTC",
+    year: "numeric",
+    month: "numeric",
+    day: "numeric"
   });
+
+  const jalaliTitleFormatter = new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
+    month: "long",
+    year: "numeric"
+  });
+
+  const jalaliValueFormatter = new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
+  const JALALI_WEEKDAYS = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
+  const JALALI_MS_PER_DAY = 86400000;
+
+  function persianPartsOf(utcMs) {
+    const result = {};
+
+    jalaliDayFormatter.formatToParts(utcMs).forEach(part => {
+      if (part.type === "year" || part.type === "month" || part.type === "day") {
+        result[part.type] = Number(part.value);
+      }
+    });
+
+    return result;
+  }
+
+  /** نخستین روز ماه شمسی (به UTC) و طول آن را با پرس‌وجوی Intl پیدا می‌کند. */
+  function persianMonthInfo(year, month) {
+    // اسفند سال قبل؛ نوروز همیشه میان ۱ تا ۲۱ مارس میلادی است.
+    let cursor = Date.UTC(year + 621, 2, 1);
+    let info = persianPartsOf(cursor);
+    let guard = 60;
+
+    while ((info.year !== year || info.month !== 1 || info.day !== 1) && guard-- > 0) {
+      cursor += JALALI_MS_PER_DAY;
+      info = persianPartsOf(cursor);
+    }
+
+    if (guard <= 0) return null;
+
+    // cursor روی ۱ فروردین است؛ گام‌به‌گام تا روز اول ماه مقصد و روز اول ماه بعد می‌رویم
+    // تا اختلافشان طول دقیق ماه (با درنظرگرفتن کبیسه) شود.
+    let monthStart = cursor;
+    let nextMonthStart = cursor;
+
+    for (let current = 2; current <= month + 1; current += 1) {
+      let probe = cursor + 29 * JALALI_MS_PER_DAY;
+      let probeInfo = persianPartsOf(probe);
+      let dayGuard = 5;
+
+      while (probeInfo.day !== 1 && dayGuard-- > 0) {
+        probe += JALALI_MS_PER_DAY;
+        probeInfo = persianPartsOf(probe);
+      }
+
+      if (probeInfo.day !== 1) return null;
+
+      if (current === month) monthStart = probe;
+
+      nextMonthStart = probe;
+      cursor = probe;
+    }
+
+    return {
+      startUtcMs: monthStart,
+      length: Math.round((nextMonthStart - monthStart) / JALALI_MS_PER_DAY),
+      startWeekday: (new Date(monthStart).getUTCDay() + 1) % 7 // شنبه = ستون صفر
+    };
+  }
+
+  function toLocalIso(date) {
+    return new Date(date.getTime() - date.getTimezoneOffset() * 60000)
+      .toISOString()
+      .slice(0, 10);
+  }
+
+  function isoFromUtcMs(utcMs) {
+    return new Date(utcMs).toISOString().slice(0, 10);
+  }
+
+  function jalaliLabel(iso) {
+    if (!iso) return "";
+
+    try {
+      return jalaliValueFormatter.format(new Date(`${iso}T12:00:00Z`));
+    } catch {
+      return iso;
+    }
+  }
+
+  function createJalaliPickerController(field, todayIso, closeAll) {
+    const visible = $("input[type='date']", field);
+    if (!visible) return { field, close() {}, sync() {} };
+
+    const isRequired = visible.required;
+    const placeholder = visible.placeholder || "انتخاب تاریخ (شمسی)";
+
+    // ورودی اصلی فقط‌خواندنی می‌شود و مقدار میلادی ISO به یک فیلد پنهان منتقل می‌شود.
+    const hidden = document.createElement("input");
+
+    hidden.type = "hidden";
+    if (visible.name) {
+      hidden.name = visible.name;
+      visible.removeAttribute("name");
+    }
+
+    visible.type = "text";
+    visible.readOnly = true;
+    visible.required = false;
+    visible.removeAttribute("dir");
+    visible.placeholder = placeholder;
+    visible.autocomplete = "off";
+    visible.classList.add("date-input");
+    visible.setAttribute("aria-haspopup", "dialog");
+    visible.setAttribute("aria-expanded", "false");
+    if (isRequired) visible.setAttribute("aria-required", "true");
+
+    visible.insertAdjacentElement("afterend", hidden);
+
+    const panel = document.createElement("div");
+
+    panel.className = "jalali-panel";
+    panel.hidden = true;
+    panel.setAttribute("role", "dialog");
+    panel.setAttribute("aria-label", "انتخاب تاریخ شمسی");
+    panel.innerHTML = `
+      <div class="jalali-head">
+        <button type="button" class="jalali-nav" data-nav="prev" aria-label="ماه قبل">›</button>
+        <span class="jalali-title"></span>
+        <button type="button" class="jalali-nav" data-nav="next" aria-label="ماه بعد">‹</button>
+      </div>
+      <div class="jalali-weekdays" aria-hidden="true">
+        ${JALALI_WEEKDAYS.map(day => `<span>${day}</span>`).join("")}
+      </div>
+      <div class="jalali-grid"></div>
+      <div class="jalali-foot">
+        <button type="button" class="jalali-action" data-action="today">امروز</button>
+        ${isRequired ? "" : '<button type="button" class="jalali-action" data-action="clear">پاک کردن</button>'}
+      </div>
+    `;
+
+    field.appendChild(panel);
+
+    const titleEl = $(".jalali-title", panel);
+    const gridEl = $(".jalali-grid", panel);
+
+    let viewYear = 0;
+    let viewMonth = 0;
+
+    function syncViewFromValue() {
+      const anchorIso = hidden.value || todayIso;
+      const parts = persianPartsOf(Date.parse(`${anchorIso}T12:00:00Z`));
+
+      viewYear = parts.year;
+      viewMonth = parts.month;
+    }
+
+    function renderGrid() {
+      const info = persianMonthInfo(viewYear, viewMonth);
+      if (!info) return;
+
+      titleEl.textContent = jalaliTitleFormatter.format(new Date(info.startUtcMs));
+
+      let html = "";
+
+      for (let index = 0; index < info.startWeekday; index += 1) {
+        html += "<span></span>";
+      }
+
+      for (let day = 1; day <= info.length; day += 1) {
+        const iso = isoFromUtcMs(info.startUtcMs + (day - 1) * JALALI_MS_PER_DAY);
+        const disabled = iso < todayIso;
+        const classes = ["jalali-day"];
+
+        if (iso === todayIso) classes.push("is-today");
+        if (iso === hidden.value) classes.push("is-selected");
+
+        html += `<button type="button" class="${classes.join(" ")}" data-iso="${iso}"${
+          disabled ? " disabled" : ""
+        }${iso === hidden.value ? ' aria-pressed="true"' : ""}${
+          iso === todayIso ? ' aria-current="date"' : ""
+        }>${faDigits(day)}</button>`;
+      }
+
+      gridEl.innerHTML = html;
+    }
+
+    function open() {
+      closeAll(field);
+      if (!viewYear) syncViewFromValue();
+      renderGrid();
+      panel.hidden = false;
+      visible.setAttribute("aria-expanded", "true");
+    }
+
+    function close() {
+      if (panel.hidden) return;
+
+      panel.hidden = true;
+      visible.setAttribute("aria-expanded", "false");
+    }
+
+    function setValue(iso) {
+      hidden.value = iso || "";
+      visible.value = iso ? jalaliLabel(iso) : "";
+    }
+
+    function shiftMonth(step) {
+      viewMonth += step;
+
+      if (viewMonth > 12) {
+        viewMonth = 1;
+        viewYear += 1;
+      } else if (viewMonth < 1) {
+        viewMonth = 12;
+        viewYear -= 1;
+      }
+
+      renderGrid();
+    }
+
+    visible.addEventListener("click", () => {
+      if (panel.hidden) open();
+      else close();
+    });
+
+    visible.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " " || event.key === "ArrowDown") {
+        event.preventDefault();
+        if (panel.hidden) open();
+      }
+    });
+
+    panel.addEventListener("click", event => {
+      const nav = event.target.closest("[data-nav]");
+
+      if (nav) {
+        shiftMonth(nav.dataset.nav === "next" ? 1 : -1);
+        return;
+      }
+
+      const action = event.target.closest("[data-action]");
+
+      if (action) {
+        if (action.dataset.action === "today") {
+          setValue(todayIso);
+          syncViewFromValue();
+          renderGrid();
+        } else if (action.dataset.action === "clear") {
+          setValue("");
+          renderGrid();
+        }
+
+        return;
+      }
+
+      const dayButton = event.target.closest(".jalali-day:not(:disabled)");
+
+      if (dayButton) {
+        setValue(dayButton.dataset.iso);
+        close();
+        visible.focus();
+      }
+    });
+
+    gridEl.addEventListener("keydown", event => {
+      const button = event.target.closest(".jalali-day");
+      if (!button) return;
+
+      if (event.key === "Escape") {
+        close();
+        visible.focus();
+        return;
+      }
+
+      const moves = { ArrowRight: -1, ArrowLeft: 1, ArrowUp: -7, ArrowDown: 7 };
+      if (!(event.key in moves)) return;
+
+      event.preventDefault();
+
+      const dayButtons = $$(".jalali-day:not(:disabled)", gridEl);
+      dayButtons[dayButtons.indexOf(button) + moves[event.key]]?.focus();
+    });
+
+    return {
+      field,
+      close,
+      sync: () => setValue(hidden.value)
+    };
+  }
+
+  function setupJalaliDatePickers() {
+    let supported = false;
+
+    try {
+      supported = jalaliDayFormatter.formatToParts(new Date()).length > 0;
+    } catch {
+      supported = false;
+    }
+
+    // پشتیبانی‌نشدن تقویم شمسی یعنی فیلدها همان انتخابگر بومی مرورگر می‌مانند.
+    if (!supported) return;
+
+    const todayIso = toLocalIso(new Date());
+    const closeAll = except => {
+      jalaliPickers.forEach(controller => {
+        if (controller.field !== except) controller.close();
+      });
+    };
+
+    $$("[data-jalali-date]").forEach(field => {
+      jalaliPickers.set(field, createJalaliPickerController(field, todayIso, closeAll));
+    });
+
+    document.addEventListener("pointerdown", event => {
+      closeAll(event.target.closest?.("[data-jalali-date]") || null);
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") closeAll(null);
+    });
+  }
+
+  function syncJalaliPickers() {
+    jalaliPickers.forEach(controller => controller.sync());
+  }
+
+  setupJalaliDatePickers();
 
   updateClock();
   renderPersianCalendar();
