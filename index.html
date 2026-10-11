@@ -1656,13 +1656,15 @@ option{background:#17191e}
         <input id="adminMapLinkUrl" name="mapLinkUrl" type="url" dir="ltr" placeholder="https://maps.google.com/?q=تهران">
       </div>
       <div class="field">
-        <label for="adminLeadEndpoint">نشانی Webhook (فقط برای آزمایش دستی)</label>
+        <label for="adminLeadEndpoint">نشانی رلهٔ سرور (Apps Script ← تلگرام)</label>
         <input id="adminLeadEndpoint" name="leadEndpoint" type="url" dir="ltr" autocomplete="off" placeholder="https://script.google.com/macros/s/…/exec">
         <small class="field-hint">
-          ارسال درخواست‌ها به Google Sheets حذف شده است؛ فرم‌های مشاوره و رزرو از این پس
-          فقط به تلگرام فرستاده می‌شوند. این نشانی و دکمهٔ «ارسال درخواست آزمایشی» صرفاً
-          برای آزمایش دستی Webhook از پنل مدیریت است و روی فرم‌های سایت اثر ندارد.
-          برای نشانی‌های <span dir="ltr">script.google.com</span> درخواست به‌صورت
+          فرم‌های مشاوره و رزرو به این نشانی POST می‌شوند و <strong>سرور گوگل</strong> پیام را
+          به گروه تلگرام می‌فرستد؛ هیچ داده‌ای در Google Sheets ثبت نمی‌شود. این مسیر برای
+          بازدیدکنندگان ایران لازم است، چون <span dir="ltr">api.telegram.org</span> از ایران
+          در دسترس مرورگر نیست. دکمهٔ «ارسال درخواست آزمایشی» همین مسیر را تست می‌کند و باید
+          پیام آزمایشی در گروه تلگرام برسد. برای نشانی‌های
+          <span dir="ltr">script.google.com</span> درخواست به‌صورت
           <code>text/plain</code> (بدون preflight) ارسال می‌شود تا خطای CORS رخ ندهد.
         </small>
         <div class="admin-actions" style="margin-top:10px">
@@ -1910,12 +1912,13 @@ document.addEventListener("DOMContentLoaded", () => {
       workingHours: "شنبه تا پنج‌شنبه، ۹ تا ۱۸",
       mapEmbedUrl: "https://maps.google.com/maps?q=%D8%AA%D9%87%D8%B1%D8%A7%D9%86&t=&z=11&ie=UTF8&iwloc=&output=embed",
       mapLinkUrl: "https://www.google.com/maps/search/?api=1&query=%D8%AA%D9%87%D8%B1%D8%A7%D9%86",
-      // تغییر دوم (بازسازی commit گم‌شدهٔ 107e824): ارسال به Google Sheets حذف شد.
-      // از این پس تنها کانال دریافت درخواست‌های مشاوره و رزرو، تلگرام است
-      // (telegram-integration.js ← window.NourotourTelegram.send).
-      // این نشانی دیگر برای فرم‌های سایت استفاده نمی‌شود و فقط «ارسال آزمایشی» دستی
-      // از پنل مدیریت (دکمهٔ آزمایش Webhook) در صورت پر شدن، به آن می‌فرستد.
-      leadEndpoint: "",
+      // تغییر سوم — رلهٔ سروری: فرم‌های مشاوره و رزرو به این نشانی POST می‌شوند و
+      // سرور گوگل (Apps Script) خودش پیام را به گروه تلگرام می‌فرستد.
+      // چرا؟ چون api.telegram.org از ایران فیلتر است و ارسال مستقیم از مرورگر
+      // بازدیدکننده هرگز به تلگرام نمی‌رسید. هیچ داده‌ای در Google Sheets ثبت نمی‌شود؛
+      // این نشانی صرفاً یک رلهٔ پیام است (کد: integrations/google-apps-script/Code.gs).
+      leadEndpoint:
+        "https://script.google.com/macros/s/AKfycbxm7nnIkic08wYopqEZxxgwpO6YliSXviZr2GMHDh2PnhvJhJpUxPNe8ux0aAhaRkee/exec",
       aboutIntro: "نوروتور مجموعه‌ای تخصصی در حوزه گردشگری و خدمات سفر است که با تمرکز بر شفافیت، طراحی دقیق برنامه سفر و پشتیبانی مسئولانه فعالیت می‌کند.",
       mission: "ساده‌تر، مطمئن‌تر و لذت‌بخش‌تر کردن مسیر سفر.",
       vision: "تبدیل‌شدن به یکی از قابل‌اعتمادترین برندهای خدمات سفر فارسی‌زبان."
@@ -2409,7 +2412,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  /** بدنهٔ ارسالی به Webhook: رکورد + زمان شمسی خوانا برای Google Sheets. */
+  /** بدنهٔ ارسالی به رله: رکورد + زمان شمسی خوانا (قالب‌بندی پیام در سرور گوگل انجام می‌شود). */
   function buildLeadPayload(lead) {
     return JSON.stringify({
       ...lead,
@@ -2419,13 +2422,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /**
-   * ارسال به Webhook (Google Apps Script ← Google Sheets).
-   * پس از تغییر دوم، فرم‌های عمومی سایت دیگر از این تابع استفاده نمی‌کنند؛
-   * تنها «ارسال درخواست آزمایشی» در پنل مدیریت به‌صورت دستی آن را صدا می‌زند.
-   * ارسال به Webhook اختیاری؛ در صورت نبود یا خطا، جریان کاربر قطع نمی‌شود.
-   * نتیجه در `lead.syncState` و توضیح کوتاه (پاسخ سرویس یا خطا) در `lead.syncDetail` ثبت می‌شود.
+   * ارسال به رلهٔ سروری (Apps Script ← تلگرام).
+   * مسیر: مرورگر بازدیدکننده → script.google.com → سرور گوگل → api.telegram.org → گروه تلگرام.
+   * اگر نشانی خالی باشد، درخواست فقط در همین مرورگر ذخیره می‌شود (syncState = "local").
+   * نتیجه در `lead.syncState` و توضیح کوتاه (پاسخ رله یا خطا) در `lead.syncDetail` ثبت می‌شود.
    */
-  async function syncLeadToAppsScript(lead, endpointOverride) {
+  async function sendLeadToRelay(lead, endpointOverride) {
     const endpoint = String(
       endpointOverride ?? siteData.general?.leadEndpoint ?? ""
     ).trim();
@@ -2474,25 +2476,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /**
-   * تغییر دوم (بازسازی commit گم‌شدهٔ 107e824): ارسال به Google Sheets حذف شد؛
-   * تنها کانال دریافت درخواست‌ها تلگرام است و ارسال از طریق ماژول
-   * telegram-integration.js (window.NourotourTelegram.send) انجام می‌شود.
+   * تغییر سوم — رلهٔ سروری: درخواست‌های فرم مشاوره و رزرو فقط به رلهٔ Apps Script
+   * فرستاده می‌شوند و سرور گوگل پیام را به تلگرام می‌رساند. (api.telegram.org از ایران
+   * برای مرورگر بازدیدکننده در دسترس نیست، پس ارسال مستقیم از مرورگر حذف شده است.)
    * نتیجه در `lead.syncState` ثبت می‌شود تا پیام مناسب به بازدیدکننده نمایش داده شود.
    */
   async function syncLead(lead) {
-    const telegramSend = window.NourotourTelegram?.send;
-
-    if (typeof telegramSend !== "function") {
-      lead.syncState = "local";
-      lead.syncDetail = "ماژول تلگرام بارگذاری نشد؛ درخواست در همین مرورگر ذخیره شد";
-      return lead;
-    }
-
-    const ok = await telegramSend({ ...lead, createdAtFa: faDateTime(lead.createdAt) });
-
-    lead.syncState = ok ? "sent" : "failed:telegram";
-    lead.syncDetail = ok ? "ارسال به تلگرام" : "خطا در ارسال به تلگرام";
-    return lead;
+    return sendLeadToRelay(lead);
   }
 
   function saveLead(form, values) {
@@ -2704,6 +2694,9 @@ document.addEventListener("DOMContentLoaded", () => {
       link.target = "_blank";
       link.rel = "noopener";
     });
+
+    // نشانی رلهٔ سروری را برای ماژول تلگرام (نسخههای کش‌شدهٔ صفحه هم از آن استفاده می‌کنند) منتشر می‌کنیم.
+    window.NOUROTOUR_RELAY_URL = String(general.leadEndpoint || "").trim();
 
     const telegramUsername = String(general.telegram || "")
       .replace("@", "")
@@ -3834,7 +3827,7 @@ document.addEventListener("DOMContentLoaded", () => {
     showToast("اطلاعات ذخیره شد", "هویت برند و راه‌های ارتباطی به‌روزرسانی شدند.");
   });
 
-  /* ارسال آزمایشی به Webhook از پنل مدیریت؛ نتیجه (یا خطا) همان‌جا نمایش داده می‌شود. */
+  /* ارسال آزمایشی به رلهٔ سروری از پنل مدیریت؛ نتیجه (یا خطا) همان‌جا نمایش داده می‌شود. */
   $("#adminLeadTestBtn")?.addEventListener("click", async event => {
     const button = event.currentTarget;
     const output = $("#adminLeadTestResult");
@@ -3843,14 +3836,14 @@ document.addEventListener("DOMContentLoaded", () => {
       String(siteData.general?.leadEndpoint || "").trim();
 
     if (!endpoint) {
-      if (output) output.textContent = "نشانی Webhook خالی است.";
+      if (output) output.textContent = "نشانی رلهٔ سرور خالی است.";
       return;
     }
 
     button.disabled = true;
     if (output) output.textContent = "در حال ارسال…";
 
-    const lead = await syncLeadToAppsScript(
+    const lead = await sendLeadToRelay(
       {
         id: `test-${Date.now()}`,
         kind: "test",
@@ -3858,7 +3851,7 @@ document.addEventListener("DOMContentLoaded", () => {
         pageUrl: window.location.href,
         fullName: "ارسال آزمایشی از پنل مدیریت",
         phone: "09120000000",
-        message: "اگر این ردیف را در Google Sheets می‌بینید، اتصال فرم به سرور درست کار می‌کند."
+        message: "اگر این پیام را در گروه تلگرام می‌بینید، رلهٔ سروری درست کار می‌کند."
       },
       endpoint
     );
@@ -3868,10 +3861,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!output) return;
 
     if (lead.syncState === "sent") {
-      output.textContent = `✅ ارسال شد — پاسخ سرویس: ${lead.syncDetail || "بدون بدنه"}`;
+      output.textContent = `✅ پیام از سرور گوگل به تلگرام رسید — پاسخ رله: ${lead.syncDetail || "بدون بدنه"}`;
     } else {
       const hint = isAppsScriptEndpoint(endpoint)
-        ? " (بررسی کنید: Deploy با دسترسی «Anyone»، نسخهٔ جدید بعد از هر تغییر کد، و خطاهای doPost در بخش Executions)"
+        ? " (بررسی کنید: کد جدید در Apps Script ذخیره شده، Deploy → Manage deployments → New version انجام شده، دسترسی روی «Anyone» است، BOT_TOKEN/CHAT_ID درست است و خطاهای doPost را در بخش Executions ببینید)"
         : "";
       output.textContent = `❌ ناموفق (${lead.syncState}) — ${lead.syncDetail || "بدون جزئیات"}${hint}`;
     }
@@ -4105,8 +4098,15 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
-  <script src="https://cdn.jsdelivr.net/gh/mohammadnoorifar1401-a11y/Nourotour@main/telegram-integration.js"></script>
-</body>
-</html>
+
+<!--
+  کلاینت رلهٔ سروری تلگرام.
+  مسیر ارسال: فرم سایت → این فایل (کلاینت) → /exec در script.google.com → سرور گوگل → تلگرام.
+  دیگر هیچ توکنی یا تماس مستقیمی با api.telegram.org از مرورگر انجام نمی‌شود
+  (چون api.telegram.org از ایران برای بازدیدکننده در دسترس نیست).
+  نکته: نسخهٔ «کش‌شدهٔ» صفحه‌های قدیمی هم همین فایل را از CDN می‌خواند و چون خودِ ماژول
+  حالا به رله وصل می‌شود، آن صفحه‌ها هم کار می‌کنند.
+-->
+<script src="telegram-integration.js"></script>
 </body>
 </html>

@@ -13,7 +13,7 @@
 - پنل مدیریت محلی با میان‌بر `Ctrl + Shift + A`
 - ذخیره تنظیمات، محتوا و علاقه‌مندی‌ها در `localStorage`
 - ثبت و نگهداری درخواست‌های فرم (مشاوره و رزرو) در کلید `nourotour_leads_v1` و tab «درخواست‌ها» در پنل مدیریت
-- ارسال درخواست‌ها به Google Sheets از طریق وب‌اپ Google Apps Script (`leadEndpoint` سراسری در `index.html` + کد در `integrations/google-apps-script/`)؛ قابل جایگزینی با هر Webhook دیگر از پنل مدیریت
+- **رلهٔ سروری درخواست‌ها به تلگرام:** فرم → وب‌اپ Google Apps Script (`leadEndpoint` سراسری در `index.html` + کد در `integrations/google-apps-script/`) → سرور گوگل → `api.telegram.org` → گروه تلگرام. دلیل: `api.telegram.org` از ایران برای مرورگر بازدیدکننده در دسترس نیست؛ ارسال مستقیم از مرورگر به تلگرام حذف شد و هیچ داده‌ای در Google Sheets ثبت نمی‌شود
 - تلهٔ ضدربات (honeypot) روی فرم‌های عمومی بدون افزودن اصطکاک برای کاربر واقعی
 - خروجی `CSV` (با BOM برای اکسل) و `JSON` از درخواست‌های ثبت‌شده
 - اصلاح دسترسی‌پذیری فرم‌ها: `id`/`name` روی همهٔ کنترل‌ها و `label for` مرتبط
@@ -92,9 +92,12 @@
 2. **ضدربات** — فیلد پنهان `company`/`website` با `.hidden` و `tabindex="-1"`؛ اگر پر شود، فرم بی‌صدا ریست می‌شود.
 3. **ذخیرهٔ محلی** — رکورد با `id`، `kind` (`consult`/`booking`)، `createdAt`، `pageUrl`، `syncState` و فیلدهای پرشده
    در `nourotour_leads_v1` ذخیره می‌شود (حداکثر ۲۰۰ رکورد، جدیدترین اول).
-4. **ارسال به سرور (Google Sheets)** — رکورد با `fetch` و `POST` به `leadEndpoint` فرستاده می‌شود.
-   نشانی پیش‌فرض در `defaultData.general.leadEndpoint` یک وب‌اپ **Google Apps Script** است که ردیفی به Google Sheet
-   اضافه می‌کند (کد و راهنما: [`integrations/google-apps-script/`](integrations/google-apps-script/README.md)).
+4. **ارسال به رلهٔ سروری (Apps Script → تلگرام)** — رکورد با `fetch` و `POST` به `leadEndpoint` فرستاده می‌شود.
+   نشانی پیش‌فرض در `defaultData.general.leadEndpoint` یک وب‌اپ **Google Apps Script** است که خودش پیام را به
+   گروه تلگرام می‌فرستد (کد و راهنما: [`integrations/google-apps-script/`](integrations/google-apps-script/README.md)).
+   - چرا از مرورگر به تلگرام نمی‌فرستیم؟ چون `api.telegram.org` از ایران فیلتر است و پیام هرگز نمی‌رسید.
+     حالا مرورگر فقط به `script.google.com` (که از ایران باز است) وصل می‌شود و **سرور گوگل** پیام را به تلگرام می‌دهد.
+     هیچ داده‌ای در Google Sheets ثبت نمی‌شود و هیچ توکن تلگرامی داخل مرورگر نیست.
    - برای نشانی‌های `script.google.com` بدنهٔ JSON با `Content-Type: text/plain` فرستاده می‌شود (درخواست ساده، بدون
      preflight) چون Apps Script به `OPTIONS` پاسخ نمی‌دهد و با `application/json` مرورگر درخواست را با خطای CORS مسدود می‌کرد؛
      برای سایر سرویس‌ها `application/json` ارسال می‌شود.
@@ -106,7 +109,7 @@
 5. **پنل مدیریت ← تب «درخواست‌ها»** — فهرست رکوردها با زمان فارسی و وضعیت همگام‌سازی، شمارنده روی تب،
    حذف تکی، «خروجی CSV» (با BOM برای اکسل فارسی)، «خروجی JSON» و «پاک‌سازی همه».
 
-> ذخیرهٔ محلی فقط پشتیبان است؛ دریافت واقعی درخواست‌ها از طریق Google Sheets انجام می‌شود.
+> ذخیرهٔ محلی فقط پشتیبان است؛ دریافت واقعی درخواست‌ها از طریق **گروه تلگرام** (با رلهٔ Apps Script) انجام می‌شود.
 > اگر بخواهید سرویس دیگری (Formspree، تابع Serverless، REST API داخلی) جایگزین شود، کافی است
 > `defaultData.general.leadEndpoint` را تغییر دهید؛ آن سرویس باید CORS را برای `nourotour.ir` باز کرده باشد.
 
@@ -155,7 +158,7 @@
 
 ## قابلیت‌های پیاده‌سازی‌نشده
 
-- CRM یا پنل سمت سرور برای درخواست‌ها: فعلاً مقصد نهایی درخواست‌ها Google Sheets است (بدون پیگیری وضعیت، تخصیص کارشناس یا احراز هویت).
+- CRM یا پنل سمت سرور برای درخواست‌ها: فعلاً مقصد نهایی درخواست‌ها گروه تلگرام است (بدون پیگیری وضعیت، تخصیص کارشناس یا احراز هویت).
 - داده زنده آب‌وهوا، نرخ ارز، ظرفیت و قیمت تورها
 - کدهای رسمی استعلام مجوزها (اینماد و پروانه) — نقشه تعاملی پیاده‌سازی شد
 - احراز هویت امن و پنل مدیریت سمت سرور
@@ -166,7 +169,7 @@
 
 1. جایگزینی اطلاعات تماس، آدرس، مجوزها و قیمت‌های نمونه با داده‌های نهایی
    (تلفن `۰۲۱-۰۰۰۰۰۰۰۰`، شماره اضطراری، واتساپ و تلگرام هنوز placeholder هستند).
-2. ~~ساخت یک گیرندهٔ واقعی برای `leadEndpoint`~~ — انجام شد: Google Apps Script → Google Sheets (`integrations/google-apps-script/`). گام بعدی اختیاری: فعال‌کردن `NOTIFY_EMAIL` در `Code.gs` برای اعلان ایمیلی.
+2. ~~ساخت یک گیرندهٔ واقعی برای `leadEndpoint`~~ — انجام شد: رلهٔ Google Apps Script → تلگرام (`integrations/google-apps-script/Code.gs`). گام بعدی اختیاری: چرخش (revoke) توکن ربات در BotFather چون توکن فعلی در مخزن عمومی است.
 3. اتصال داده‌های تور و محتوا به Table API برای مدیریت پایدار.
 4. ~~جایگزینی CDN آیکون‌ها با sprite محلی~~ — انجام شد: ۳۷ نماد Lucide (ISC) به‌صورت `<symbol>` داخل صفحه؛ بدون درخواست خارجی.
 5. ~~افزودن `srcset`/`sizes` و خروجی `WebP`~~ — انجام شد برای تورها، گالری، مجله، هیرو و نشان‌ها.
@@ -198,7 +201,7 @@ node --check <(sed -n '/^<script>$/,/^<\/script>$/p' index.html | sed '1d;$d')  
 ## URLهای عمومی و API
 
 - Production: هنوز در این پروژه ثبت یا تأیید نشده است.
-- API endpoints: فقط `leadEndpoint` (وب‌اپ Google Apps Script؛ `GET` ← `{"status":"ok"}` برای بررسی سلامت، `POST` ← ثبت درخواست).
+- API endpoints: فقط `leadEndpoint` (وب‌اپ Google Apps Script ← رلهٔ تلگرام؛ `GET` ← `{"status":"ok","service":"nourotour-telegram-relay","version":3}` برای بررسی سلامت، `POST` ← ارسال پیام به گروه تلگرام).
 - Canonical تنظیم‌شده در صفحه: `https://nourotour.ir/`
 - Sitemap: `https://nourotour.ir/sitemap.xml`
 
@@ -208,6 +211,7 @@ node --check <(sed -n '/^<script>$/,/^<\/script>$/p' index.html | sed '1d;$d')  
 - `robots.txt` — قوانین خزنده و نشانی نقشهٔ سایت
 - `sitemap.xml` — نقشهٔ سایت (تک URL)
 - `CNAME` — دامنهٔ `nourotour.ir` برای GitHub Pages
-- `integrations/google-apps-script/Code.gs` — کد وب‌اپ Apps Script (گیرندهٔ فرم‌ها → Google Sheets) + راهنمای راه‌اندازی و عیب‌یابی در `README.md` همان پوشه
+- `integrations/google-apps-script/Code.gs` — کد وب‌اپ Apps Script (رلهٔ فرم‌ها → تلگرام؛ بدون Google Sheets) + راهنمای راه‌اندازی و عیب‌یابی در `README.md` همان پوشه
+- `telegram-integration.js` — کلاینت رله در مرورگر (`window.NourotourTelegram`؛ بدون توکن و بدون تماس مستقیم با `api.telegram.org`)
 - `images/logo.png` — لوگوی رسمی آپلودشده (هم‌چنین favicon)
 - `images/*.jpg` — تصاویر محلی هیرو، تورها، گالری، وبلاگ و سایر بخش‌ها

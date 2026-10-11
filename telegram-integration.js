@@ -1,241 +1,136 @@
 /**
- * نوروتور - اتصال تلگرام (نسخه نهایی)
- * این فایل را در روت سایت قرار دهید و در index.html لود کنید
- * 
- * نحوه استفاده:
- * <script src="telegram-integration.js"></script>
+ * نوروتور — کلاینت رلهٔ سروری تلگرام (نسخه ۲)
+ *
+ * ⚠️ تغییر مهم نسبت به نسخهٔ ۱: این فایل دیگر از مرورگر به api.telegram.org وصل نمی‌شود؛
+ * چون api.telegram.org از ایران فیلتر است و پیام‌ها نمی‌رسیدند. اکنون درخواست به
+ * وب‌اپ Google Apps Script (رلهٔ سروری) فرستاده می‌شود و سرور گوگل پیام را به تلگرام می‌دهد.
+ * به همین دلیل هم دیگر هیچ توکن تلگرامی داخل مرورگر نیست.
+ *
+ * مسیر ارسال:  فرم سایت → Apps Script (/exec) → تلگرام
+ *
+ * استفاده:
+ *   <script src="telegram-integration.js"></script>
+ *   <script>
+ *     await window.NourotourTelegram.send({ kind: 'consult', fullName: '…', phone: '…' });
+ *   </script>
+ *
+ * نشانی رله: مقدار پیش‌فرض پایین همین فایل است؛ اگر خواستید از بیرون عوضش کنید،
+ * قبل از بارگذاری این فایل بنویسید:
+ *   <script>window.NOUROTOUR_RELAY_URL = "https://script.google.com/macros/s/…/exec";</script>
  */
 
-(function() {
+(function () {
   'use strict';
 
-  // ═══════════════════════════════════════════════════════════════
-  // تنظیمات اصلی
-  // ═══════════════════════════════════════════════════════════════
-  
-  const CONFIG = {
-    telegram: {
-      botToken: '8898159650:AAEqqUDMSx3BOwzITqvq-a-mrXLI-tWIhNE',
-      chatId: '-1004463990161'
-    },
-    debug: true // برای نمایش لاگ در Console
+  // همان نشانی‌ای که در index.html (defaultData.general.leadEndpoint) قرار دارد.
+  var DEFAULT_RELAY_URL =
+    'https://script.google.com/macros/s/AKfycbxm7nnIkic08wYopqEZxxgwpO6YliSXviZr2GMHDh2PnhvJhJpUxPNe8ux0aAhaRkee/exec';
+
+  var CONFIG = {
+    relayUrl: DEFAULT_RELAY_URL,
+    timeout: 15000,
+    debug: true
   };
 
-  // ═══════════════════════════════════════════════════════════════
-  // توابع کمکی
-  // ═══════════════════════════════════════════════════════════════
-
-  /**
-   * لاگ با رنگ در Console
-   */
-  function log(message, type = 'info') {
+  function log(message, type) {
     if (!CONFIG.debug) return;
-    
-    const styles = {
+
+    var styles = {
       info: 'color: #0088cc; font-weight: bold',
       success: 'color: #00cc88; font-weight: bold',
       error: 'color: #cc0000; font-weight: bold',
       warn: 'color: #cc8800; font-weight: bold'
     };
-    
-    console.log(`%c[Telegram] ${message}`, styles[type] || styles.info);
+
+    console.log('%c[Nourotour relay] ' + message, styles[type] || styles.info);
+  }
+
+  /** نشانی رله: اول از window (پنل مدیریت/دستکاری بیرونی)، بعد مقدار پیش‌فرض. */
+  function resolveRelayUrl() {
+    var override = String(window.NOUROTOUR_RELAY_URL || '').trim();
+    return override || CONFIG.relayUrl || '';
   }
 
   /**
-   * Escape HTML برای امنیت
+   * ارسال درخواست فرم به رلهٔ سروری.
+   * @param {Object} leadData رکورد فرم (kind, fullName, phone, destination, message, …)
+   * @returns {Promise<boolean>} true اگر سرور گوگل پیام را به تلگرام رسانده باشد.
    */
-  function escapeHtml(text) {
-    if (!text) return '';
-    const map = {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#039;'
-    };
-    return String(text).replace(/[&<>"']/g, m => map[m]);
-  }
+  async function send(leadData) {
+    var url = resolveRelayUrl();
 
-  /**
-   * تاریخ و زمان فارسی
-   */
-  function getPersianDateTime() {
-    const now = new Date();
+    if (!url) {
+      log('نشانی رله تنظیم نشده است؛ درخواست فقط در مرورگر ذخیره شد', 'warn');
+      return false;
+    }
+
+    // رکورد را با فیلدهای کمکی (زمان شمسی) کامل می‌کنیم؛ قالب‌بندی پیام در سرور انجام می‌شود.
+    var payload = Object.assign({ site: 'nourotour.ir' }, leadData || {}, {
+      createdAtFa: (leadData && leadData.createdAtFa) || getPersianDateTime()
+    });
+
+    var controller = typeof AbortController === 'function' ? new AbortController() : null;
+    var timer = controller ? setTimeout(function () { controller.abort(); }, CONFIG.timeout) : null;
+
     try {
-      const date = now.toLocaleDateString('fa-IR');
-      const time = now.toLocaleTimeString('fa-IR', {
-        hour: '2-digit',
-        minute: '2-digit'
+      log('ارسال درخواست به رلهٔ سروری…', 'info');
+
+      var response = await fetch(url, {
+        method: 'POST',
+        // text/plain = درخواست ساده (بدون preflight)؛ تنها حالتی که Apps Script از مرورگر می‌پذیرد.
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload),
+        redirect: 'follow',
+        signal: controller ? controller.signal : undefined
       });
-      return `${date} ${time}`;
-    } catch (e) {
-      // Fallback برای مرورگرهایی که فارسی ساپورت نمی‌کنند
+
+      var text = '';
+      try { text = await response.text(); } catch (ignored) {}
+
+      var data = null;
+      try { data = JSON.parse(text); } catch (ignored) {}
+
+      if (response.ok && data && data.status === 'ok') {
+        log('✅ پیام از طریق سرور گوگل به تلگرام رسید', 'success');
+        return true;
+      }
+
+      var detail = (data && data.message) || text.replace(/\s+/g, ' ').trim().slice(0, 200) || ('HTTP ' + response.status);
+      log('❌ ارسال ناموفق: ' + detail, 'error');
+      return false;
+    } catch (error) {
+      var aborted = error && error.name === 'AbortError';
+      log('❌ خطا در تماس با رله: ' + (aborted ? 'بدون پاسخ (timeout)' : (error && error.message) || error), 'error');
+      return false;
+    } finally {
+      if (timer) clearTimeout(timer);
+    }
+  }
+
+  function getPersianDateTime() {
+    var now = new Date();
+
+    try {
+      var date = now.toLocaleDateString('fa-IR');
+      var time = now.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+      return date + ' ' + time;
+    } catch (ignored) {
       return now.toISOString().replace('T', ' ').substring(0, 19);
     }
   }
 
-  // ═══════════════════════════════════════════════════════════════
-  // فرمت کردن پیام تلگرام
-  // ═══════════════════════════════════════════════════════════════
-
-  /**
-   * ساخت پیام زیبا برای تلگرام
-   */
-  function formatTelegramMessage(data) {
-    const kindLabels = {
-      consult: '🔔 درخواست مشاوره',
-      booking: '✈️ درخواست رزرو',
-      test: '🧪 ارسال آزمایشی'
-    };
-
-    const title = kindLabels[data.kind] || '📋 درخواست جدید';
-    let message = `<b>${title}</b>\n━━━━━━━━━━━━━━━━━━━\n\n`;
-
-    // اطلاعات شخصی
-    if (data.fullName) {
-      message += `👤 <b>نام:</b> ${escapeHtml(data.fullName)}\n`;
-    }
-    
-    if (data.phone) {
-      message += `📱 <b>تلفن:</b> <code>${escapeHtml(data.phone)}</code>\n`;
-    }
-
-    // اطلاعات سفر
-    if (data.tour) {
-      message += `🎯 <b>تور:</b> ${escapeHtml(data.tour)}\n`;
-    }
-    
-    if (data.destination) {
-      message += `📍 <b>مقصد:</b> ${escapeHtml(data.destination)}\n`;
-    }
-    
-    if (data.travelers) {
-      message += `👥 <b>تعداد مسافر:</b> ${escapeHtml(data.travelers)}\n`;
-    }
-    
-    if (data.preferredDate) {
-      message += `📅 <b>تاریخ:</b> ${escapeHtml(data.preferredDate)}\n`;
-    }
-    
-    if (data.budget) {
-      message += `💰 <b>بودجه:</b> ${escapeHtml(data.budget)}\n`;
-    }
-    
-    if (data.contactMethod) {
-      message += `📞 <b>روش تماس:</b> ${escapeHtml(data.contactMethod)}\n`;
-    }
-
-    // توضیحات
-    if (data.message) {
-      message += `\n💬 <b>توضیحات:</b>\n${escapeHtml(data.message)}\n`;
-    }
-
-    // اطلاعات تکمیلی
-    message += `\n━━━━━━━━━━━━━━━━━━━\n`;
-    message += `🕐 <b>زمان:</b> ${data.createdAtFa || getPersianDateTime()}\n`;
-    
-    if (data.id) {
-      message += `🆔 <b>شناسه:</b> <code>${escapeHtml(data.id)}</code>\n`;
-    }
-
-    message += `\n🌐 <a href="https://nourotour.ir">nourotour.ir</a>`;
-
-    return message;
-  }
-
-  // ═══════════════════════════════════════════════════════════════
-  // ارسال به تلگرام
-  // ═══════════════════════════════════════════════════════════════
-
-  /**
-   * ارسال پیام به گروه تلگرام
-   */
-  async function sendToTelegram(leadData) {
-    try {
-      log('در حال ارسال به تلگرام...', 'info');
-      
-      const message = formatTelegramMessage(leadData);
-      const url = `https://api.telegram.org/bot${CONFIG.telegram.botToken}/sendMessage`;
-
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          chat_id: CONFIG.telegram.chatId,
-          text: message,
-          parse_mode: 'HTML',
-          disable_web_page_preview: true
-        })
-      });
-
-      const result = await response.json();
-      
-      if (!result.ok) {
-        throw new Error(result.description || 'خطای ناشناخته تلگرام');
-      }
-
-      log('✅ پیام با موفقیت به تلگرام ارسال شد', 'success');
-      return true;
-      
-    } catch (error) {
-      log(`❌ خطا در ارسال به تلگرام: ${error.message}`, 'error');
-      // خطای تلگرام نباید باعث توقف فرآیند اصلی شود
-      return false;
-    }
-  }
-
-  // ═══════════════════════════════════════════════════════════════
-  // Hook به سیستم فرم فعلی
-  // ═══════════════════════════════════════════════════════════════
-
-  /**
-   * اتصال به سیستم فرم موجود سایت
-   * تغییر دوم: فرم سایت (index.html ← syncLead) خودش ارسال به تلگرام را از طریق
-   * window.NourotourTelegram.send انجام می‌دهد؛ بنابراین شنوندهٔ جداگانه روی فرم‌ها
-   * دیگر لازم نیست و وجود هر دو، باعث ارسال دو پیام تلگرام برای هر درخواست می‌شد.
-   */
-  function hookToExistingForm() {
-    log('ماژول تلگرام آماده است؛ ارسال توسط فرم سایت از طریق NourotourTelegram.send انجام می‌شود', 'success');
-    return true;
-  }
-
-  // ═══════════════════════════════════════════════════════════════
-  // راه‌اندازی اولیه
-  // ═══════════════════════════════════════════════════════════════
-
-  /**
-   * شروع اتصال
-   */
-  function initialize() {
-    log('شروع راه‌اندازی اتصال تلگرام...', 'info');
-    
-    // صبر تا DOM کامل بارگذاری شود
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', function() {
-        setTimeout(hookToExistingForm, 500);
-      });
-    } else {
-      // DOM از قبل آماده است
-      setTimeout(hookToExistingForm, 500);
-    }
-  }
-
-  // ═══════════════════════════════════════════════════════════════
-  // API عمومی
-  // ═══════════════════════════════════════════════════════════════
-
-  // در دسترس قرار دادن توابع برای استفاده خارجی
   window.NourotourTelegram = {
-    send: sendToTelegram,
+    send: send,
     config: CONFIG,
-    version: '1.0.0'
+    relayUrl: resolveRelayUrl,
+    version: '2.0.0'
   };
 
-  // شروع خودکار
-  initialize();
-
-  log('ماژول تلگرام بارگذاری شد', 'success');
-
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      log('ماژول رلهٔ تلگرام آماده است (ارسال از سمت سرور گوگل انجام می‌شود)', 'success');
+    });
+  } else {
+    log('ماژول رلهٔ تلگرام آماده است (ارسال از سمت سرور گوگل انجام می‌شود)', 'success');
+  }
 })();
