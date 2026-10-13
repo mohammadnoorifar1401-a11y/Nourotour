@@ -1,11 +1,23 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
+  <script>
+    /* نوروتور — ریشه به تجربهٔ سینمایی: هر کسی nourotour.ir را باز کند به /motion/ می‌رود.
+       برای دیدن سایت کامل (فرم رزرو، تورها، بلاگ): nourotour.ir/?classic=1 */
+    (function () {
+      var q = window.location.search + window.location.hash;
+      if (q.indexOf("classic") === -1) {
+        window.location.replace("/motion/");
+      }
+    })();
+  </script>
+  <noscript><meta http-equiv="refresh" content="0;url=/motion/"></noscript>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#08090b">
   <meta name="color-scheme" content="dark">
-  <meta name="description" content="نوروتور؛ رزرو تورهای داخلی و خارجی، پرواز، هتل، خدمات ویزا، وقت سفارت و مشاوره سفر.">
+  <meta name="description" content="نوروتور؛ رزرو تورهای داخلی و خارجی، پرواز، هتل، خدمات ویزا، وقت سفارت و مشاوره سفر."
+  <link rel="canonical" href="https://www.nourotour.ir/motion/">>
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://nourotour.ir/">
   <link rel="icon" type="image/png" href="images/logo-falcon.png">
