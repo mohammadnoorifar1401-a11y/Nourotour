@@ -22,7 +22,9 @@ The workflow validates the Gradle wrapper, runs `:app:assembleDebug`, verifies t
 - `SHA256SUMS.txt` — APK SHA-256 checksum.
 - `apk-metadata.txt` and `signature-verification.txt` — verification results.
 
-Artifacts are retained for 14 days. Download and keep the APK if you want to install it later. The app itself does not expire after 14 days.
+After the build succeeds, a separate publishing job downloads and rechecks the artifact and publishes a **MONO-only GitHub prerelease** with the raw APK and verification files. This gives phone users a direct `.apk` download without extracting a ZIP. The prerelease is not marked as the repository's latest release, does not deploy the website, and targets the exact source commit built by the workflow. Only this publishing job has `contents: write`; the Android build keeps a read-only token.
+
+Actions artifacts are retained for 14 days. The prerelease assets remain available unless the release is removed. Download and keep the APK if you want to install it later. The app itself does not expire after 14 days.
 
 This is a debug-signed build for a **fresh installation**, not an app-store release. It is not guaranteed to update an existing installation signed with another key. No previous signing key or personal credentials are included. Future cloud builds can use a different debug signing key, so do not assume they will install as updates without additional signing setup. Back up any data before uninstalling an existing version.
 
