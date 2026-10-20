@@ -1,5 +1,14 @@
 # طرح میزبانی بکاپ خصوصی MONO روی `api.nourotour.ir`
 
+> **وضعیت: طرح A انتخاب شد و پیاده‌سازی شد.** سایت روی GitHub Pages می‌ماند و تغییری
+> نمی‌کند. کد آماده:
+> - `integrations/secure-backup/` — رمزگذاری AES-256-GCM در مرورگر + اندازه‌گیری واقعی حجم
+> - `integrations/cloudflare-r2/` — Worker + bucket خصوصی + پیش‌بررسی `check-r2.sh`
+> - راهنمای اجرا: `integrations/cloudflare-r2/README.md`
+>
+> پیش‌نیاز بیرونی: فعال‌سازی اشتراک R2 در داشبورد Cloudflare (نیازمند روش پرداخت معتبر).
+> پیش از هر کاری `bash integrations/cloudflare-r2/check-r2.sh` را اجرا کنید.
+
 وضعیت فعلی: سایت روی **GitHub Pages** می‌ماند و فقط زیردامنهٔ `api.nourotour.ir` برای دریافت و نگه‌داری
 فایل بکاپ MONO استفاده می‌شود.
 

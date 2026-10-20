@@ -1,0 +1,26 @@
+name = "nourotour-backup"
+main = "worker.js"
+compatibility_date = "2025-09-01"
+
+# bucket خصوصی؛ هیچ دسترسی عمومی (Custom Domain یا r2.dev) نباید فعال شود
+[[r2_buckets]]
+binding = "BACKUPS"
+bucket_name = "nourotour-mono-backups"
+
+# زیردامنهٔ اختصاصی Worker. زون nourotour.ir باید در همین حساب Cloudflare باشد.
+routes = [
+  { pattern = "api.nourotour.ir", custom_domain = true }
+]
+
+# پاک‌سازی روزانهٔ نسخه‌های قدیمی (ساعت ۰۳:۰۰ UTC)
+[triggers]
+crons = ["0 3 * * *"]
+
+[vars]
+# فقط این مبدأها اجازهٔ CORS دارند (بدون اسلش انتهایی)
+ALLOWED_ORIGIN = "https://nourotour.ir,https://www.nourotour.ir"
+# تعداد نسخه‌هایی که نگه داشته می‌شود
+KEEP_OBJECTS = "60"
+
+# توکن آپلود هرگز در این فایل نوشته نمی‌شود:
+#   npx wrangler secret put UPLOAD_TOKEN

@@ -1657,6 +1657,7 @@ option{background:#17191e}
     <button class="pill" data-admin-tab="content">محتوا</button>
     <button class="pill" data-admin-tab="leads">درخواست‌ها<span class="pill-count" id="leadCount" hidden>۰</span></button>
     <button class="pill" data-admin-tab="json">JSON</button>
+    <button class="pill" data-admin-tab="backup">بکاپ امن</button>
   </div>
   <section class="admin-section active" data-admin-section="general">
     <form id="generalAdminForm" class="admin-card">
@@ -1877,6 +1878,78 @@ option{background:#17191e}
         <input class="hidden" id="importJson" type="file" accept="application/json">
         <button class="btn btn-danger btn-small" id="resetData" type="button">بازنشانی کامل</button>
       </div>
+    </div>
+  </section>
+  <section class="admin-section" data-admin-section="backup">
+    <div class="admin-card">
+      <h3>بکاپ امن MONO (رمزگذاری در همین مرورگر)</h3>
+      <p class="muted" style="font-size:.65rem;margin-bottom:10px;line-height:1.9">
+        بکاپ با <strong>AES-256-GCM</strong> و کلید مشتق‌شده از گذرواژهٔ شما
+        (<span dir="ltr">PBKDF2-SHA256</span>) رمز می‌شود؛ همه‌چیز داخل همین مرورگر انجام می‌شود.
+        گذرواژه و توکن آپلود هیچ‌جا ذخیره نمی‌شوند و با بستن پنل از حافظه پاک می‌شوند.
+        اگر گذرواژه را فراموش کنید، بکاپ قابل بازکردن نیست.
+      </p>
+
+      <div class="field">
+        <label for="backupPassphrase">گذرواژهٔ رمزگذاری (حداقل ۱۲ نویسه)</label>
+        <input id="backupPassphrase" type="password" dir="ltr" autocomplete="new-password" spellcheck="false" minlength="12">
+      </div>
+      <div class="field">
+        <label for="backupPassphrase2">تکرار گذرواژه</label>
+        <input id="backupPassphrase2" type="password" dir="ltr" autocomplete="new-password" spellcheck="false" minlength="12">
+      </div>
+      <label class="muted" style="display:flex;align-items:center;gap:8px;font-size:.65rem;margin-bottom:10px">
+        <input id="backupIncludeMono" type="checkbox" checked>
+        شامل فایل سورس MONO (MONO-v1.7.0-source.zip)
+      </label>
+
+      <div class="admin-actions">
+        <button class="btn btn-gold btn-small" id="backupBuild" type="button">ساخت و رمزگذاری بکاپ</button>
+        <button class="btn btn-ghost btn-small" id="backupDownload" type="button" disabled>دانلود فایل رمزشده</button>
+      </div>
+      <p class="muted" id="backupBuildStatus" style="font-size:.62rem;margin-top:8px" dir="auto"></p>
+      <div id="backupMeasure" dir="auto"></div>
+    </div>
+
+    <div class="admin-card" style="margin-top:12px">
+      <h3>ارسال رمزشده به R2 (اختیاری)</h3>
+      <p class="muted" style="font-size:.62rem;margin-bottom:10px;line-height:1.9">
+        سرور فقط فایل رمزشده را ذخیره می‌کند و گذرواژه را نمی‌بیند. توکن آپلود را از
+        <span dir="ltr">wrangler secret</span> بگیرید و فقط همین‌جا وارد کنید؛ در حافظهٔ مرورگر ذخیره نمی‌شود.
+      </p>
+      <div class="field">
+        <label for="backupEndpoint">نشانی سرویس بکاپ</label>
+        <input id="backupEndpoint" type="url" dir="ltr" inputmode="url" placeholder="https://api.nourotour.ir/v1/backup" spellcheck="false">
+      </div>
+      <div class="field">
+        <label for="backupToken">توکن آپلود (فقط در حافظهٔ همین صفحه)</label>
+        <input id="backupToken" type="password" dir="ltr" autocomplete="off" spellcheck="false" placeholder="توکن بلند تصادفی">
+      </div>
+      <div class="admin-actions">
+        <button class="btn btn-ghost btn-small" id="backupUpload" type="button" disabled>ارسال به سرور</button>
+      </div>
+      <p class="muted" id="backupUploadStatus" style="font-size:.62rem;margin-top:8px" dir="auto"></p>
+    </div>
+
+    <div class="admin-card" style="margin-top:12px">
+      <h3>بررسی و بازیابی بکاپ</h3>
+      <p class="muted" style="font-size:.62rem;margin-bottom:10px;line-height:1.9">
+        فایل <span dir="ltr">.ntbk</span> را انتخاب کنید تا سالم‌بودن آن و درستی گذرواژه بررسی شود.
+        بازیابی داده‌های سایت فقط پس از تأیید شما انجام می‌شود.
+      </p>
+      <div class="field">
+        <label for="backupVerifyFile">فایل بکاپ</label>
+        <input id="backupVerifyFile" type="file" accept=".ntbk,application/octet-stream">
+      </div>
+      <div class="field">
+        <label for="backupVerifyPassphrase">گذرواژهٔ بکاپ</label>
+        <input id="backupVerifyPassphrase" type="password" dir="ltr" autocomplete="off" spellcheck="false">
+      </div>
+      <div class="admin-actions">
+        <button class="btn btn-ghost btn-small" id="backupVerify" type="button">بررسی فایل</button>
+      </div>
+      <p class="muted" id="backupVerifyStatus" style="font-size:.62rem;margin-top:8px" dir="auto"></p>
+      <div id="backupVerifyResult" dir="auto"></div>
     </div>
   </section>
 </aside>
@@ -4536,6 +4609,46 @@ document.addEventListener("DOMContentLoaded", () => {
       renderAdminLeads();
     }
   });
+
+  /*
+    پل کوچک برای ماژول بکاپ امن (integrations/secure-backup/admin.js).
+    فقط داده و پیام‌ها را رد و بدل می‌کند؛ هیچ راز یا کلیدی اینجا نیست.
+  */
+  window.NourotourBackup = {
+    getData: () => JSON.parse(JSON.stringify(siteData)),
+    getLeads: () => {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(LEADS_KEY) || "[]");
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (error) {
+        return [];
+      }
+    },
+    getFavorites: () => {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]");
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (error) {
+        return [];
+      }
+    },
+    importData: raw => {
+      if (!raw || !Array.isArray(raw.tours)) {
+        throw new Error("دادهٔ بکاپ ساختار معتبر ندارد.");
+      }
+      siteData = {
+        ...cloneDefaultData(),
+        ...raw,
+        general: {
+          ...defaultData.general,
+          ...(raw.general || {})
+        }
+      };
+      saveData();
+      renderAll();
+    },
+    toast: showToast
+  };
 });
 </script>
 
@@ -4548,5 +4661,6 @@ document.addEventListener("DOMContentLoaded", () => {
   حالا به رله وصل می‌شود، آن صفحه‌ها هم کار می‌کنند.
 -->
 <script src="telegram-integration.js"></script>
+<script type="module" src="integrations/secure-backup/admin.js"></script>
 </body>
 </html>
