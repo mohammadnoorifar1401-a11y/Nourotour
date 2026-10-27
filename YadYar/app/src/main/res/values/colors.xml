@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg_deep">#1B4D4E</color>
+    <color name="bg_container">#D3ECEC</color>
+    <color name="bg_light">#F7F8F6</color>
+    <color name="amber">#B86B19</color>
+    <color name="secondary">#4A5D6A</color>
+    <color name="surface_dark">#0F1415</color>
+    <color name="primary_dark">#7AD0D2</color>
+    <color name="card_dark">#182123</color>
+    <color name="ic_launcher_background">#1B4D4E</color>
+</resources>

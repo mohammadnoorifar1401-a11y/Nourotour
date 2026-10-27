@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1B4D4E">
+<title>MONO — یادیار | پیش‌نمایش تعاملی</title>
+<style>
+  :root{
+    --deep:#1B4D4E; --container:#D3ECEC; --amber:#B86B19; --secondary:#4A5D6A;
+    --light:#F7F8F6; --dark:#0F1415; --primary-dark:#7AD0D2; --card-dark:#182123;
+    --line:#E6EDEB; --success:#1B7A4B; --success-bg:#D6F0E2; --warning:#8A5A00; --warning-bg:#FFE9B5;
+    --error:#8C1D18; --error-bg:#FFDAD6; --radius:18px; --radius-lg:22px; --pad:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,"Vazirmatn",Segoe UI,Roboto,sans-serif;background:var(--light);color:#132223;line-height:1.6}
+  a{color:inherit;text-decoration:none}
+  .phone-frame{max-width:420px;margin:0 auto;min-height:100vh;background:var(--light);border-inline:1px solid var(--line);position:relative;overflow:hidden}
+  @media(min-width:860px){.phone-frame{max-width:1200px;display:grid;grid-template-columns:420px 1fr;gap:0;border:1px solid var(--line);border-radius:12px;margin:24px auto;min-height:calc(100vh - 48px);box-shadow:0 16px 40px rgba(0,0,0,.08)} .desktop-side{display:block !important}}
+  .desktop-side{display:none;padding:32px;background:linear-gradient(180deg,#F7F8F6,#D3ECEC);border-inline-start:1px solid var(--line)}
+  .topbar{position:sticky;top:0;z-index:10;background:rgba(247,248,246,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 16px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .mark{width:36px;height:36px;border-radius:10px;background:var(--deep);display:grid;place-items:center;color:#fff;font-weight:900;font-size:18px}
+  .brand h1{font-size:18px;font-weight:900;letter-spacing:1px}
+  .brand small{color:var(--secondary);font-size:12px}
+  .offline{display:flex;align-items:center;gap:6px;background:var(--success-bg);color:var(--success);padding:6px 10px;border-radius:999px;font-size:11px;font-weight:700;border:1px solid #c7e8d6}
+  .offline i{width:7px;height:7px;border-radius:999px;background:var(--success);display:inline-block}
+  .privacy{margin:14px 16px;background:var(--container);border:1px solid #cfe7e7;border-radius:14px;padding:10px 12px;display:flex;gap:8px;align-items:center;font-size:12px;color:#134041}
+  .privacy span{font-size:16px}
+  .section{padding:0 16px}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:14px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+  .card .icon{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-size:18px}
+  .card .k{font-size:12px;color:var(--secondary)}
+  .card .v{font-size:18px;font-weight:900;margin-top:6px}
+  .card .s{font-size:11px;color:var(--secondary)}
+  .chips{display:flex;gap:10px;overflow:auto;padding:12px 16px;scrollbar-width:none}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 14px;display:flex;align-items:center;gap:8px;white-space:nowrap;box-shadow:0 1px 2px rgba(0,0,0,.04);font-size:13px;font-weight:600}
+  .chip i{width:28px;height:28px;border-radius:999px;display:grid;place-items:center;font-size:14px}
+  .list{display:flex;flex-direction:column;gap:10px}
+  .item{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;display:flex;align-items:center;gap:12px}
+  .avatar{width:38px;height:38px;border-radius:999px;display:grid;place-items:center;color:#fff;font-weight:800}
+  .badge{padding:4px 8px;border-radius:999px;font-size:11px;font-weight:700}
+  .toolbar{display:flex;gap:8px;margin-top:12px}
+  .btn{flex:1;padding:12px;border-radius:14px;border:1px solid var(--line);background:#fff;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer}
+  .btn.primary{background:var(--deep);color:#fff;border-color:var(--deep)}
+  .btn.amber{background:var(--amber);color:#fff;border-color:var(--amber)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .tool{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;display:flex;align-items:center;gap:10px}
+  .tool i{width:36px;height:36px;border-radius:10px;display:grid;place-items:center}
+  .folders{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .folder{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px}
+  .folder-head{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:20px}
+  .folder h4{font-size:14px;font-weight:800;margin-top:10px}
+  .folder p{font-size:11px;color:var(--secondary)}
+  .folder .open{margin-top:10px;background:var(--deep);color:#fff;border-radius:999px;padding:8px;text-align:center;font-size:12px;font-weight:700;cursor:pointer}
+  .folder.amber .open{background:var(--amber)}
+  .folder.blue .open{background:#2A7A8A}
+  .bottom{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:6px 0;padding-bottom:max(6px, env(safe-area-inset-bottom));}
+  .tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;color:var(--secondary);font-size:11px;cursor:pointer}
+  .tab.active{color:var(--deep);font-weight:800}
+  .tab i{font-size:18px}
+  .tab.active i{background:var(--container);padding:4px 10px;border-radius:999px}
+  .view{display:none;padding-bottom:80px}
+  .view.active{display:block}
+  .header{padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+  .header h2{font-size:18px;font-weight:900}
+  .header p{font-size:12px;color:var(--secondary)}
+  .search{margin:0 16px;background:#fff;border:1px solid var(--line);border-radius:14px;display:flex;align-items:center;padding:10px 12px;gap:8px}
+  .search input{border:none;outline:none;width:100%;font-size:13px;background:transparent}
+  .filters{display:flex;gap:8px;padding:10px 16px;overflow:auto}
+  .filter{padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:12px;white-space:nowrap;cursor:pointer}
+  .filter.active{background:var(--deep);color:#fff;border-color:var(--deep)}
+  .empty{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;text-align:center;margin:16px}
+  .empty h3{font-size:14px;font-weight:800}
+  .empty p{font-size:12px;color:var(--secondary);margin-top:6px}
+  .doc-form{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;margin:0 16px}
+  .doc-form label{font-size:12px;color:var(--secondary);display:block;margin-top:10px}
+  .doc-form input{width:100%;margin-top:6px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;font-size:13px}
+  .doc-preview{background:#fff;border:1px solid var(--line);border-radius:16px;margin:14px 16px;padding:18px;position:relative;overflow:hidden}
+  .watermark{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+  .watermark span{transform:rotate(-18deg);font-size:34px;font-weight:900;color:rgba(140,29,24,.07);white-space:nowrap}
+  .stamp{background:var(--error-bg);color:var(--error);border-radius:10px;padding:8px;text-align:center;font-size:11px;font-weight:800;margin-top:12px}
+  .switch{display:flex;align-items:center;gap:8px;font-size:12px}
+  .settings-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;margin:0 16px;margin-top:12px}
+  .row{display:flex;align-items:center;gap:12px}
+  .row i{width:44px;height:44px;border-radius:12px;display:grid;place-items:center}
+  .toggle{margin-inline-start:auto;width:44px;height:26px;background:#E6EDEB;border-radius:999px;position:relative;cursor:pointer}
+  .toggle.on{background:var(--deep)}
+  .toggle::after{content:"";position:absolute;width:20px;height:20px;background:#fff;border-radius:999px;top:3px;right:3px;transition:.2s}
+  .toggle.on::after{transform:translateX(-18px)}
+</style>
+</head>
+<body>
+<div class="phone-frame" id="app">
+  <div>
+    <div class="topbar">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+        <div class="brand"><div class="mark">◈</div><div><h1>MONO <span style="font-weight:500;color:var(--secondary)">│ یادیار</span></h1><small>مدیریت امور آقای نوری‌فر</small></div></div>
+        <div class="offline"><i></i> کاملاً آفلاین</div>
+      </div>
+      <div style="margin-top:10px;display:flex;align-items:center;justify-content:space-between">
+        <div><div style="font-weight:800">خوش آمدید 👋</div><div style="font-size:12px;color:var(--secondary)" id="faDate"></div></div>
+        <div style="display:flex;gap:8px"><button class="btn" style="padding:8px 10px;border-radius:12px" onclick="switchView('tasks')">📅</button><button class="btn" style="padding:8px 10px;border-radius:12px" onclick="switchView('settings')">🔔</button></div>
+      </div>
+    </div>
+
+    <!-- HOME -->
+    <div class="view active" id="view-home">
+      <div class="privacy"><span>🔒</span><div>حریم خصوصی شما محفوظ است — همهٔ داده‌ها فقط روی همین دستگاه ذخیره می‌شود و هرگز به اینترنت ارسال نمی‌شود.</div></div>
+      <div class="section">
+        <div style="font-weight:800;margin-top:6px">خلاصه امروز</div>
+        <div class="cards">
+          <div class="card" onclick="switchView('members')" style="cursor:pointer"><div style="display:flex;justify-content:space-between"><div class="icon" style="background:var(--container);color:var(--deep)">👥</div><span style="color:var(--secondary)">⋯</span></div><div class="k">اعضای فعال</div><div class="v">۳</div><div class="s">۰ بایگانی‌شده</div></div>
+          <div class="card" onclick="switchView('tasks')" style="cursor:pointer"><div style="display:flex;justify-content:space-between"><div class="icon" style="background:#FFE9C8;color:#6A3B00">✓</div><span style="color:var(--secondary)">⋯</span></div><div class="k">وظایف باز</div><div class="v">۴</div><div class="s">از ۵ کل</div></div>
+          <div class="card" onclick="switchView('folders')"><div class="icon" style="background:#E8F0F0;color:var(--deep)">📁</div><div class="k">پرونده‌ها</div><div class="v">۲</div><div class="s">امور کاری / شخصی</div></div>
+          <div class="card" onclick="switchView('documents')"><div class="icon" style="background:#F0E6F6;color:#4A2D7A">📄</div><div class="k">اسناد</div><div class="v">پیش‌نویس</div><div class="s">اشتغال و فیش</div></div>
+        </div>
+        <div style="font-weight:800;margin-top:18px">دسترسی سریع</div>
+      </div>
+      <div class="chips">
+        <div class="chip" onclick="switchView('members')"><i style="background:#e8f0f0;color:var(--deep)">＋</i> افزودن عضو</div>
+        <div class="chip" onclick="switchView('tasks')"><i style="background:#FFE9C8;color:var(--amber)">✓</i> افزودن وظیفه</div>
+        <div class="chip" onclick="switchView('folders')"><i style="background:#E6EDEB;color:var(--secondary)">📁</i> ایجاد پوشه</div>
+        <div class="chip" onclick="switchView('documents')"><i style="background:#F0E6F6;color:#6B5CE7">＋</i> سند جدید</div>
+      </div>
+      <div class="section">
+        <div style="display:flex;justify-content:space-between;align-items:center"><div style="font-weight:800">برنامه امروز</div><a style="color:var(--deep);font-size:12px;font-weight:700;cursor:pointer" onclick="switchView('tasks')">مشاهده همه</a></div>
+        <div class="list" style="margin-top:10px">
+          <div class="item"><div class="avatar" style="background:#5B8DEF">ع</div><div style="flex:1"><div style="font-weight:700;font-size:13px">پیگیری سفارش — علی رضایی</div><div style="font-size:11px;color:var(--secondary)">⏰ ساعت ۱۴:۳۰ • یادآور فعال</div></div><div style="width:10px;height:10px;border-radius:999px;background:var(--warning)"></div></div>
+          <div class="item"><div class="avatar" style="background:#B86B19">س</div><div style="flex:1"><div style="font-weight:700;font-size:13px">ارسال گزارش ماهانه — سارا احمدی</div><div style="font-size:11px;color:var(--secondary)">📅 فردا • ماهانه</div></div><div style="width:10px;height:10px;border-radius:999px;background:var(--success)"></div></div>
+        </div>
+      </div>
+      <div class="section" style="margin-top:18px">
+        <div style="font-weight:800">یادآورهای نزدیک <span style="font-weight:400;color:var(--secondary);font-size:12px">— ۳ روز آینده</span></div>
+        <div class="list" style="margin-top:10px">
+          <div class="item"><div style="width:38px;height:38px;border-radius:999px;background:var(--container);display:grid;place-items:center">🔔</div><div style="flex:1"><div style="font-weight:700;font-size:13px">پیگیری سفارش</div><div style="font-size:11px;color:var(--secondary)">علی رضایی</div></div><span class="badge" style="background:var(--warning-bg);color:var(--warning)">فردا</span></div>
+          <div class="item"><div style="width:38px;height:38px;border-radius:999px;background:var(--container);display:grid;place-items:center">🗓️</div><div style="flex:1"><div style="font-weight:700;font-size:13px">ارسال گزارش ماهانه</div><div style="font-size:11px;color:var(--secondary)">سارا احمدی</div></div><span class="badge" style="background:var(--warning-bg);color:var(--warning)">فردا</span></div>
+        </div>
+      </div>
+      <div class="section" style="margin-top:18px">
+        <div style="font-weight:800">ابزارها</div>
+        <div class="grid2" style="margin-top:10px">
+          <div class="tool"><i style="background:#E6F0E2;color:#1B7A4B">📅</i><div><div style="font-size:13px;font-weight:700">تقویم</div><div style="font-size:11px;color:var(--secondary)">برنامه‌ریز</div></div></div>
+          <div class="tool"><i style="background:#F0E6F6;color:#6B5CE7">⏱️</i><div><div style="font-size:13px;font-weight:700">تمرکز</div><div style="font-size:11px;color:var(--secondary)">جلسه کاری</div></div></div>
+          <div class="tool"><i style="background:#FFE9C8;color:var(--amber)">🚩</i><div><div style="font-size:13px;font-weight:700">هدف‌ها</div><div style="font-size:11px;color:var(--secondary)">اهداف ماهانه</div></div></div>
+          <div class="tool"><i style="background:#CCE8F5;color:#155E7A">🔄</i><div><div style="font-size:13px;font-weight:700">عادت‌ها</div><div style="font-size:11px;color:var(--secondary)">پیگیری روزانه</div></div></div>
+          <div class="tool"><i style="background:#E6EDEB;color:var(--secondary)">📝</i><div><div style="font-size:13px;font-weight:700">یادداشت‌ها</div><div style="font-size:11px;color:var(--secondary)">ایده‌ها</div></div></div>
+          <div class="tool"><i style="background:var(--container);color:var(--deep)">📊</i><div><div style="font-size:13px;font-weight:700">گزارش‌ها</div><div style="font-size:11px;color:var(--secondary)">آمار</div></div></div>
+        </div>
+        <button class="btn" style="width:100%;margin-top:12px" onclick="switchView('folders')">📂 &nbsp; مشاهده پوشه‌ها</button>
+      </div>
+    </div>
+
+    <!-- MEMBERS -->
+    <div class="view" id="view-members">
+      <div class="header"><div><h2>اعضا</h2><p>مدیریت مشتریان و پرسنل</p></div><button class="btn" style="padding:8px 10px" onclick="switchView('settings')">⚙️</button></div>
+      <div class="search">🔍<input id="memberSearch" placeholder="جست‌وجو در نام اعضا…" oninput="filterMembers()"><span style="color:var(--secondary);cursor:pointer" onclick="document.getElementById('memberSearch').value='';filterMembers()">✕</span></div>
+      <div class="filters"><div class="filter active" data-type="" onclick="setFilter('',this)">همه</div><div class="filter" data-type="customer" onclick="setFilter('customer',this)">مشتری</div><div class="filter" data-type="staff" onclick="setFilter('staff',this)">پرسنل</div><div style="margin-inline-start:auto;font-size:12px;color:var(--secondary)">📦 بایگانی (۰)</div></div>
+      <div class="list" style="padding:12px 16px" id="memberList">
+        <div class="item member" data-name="علی رضایی" data-type="customer" onclick="openProfile('علی رضایی')"><div class="avatar" style="background:#5B8DEF">ع</div><div style="flex:1"><div style="font-weight:800;font-size:14px">علی رضایی <span class="badge" style="background:#E0ECFF;color:#1A3A7A">مشتری</span></div><div style="font-size:12px;color:var(--secondary)">1 باز • 2 وظیفه</div></div><button class="btn" style="padding:6px 10px;font-size:12px" onclick="event.stopPropagation();alert('ویرایش عضو — فرم کامل در اپ اندروید')">✏️</button></div>
+        <div class="item member" data-name="سارا احمدی" data-type="staff" onclick="openProfile('سارا احمدی')"><div class="avatar" style="background:#F2994A">س</div><div style="flex:1"><div style="font-weight:800;font-size:14px">سارا احمدی <span class="badge" style="background:#FFE9C8;color:#6A3B00">پرسنل</span></div><div style="font-size:12px;color:var(--secondary)">1 باز • 2 وظیفه</div></div><button class="btn" style="padding:6px 10px;font-size:12px" onclick="event.stopPropagation();alert('ویرایش')">✏️</button></div>
+        <div class="item member" data-name="مریم محمدی" data-type="customer" onclick="openProfile('مریم محمدی')"><div class="avatar" style="background:#9B51E0">م</div><div style="flex:1"><div style="font-weight:800;font-size:14px">مریم محمدی <span class="badge" style="background:#E0ECFF;color:#1A3A7A">مشتری</span></div><div style="font-size:12px;color:var(--secondary)">0 باز • 1 وظیفه</div></div><button class="btn" style="padding:6px 10px;font-size:12px" onclick="event.stopPropagation();alert('ویرایش')">✏️</button></div>
+      </div>
+      <div style="padding:16px"><button class="btn primary" style="width:100%" onclick="alert('افزودن عضو — فرم کامل با ماسک اطلاعات و آواتار')">＋ افزودن عضو</button></div>
+    </div>
+
+    <!-- TASKS -->
+    <div class="view" id="view-tasks">
+      <div class="header"><div><h2>وظایف و یادآورها</h2><p>۵ وظیفه • ۴ باز</p></div></div>
+      <div style="display:flex;margin:0 16px;border:1px solid var(--line);border-radius:12px;overflow:hidden">
+        <div class="filter active" style="flex:1;text-align:center;border:none;border-radius:0" onclick="setTaskTab('today',this)">امروز</div>
+        <div class="filter" style="flex:1;text-align:center;border:none;border-radius:0" onclick="setTaskTab('upcoming',this)">آینده</div>
+        <div class="filter" style="flex:1;text-align:center;border:none;border-radius:0" onclick="setTaskTab('done',this)">انجام‌شده</div>
+      </div>
+      <div style="padding:12px 16px"><button class="btn primary" style="width:100%" onclick="alert('وظیفه جدید — الگوی تکرار روزانه/هفتگی/ماهانه در اپ')">＋ وظیفه جدید</button></div>
+      <div class="list" style="padding:0 16px" id="taskList">
+        <div class="item" onclick="alert('تغییر وضعیت — تیک انجام شد')"><span style="font-size:22px">⭕</span><div style="flex:1"><div style="font-weight:700;font-size:13px">پیگیری سفارش</div><div style="font-size:11px;color:var(--secondary)">یادآور روزانه ساعت 14:30 • علی رضایی</div></div><span style="font-size:16px">✏️</span></div>
+        <div class="item"><span style="font-size:22px">⭕</span><div style="flex:1"><div style="font-weight:700;font-size:13px">تماس هفتگی</div><div style="font-size:11px;color:var(--secondary)">یادآور خاموش • علی رضایی</div></div><span style="font-size:16px">✏️</span></div>
+        <div class="item"><span style="font-size:22px">⭕</span><div style="flex:1"><div style="font-weight:700;font-size:13px">ارسال گزارش ماهانه</div><div style="font-size:11px;color:var(--secondary)">یادآور ماهانه — روز 5 ساعت 09:00 • سارا احمدی</div></div><span style="font-size:16px">✏️</span></div>
+        <div class="item" style="opacity:.6"><span style="font-size:22px">✅</span><div style="flex:1"><div style="font-weight:700;font-size:13px;text-decoration:line-through">بررسی موجودی انبار</div><div style="font-size:11px;color:var(--secondary)">انجام‌شده</div></div></div>
+      </div>
+    </div>
+
+    <!-- FOLDERS -->
+    <div class="view" id="view-folders">
+      <div class="header"><div><h2>پوشه‌ها</h2><p>مدیریت امور کاری آقای نوری‌فر</p></div><button class="btn" style="padding:8px 10px" onclick="switchView('settings')">⚙️</button></div>
+      <div style="padding:0 16px"><button class="btn primary" style="width:100%" onclick="alert('ایجاد پوشه جدید — با انتخاب رنگ و نام')">＋ پوشه جدید</button></div>
+      <div class="folders" style="padding:14px 16px">
+        <div class="folder amber" style="border-inline-start:4px solid var(--amber)"><div class="folder-head" style="background:#FFF4E0">🏦</div><h4>بانک مهر</h4><p>۳ پرونده</p><div class="open">باز کردن</div></div>
+        <div class="folder blue" style="border-inline-start:4px solid #2A7A8A"><div class="folder-head" style="background:#E0F0F3">🏛️</div><h4>بانک ملی</h4><p>۲ پرونده</p><div class="open">باز کردن</div></div>
+        <div class="folder" style="border-inline-start:4px solid var(--secondary)"><div class="folder-head" style="background:#E6EDEB">👤</div><h4>امور شخصی</h4><p>۵ پرونده</p><div class="open">باز کردن</div></div>
+        <div class="folder" style="border-inline-start:4px solid #6B5CE7"><div class="folder-head" style="background:#F0E6F6">📁</div><h4>پروژه‌ها</h4><p>۱ پرونده</p><div class="open">باز کردن</div></div>
+      </div>
+      <div style="padding:0 16px"><button class="btn" style="width:100%" onclick="switchView('members')">بدون پوشه</button></div>
+    </div>
+
+    <!-- DOCUMENTS -->
+    <div class="view" id="view-documents">
+      <div class="header"><div><h2>اسناد</h2><p>گواهی اشتغال و فیش — فقط پیش‌نویس</p></div><div class="offline"><i></i> آفلاین</div></div>
+      <div style="padding:0 16px;display:flex;gap:8px"><div class="filter active" onclick="setDoc('employment',this)">گواهی اشتغال</div><div class="filter" onclick="setDoc('payslip',this)">فیش حقوقی</div><div class="switch" style="margin-inline-start:auto"><span>ماسک</span><div class="toggle on" id="maskToggle" onclick="this.classList.toggle('on');toggleMask()"></div></div></div>
+      <div class="doc-form" style="margin-top:12px">
+        <label>نام سازمان</label><input id="orgName" value="لاوان صنعت نوین شمس" oninput="updatePreview()">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div><label>نام کارمند</label><input id="empName" value="کاربر نمونه" oninput="updatePreview()"></div><div><label>سمت</label><input value="کارشناس عملیات" oninput="updatePreview()"></div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div><label>تاریخ شروع</label><input value="۱۴۰۲/۰۱/۱۵"></div><div><label>مبلغ / حقوق <span id="maskLabel">(ماسک)</span></label><input id="salary" value="۸۵٬۰۰۰٬۰۰۰ ریال"></div></div>
+        <div style="font-size:12px;color:var(--secondary);margin-top:10px">ℹ️ خروجی‌ها فقط پیش‌نویس هستند و محاسبه حقوقی/قانونی انجام نمی‌دهند.</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 16px"><button class="btn primary" onclick="showPreview()">👁️ پیش‌نمایش</button><button class="btn" onclick="showPreview()">📄 PDF</button></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px"><button class="btn" onclick="showPreview()">🖼️ JPG</button><button class="btn" onclick="showPreview()">📝 DOCX</button></div>
+      <div style="font-size:11px;color:var(--secondary);text-align:center;padding:8px 16px">هر خروجی واترمارک «نمونه / نامعتبر / غیرقابل ارائه» دارد؛ مهر و امضا خالی است.</div>
+      <div id="docPreview" style="display:none">
+        <div style="padding:0 16px;font-weight:800">پیش‌نمایش سند</div>
+        <div class="doc-preview">
+          <div class="watermark"><span>نمونه • نامعتبر</span></div>
+          <div style="display:flex;align-items:center;gap:8px"><div class="mark">◈</div><div style="flex:1"><div style="font-weight:900;color:var(--deep)" id="prevOrg">لاوان صنعت نوین شمس</div><div style="font-size:11px;color:var(--secondary)" id="prevType">گواهی اشتغال — پیش‌نویس</div></div><span style="cursor:pointer" onclick="hidePreview()">✕</span></div>
+          <div style="height:1px;background:var(--line);margin:14px 0"></div>
+          <div style="font-size:13px;text-align:justify;line-height:1.9" id="prevBody">به استحضار می‌رساند آقای/خانم کاربر نمونه با سمت کارشناس عملیات از تاریخ ۱۴۰۲/۰۱/۱۵ در این مجموعه مشغول به کار می‌باشد. این گواهی بنا به درخواست نامبرده صادر شده و فاقد اعتبار حقوقی برای ارائه به مراجع رسمی است.</div>
+          <div style="display:flex;justify-content:space-between;margin-top:18px"><div><div style="font-size:11px;color:var(--secondary)">محل مهر سازمان</div><div style="width:86px;height:86px;border:1px solid var(--line);border-radius:10px;background:#F7F8F6;display:grid;place-items:center;color:#aaa;font-size:11px;margin-top:6px">خالی</div></div><div style="text-align:left"><div style="font-size:11px;color:var(--secondary)">امضا و تاریخ</div><div style="width:120px;height:46px;border:1px solid var(--line);border-radius:10px;background:#F7F8F6;display:grid;place-items:center;color:#aaa;font-size:11px;margin-top:6px">خالی</div><div style="font-size:11px;color:var(--secondary);margin-top:6px">۱۴۰۴/۰۸/۰۵</div></div></div>
+          <div class="stamp">نمونه / نامعتبر / غیرقابل ارائه — فقط برای پیش‌نمایش</div>
+        </div>
+      </div>
+      <div class="settings-card" style="background:var(--warning-bg);border-color:#f0d9a0"><div style="display:flex;gap:8px"><span>⚠️</span><div><div style="font-weight:800;color:var(--warning)">توجه</div><div style="font-size:12px;color:var(--warning)">این سند نمونه و غیرقابل ارائه است؛ برای صدور رسمی با منابع انسانی هماهنگ کنید. اطلاعات حساس ماسک شده و محل مهر/امضا خالی است.</div></div></div></div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="view" id="view-settings">
+      <div class="header"><div><h2>تنظیمات</h2><p>حریم خصوصی، ظاهر و پشتیبان</p></div><div class="offline"><i></i> آفلاین</div></div>
+      <div class="privacy">🔒 حریم خصوصی — داده‌ها فقط روی دستگاه، بدون اینترنت</div>
+      <div style="padding:0 16px;font-weight:800;margin-top:12px">ظاهر</div>
+      <div class="settings-card"><div class="row"><i style="background:var(--container);color:var(--deep)">🌙</i><div style="flex:1"><div style="font-weight:700">تم تاریک</div><div style="font-size:12px;color:var(--secondary)">برای شب و کاهش باتری</div></div><div class="toggle" onclick="this.classList.toggle('on')" id="themeToggle"></div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px"><div style="background:#fff;border:1px solid var(--line);border-radius:12px;height:56px;display:grid;place-items:center;font-weight:800;color:var(--deep)">روشن</div><div style="background:var(--card-dark);color:#fff;border-radius:12px;height:56px;display:grid;place-items:center;font-weight:800">تیره</div></div>
+      </div>
+      <div style="padding:0 16px;font-weight:800;margin-top:16px">حریم خصوصی و قفل</div>
+      <div class="settings-card"><div class="row"><i style="background:var(--container);color:var(--deep)">🔒</i><div style="flex:1"><div style="font-weight:700">قفل برنامه</div><div style="font-size:12px;color:var(--secondary)">PIN یا الگو — ورود محدود</div></div><span class="badge" style="background:var(--success-bg);color:var(--success)">غیرفعال</span></div>
+        <div style="font-size:12px;color:var(--secondary);margin-top:8px">با PIN یا الگو، ورود به MONO را محدود کنید. داده‌ها روی دستگاه می‌مانند.</div>
+        <div style="display:flex;gap:10px;margin-top:12px"><button class="btn primary" style="flex:1" onclick="alert('تنظیم PIN — ۴ تا ۱۲ رقم')">تنظیم PIN</button><button class="btn" style="flex:1" onclick="alert('تنظیم الگو — حداقل ۴ نقطه')">الگو</button></div>
+      </div>
+      <div style="padding:0 16px;font-weight:800;margin-top:16px">بکاپ محلی</div>
+      <div class="settings-card"><div class="row"><i style="background:var(--container);color:var(--deep)">💾</i><div style="flex:1"><div style="font-weight:700">پشتیبان‌گیری JSON</div><div style="font-size:12px;color:var(--secondary)">همه اعضا، مشخصات و وظایف در یک فایل</div></div></div>
+        <div style="display:flex;gap:10px;margin-top:12px"><button class="btn primary" style="flex:1" onclick="alert('خروجی JSON — انتخاب محل ذخیره')">خروجی JSON</button><button class="btn" style="flex:1" onclick="if(confirm('بازیابی، تمام داده‌های فعلی را جایگزین می‌کند. ادامه؟'))alert('بازیابی انجام شد')">بازیابی</button></div>
+        <div style="background:var(--warning-bg);border-radius:10px;padding:10px;margin-top:10px;display:flex;gap:8px;font-size:12px;color:var(--warning)">⚠️ بازیابی جایگزینی کامل است و تأیید صریح می‌خواهد.</div>
+      </div>
+      <div style="padding:0 16px;font-weight:800;margin-top:16px">اعلان‌ها و یادآورها</div>
+      <div class="settings-card"><div class="row"><span style="color:var(--success);font-size:18px">✔️</span><div style="flex:1"><div style="font-weight:700">اعلان‌ها (نوتیفیکیشن)</div><div style="font-size:12px;color:var(--secondary)">برای یادآوری‌های محلی لازم است</div></div></div><div style="height:1px;background:var(--line);margin:12px 0"></div>
+        <div class="row"><span style="color:var(--success);font-size:18px">✔️</span><div style="flex:1"><div style="font-weight:700">یادآوری دقیق</div><div style="font-size:12px;color:var(--secondary)">فعال — سرِ ساعت دقیق</div></div></div>
+        <div style="font-size:12px;color:var(--secondary);margin-top:10px">اگر مجوز رد شود فقط نوتیف نمایش داده نمی‌شود؛ ثبت و ویرایش بدون مشکل کار می‌کند.</div>
+        <div style="background:var(--error-bg);color:var(--error);border-radius:10px;padding:10px;margin-top:10px;font-size:12px;display:none" id="permDenied">مجوز اعلان رد شده — برای یادآورها فعال کنید.</div>
+      </div>
+      <div style="padding:0 16px;font-weight:800;margin-top:16px">وضعیت آفلاین و اطلاعات</div>
+      <div class="settings-card"><div class="row"><i style="background:var(--success-bg);color:var(--success)">☁️</i><div style="flex:1"><div style="font-weight:700">کاملاً آفلاین</div><div style="font-size:12px;color:var(--secondary)">بدون اینترنت — روی دستگاه شما</div></div><span style="color:var(--success)">✔️</span></div>
+        <div style="height:1px;background:var(--line);margin:12px 0"></div>
+        <div style="font-size:12px;line-height:2"><div style="display:flex;gap:10px"><span style="color:var(--secondary);min-width:90px">نام</span><b>MONO — یادیار</b></div><div style="display:flex;gap:10px"><span style="color:var(--secondary);min-width:90px">نسخه</span><b>1.8.0-preview (debug/test)</b></div><div style="display:flex;gap:10px"><span style="color:var(--secondary);min-width:90px">شناسه</span><b>com.yadyar.app.preview</b></div><div style="display:flex;gap:10px"><span style="color:var(--secondary);min-width:90px">ذخیره</span><b>SQLite محلی — بدون اینترنت</b></div><div style="display:flex;gap:10px"><span style="color:var(--secondary);min-width:90px">سازمان</span><b>لاوان صنعت نوین شمس (قابل ویرایش)</b></div></div>
+      </div>
+      <div style="height:20px"></div>
+    </div>
+
+    <!-- PROFILE (overlay) -->
+    <div class="view" id="view-profile">
+      <div class="header"><button class="btn" onclick="switchView('members')">←</button><div style="flex:1;text-align:center;font-weight:800">پروفایل</div><button class="btn" onclick="alert('ویرایش پرونده')">✏️</button></div>
+      <div class="card" style="margin:0 16px;display:flex;gap:12px;align-items:center"><div class="avatar" style="background:#5B8DEF;width:56px;height:56px;font-size:20px">ع</div><div style="flex:1"><div style="font-weight:900">علی رضایی</div><div style="font-size:12px;color:var(--secondary)">مشتری • ثبت: ۱۴۰۲/۰۵/۱۲</div></div><span class="badge" style="background:#E0ECFF;color:#1A3A7A">مشتری</span></div>
+      <div style="padding:0 16px;font-weight:800;margin-top:14px;display:flex;justify-content:space-between"><span>مشخصات</span><span style="color:var(--deep);font-size:12px;cursor:pointer" onclick="alert('ویرایش مشخصات — فیلدها ماسک‌شده با چشم برای نمایش')">✏️ ویرایش</span></div>
+      <div class="settings-card" style="margin-top:8px">
+        <div style="color:var(--amber);font-size:12px;font-weight:800;margin-bottom:6px">مشخصات هویتی</div>
+        <div class="row" style="padding:6px 0"><span style="min-width:120px;font-size:12px;color:var(--secondary)">نام پدر</span><span style="flex:1;font-size:13px">حسین</span></div>
+        <div class="row" style="padding:6px 0"><span style="min-width:120px;font-size:12px;color:var(--secondary)">کد ملی</span><span style="flex:1;font-size:13px"><span id="nid">•••• •••• ۵۶۷۸</span> <span style="cursor:pointer" onclick="toggleNid()">👁️</span></span></div>
+        <div class="row" style="padding:6px 0"><span style="min-width:120px;font-size:12px;color:var(--secondary)">تاریخ تولد</span><span style="flex:1;font-size:13px">۱۳۷۰/۰۵/۱۲</span></div>
+        <div style="color:var(--amber);font-size:12px;font-weight:800;margin:10px 0 6px">اطلاعات بانکی (ماسک)</div>
+        <div class="row" style="padding:6px 0"><span style="min-width:120px;font-size:12px;color:var(--secondary)">شماره کارت</span><span style="flex:1;font-size:13px">۶۰۳۷ •••• •••• ۱۲۳۴</span></div>
+        <div class="row" style="padding:6px 0"><span style="min-width:120px;font-size:12px;color:var(--secondary)">Cvv2</span><span style="flex:1;font-size:13px">•••</span></div>
+      </div>
+      <div style="padding:0 16px;font-weight:800;margin-top:14px">وظایف (۲)</div>
+      <div class="list" style="padding:8px 16px">
+        <div class="item"><span>⭕</span><div style="flex:1"><div style="font-weight:700;font-size:13px">پیگیری سفارش</div><div style="font-size:11px;color:var(--secondary)">یادآور روزانه ساعت 14:30</div></div></div>
+        <div class="item"><span>⭕</span><div style="flex:1"><div style="font-weight:700;font-size:13px">تماس هفتگی</div><div style="font-size:11px;color:var(--secondary)">یادآور خاموش</div></div></div>
+      </div>
+      <div style="padding:0 16px"><button class="btn primary" style="width:100%" onclick="alert('وظیفه جدید برای این عضو')">＋ وظیفه جدید</button></div>
+    </div>
+
+    <div class="bottom" id="bottomNav">
+      <div class="tab active" data-view="home" onclick="switchView('home')"><i>🏠</i>خانه</div>
+      <div class="tab" data-view="members" onclick="switchView('members')"><i>👥</i>اعضا</div>
+      <div class="tab" data-view="tasks" onclick="switchView('tasks')"><i>✓</i>وظایف</div>
+      <div class="tab" data-view="documents" onclick="switchView('documents')"><i>📄</i>اسناد</div>
+      <div class="tab" data-view="settings" onclick="switchView('settings')"><i>⚙️</i>تنظیمات</div>
+    </div>
+  </div>
+
+  <div class="desktop-side">
+    <h2 style="font-weight:900">MONO پیش‌نمایش تعاملی</h2>
+    <p style="color:var(--secondary);font-size:14px;margin-top:8px">نسخهٔ Androidِ گرم، خلوت و حرفه‌ای — تم روشن/تاریک، فارسی و راست‌به‌چپ، کاملاً آفلاین</p>
+    <div style="margin-top:18px;display:grid;gap:10px">
+      <div class="card"><div style="font-weight:800">🎯 هدف بصری</div><div style="font-size:13px;color:var(--secondary);margin-top:6px">سربرگ MONO | یادیار، نشان «کاملاً آفلاین»، خوشامد و تاریخ، پیام حریم خصوصی، کارت‌های خلاصه، دسترسی سریع، برنامه امروز، یادآورهای نزدیک و نوار ۵تایی</div></div>
+      <div class="card"><div style="font-weight:800">🎨 توکن‌ها</div><div style="font-size:13px;color:var(--secondary);margin-top:6px">سبزآبی #1B4D4E · ظرف #D3ECEC · کهربایی #B86B19 · سطح روشن #F7F8F6 · سطح تیره #0F1415 · primary تیره #7AD0D2 · کارت تیره #182123 · وضعیت success/warning/error/info با container</div></div>
+      <div class="card"><div style="font-weight:800">🔒 محرمانگی</div><div style="font-size:13px;color:var(--secondary);margin-top:6px">دادهٔ آزمایشی جدا از واقعی — فقط «کاربر نمونه» و مقادیر ماسک‌شده. محل مهر/امضا خالی. واترمارک «نمونه / نامعتبر / غیرقابل ارائه» روی همه خروجی‌ها.</div></div>
+      <div class="card"><div style="font-weight:800">📦 ساخت</div><div style="font-size:13px;color:var(--secondary);margin-top:6px">APK جداگانه با suffix <code>.preview</code> و DB ایزوله؛ versionCode 8؛ بدون مجوز INTERNET؛ قابل نصب کنار نسخه اصلی</div></div>
+      <div class="card"><div style="font-weight:800">✅ پذیرش</div><ul style="font-size:13px;color:var(--secondary);margin:6px 18px 0"><li>قابل لمس و پیمایش — نه کلاژ</li><li>RTL واقعی + تم روشن/تاریک</li><li>پوشه‌های رنگی (کهربایی/آبی/خاکستری)</li><li>ماسک حساس + تأیید حذف/بازیابی</li></ul></div>
+    </div>
+  </div>
+</div>
+<script>
+  document.getElementById('faDate').textContent = new Date().toLocaleDateString('fa-IR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  let cur='home', filterType='', taskTab='today';
+  function switchView(v){
+    cur=v;
+    document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
+    const target=document.getElementById('view-'+v);
+    if(target) target.classList.add('active');
+    document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.view===v));
+    window.scrollTo(0,0);
+    if(v==='profile') document.getElementById('bottomNav').style.display='none'; else document.getElementById('bottomNav').style.display='flex';
+    if(v==='members') filterMembers();
+  }
+  function openProfile(name){
+    document.getElementById('view-profile').querySelector('.card div div').textContent=name;
+    switchView('profile');
+  }
+  function filterMembers(){
+    const q=(document.getElementById('memberSearch').value||'').toLowerCase();
+    document.querySelectorAll('.member').forEach(m=>{
+      const name=m.dataset.name.toLowerCase();
+      const tp=m.dataset.type;
+      const okName=!q || name.includes(q);
+      const okType=!filterType || tp===filterType;
+      m.style.display=(okName&&okType)?'flex':'none';
+    });
+    const any=[...document.querySelectorAll('.member')].some(m=>m.style.display!=='none');
+    let empty=document.getElementById('memberEmpty');
+    if(!any){
+      if(!empty){ empty=document.createElement('div'); empty.id='memberEmpty'; empty.className='empty'; empty.innerHTML='<h3>نتیجه‌ای یافت نشد</h3><p>جست‌وجو یا فیلتر را تغییر دهید.</p><button class=btn onclick=\"document.getElementById(\'memberSearch\').value=\'\';filterMembers()\">پاک کردن فیلتر</button>'; document.getElementById('memberList').appendChild(empty); }
+      empty.style.display='block';
+    } else if(empty) empty.style.display='none';
+  }
+  function setFilter(tp, el){
+    filterType=tp; document.querySelectorAll('.filters .filter').forEach(f=>f.classList.remove('active')); el.classList.add('active'); filterMembers();
+  }
+  function setTaskTab(tab, el){
+    document.querySelectorAll('#view-tasks .filter').forEach(f=>f.classList.remove('active')); el.classList.add('active');
+  }
+  function setDoc(type, el){
+    document.querySelectorAll('#view-documents .filter').forEach(f=>f.classList.remove('active')); el.classList.add('active');
+    document.getElementById('prevType').textContent = type==='employment' ? 'گواهی اشتغال — پیش‌نویس' : 'فیش حقوقی — پیش‌نویس';
+    const body=document.getElementById('prevBody');
+    if(type==='employment') body.textContent='به استحضار می‌رساند آقای/خانم کاربر نمونه با سمت کارشناس عملیات از تاریخ ۱۴۰۲/۰۱/۱۵ در این مجموعه مشغول به کار می‌باشد. این گواهی بنا به درخواست نامبرده صادر شده و فاقد اعتبار حقوقی برای ارائه به مراجع رسمی است.';
+    else body.textContent='فیش حقوقی مربوط به کاربر نمونه — سمت: کارشناس عملیات — دوره: ۱۴۰۲/۰۱/۱۵ — مبلغ ناخالص: •••• •••• — این فیش صرفاً نمونه نمایشی است و فاقد اعتبار مالی/قانونی می‌باشد.';
+  }
+  function showPreview(){ document.getElementById('docPreview').style.display='block'; updatePreview(); }
+  function hidePreview(){ document.getElementById('docPreview').style.display='none'; }
+  function updatePreview(){
+    const org=document.getElementById('orgName').value||'لاوان صنعت نوین شمس';
+    document.getElementById('prevOrg').textContent=org;
+  }
+  function toggleMask(){
+    const s=document.getElementById('salary');
+    const on=document.getElementById('maskToggle').classList.contains('on');
+    document.getElementById('maskLabel').textContent = on ? '(ماسک)' : '';
+    s.value = on ? '•••• ••••' : '۸۵٬۰۰۰٬۰۰۰ ریال';
+  }
+  function toggleNid(){
+    const el=document.getElementById('nid');
+    if(el.textContent.includes('•')) el.textContent='۰۰۱۲۳۴۵۶۷۸'; else el.textContent='•••• •••• ۵۶۷۸';
+  }
+</script>
+</body>
+</html>
